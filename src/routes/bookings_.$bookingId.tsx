@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import inspectionPhoto from '@/assets/inspection-sample-mazda.jpg';
+import inspectionPhotos from '@/lib/inspection-photos';
 import { useState } from 'react';
 import { ArrowLeft, Check, MessageSquare, X, FileText } from 'lucide-react';
 import { AccountGate, StatusBadge, displayTime, displayDate } from '@/components/account-ui';
