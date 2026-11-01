@@ -5,6 +5,8 @@ import { PageIntro } from "@/components/site-chrome";
 export const Route = createFileRoute("/how-it-works")({
   head: () => ({
     meta: [
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:card', content: 'summary_large_image' },
       { title: "How it works — Trustferly" },
       { name: "description", content: "How Trustferly matches used-car buyers with independent inspectors." },
       { property: "og:title", content: "How Trustferly works" },

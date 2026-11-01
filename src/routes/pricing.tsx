@@ -6,6 +6,8 @@ import { PageIntro } from "@/components/site-chrome";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:card', content: 'summary_large_image' },
       { title: "Pricing — Trustferly" },
       { name: "description", content: "Transparent flat-rate pricing for pre-purchase vehicle inspections." },
       { property: "og:title", content: "Trustferly pricing" },
