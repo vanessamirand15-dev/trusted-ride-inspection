@@ -6,6 +6,8 @@ import { PageIntro } from "@/components/site-chrome";
 export const Route = createFileRoute("/for-inspectors")({
   head: () => ({
     meta: [
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:card', content: 'summary_large_image' },
       { title: "For inspectors — Trustferly" },
       { name: "description", content: "Join Trustferly as an independent professional vehicle inspector." },
       { property: "og:title", content: "Become a Trustferly inspector" },

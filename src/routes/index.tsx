@@ -6,6 +6,8 @@ import hero from "@/assets/hero.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:card', content: 'summary_large_image' },
       { title: "Trustferly — Inspect before you buy a used car" },
       { name: "description", content: "Connect with independent, verified vehicle inspectors before buying a used car from a private seller." },
       { property: "og:title", content: "Trustferly — Inspect before you buy" },

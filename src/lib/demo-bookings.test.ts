@@ -21,6 +21,7 @@ describe('demonstration booking rules', () => {
   });
   it('allows cancellation of open bookings but not completed or cancelled ones', () => {
     const [open, , completed] = sampleState().bookings;
+    if (!open || !completed) throw new Error('Missing sample bookings');
     expect(canCancel(open)).toBe(true);
     expect(canCancel(completed)).toBe(false);
     expect(canCancel({ ...open, cancelledAt: '2026-11-01T19:35:00Z' })).toBe(false);

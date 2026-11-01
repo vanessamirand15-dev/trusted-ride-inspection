@@ -8,7 +8,7 @@ export interface Booking {
 }
 export interface DemoState { account: DemoAccount | null; bookings: Booking[] }
 export function statusOf(booking: Booking): Stage | 'Cancelled' {
-  return booking.cancelledAt ? 'Cancelled' : stages[Math.min(Math.max(booking.timestamps.length - 1, 0), stages.length - 1)];
+  return booking.cancelledAt ? 'Cancelled' : (stages[Math.min(Math.max(booking.timestamps.length - 1, 0), stages.length - 1)] ?? 'Requested');
 }
 export function ownBookings(state: DemoState) {
   return state.account ? state.bookings.filter(b => b.accountId === state.account?.id) : [];
