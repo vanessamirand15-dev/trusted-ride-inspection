@@ -7,7 +7,7 @@ import { stages, canCancel, statusOf } from '@/lib/demo-bookings';
 import { pageHead } from '@/lib/page-head';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-export const Route = createFileRoute('/bookings/$bookingId')({ head: () => pageHead('Inspection booking', 'View your inspection timeline, inspector, and booking details.'), component: Page });
+export const Route = createFileRoute('/bookings_/$bookingId')({ head: () => pageHead('Inspection booking', 'View your inspection timeline, inspector, and booking details.'), component: Page });
 function Page() { return <AccountGate><Detail /></AccountGate>; }
 function Detail() {
   const { bookingId } = Route.useParams();

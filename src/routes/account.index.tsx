@@ -3,7 +3,7 @@ import { AccountGate, AccountLayout } from '@/components/account-ui';
 import { useDemoAccount, useBookings } from '@/components/demo-account';
 import { Button } from '@/components/ui/button';
 import { pageHead } from '@/lib/page-head';
-export const Route = createFileRoute('/account')({ head: () => pageHead('Your account', 'Manage your Trustferly buyer account and vehicle inspection bookings.'), component: Page });
+export const Route = createFileRoute('/account/')({ head: () => pageHead('Your account', 'Manage your Trustferly buyer account and vehicle inspection bookings.'), component: Page });
 function Page() {
   const path = useLocation({ select: l => l.pathname });
   return path === '/account' ? <AccountGate next="/account"><Overview /></AccountGate> : <Outlet />;
