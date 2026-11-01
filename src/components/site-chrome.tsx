@@ -1,6 +1,9 @@
-import { Link } from "@tanstack/react-router";
-import { ShieldCheck } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useState } from 'react';
+import { ShieldCheck, Menu, LogOut, UserRound, CalendarDays, Settings, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useDemoAccount } from '@/components/demo-account';
+import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 
 const nav = [
   { to: "/how-it-works", label: "How it works" },
@@ -22,10 +25,32 @@ export function Logo({ dark = false }: { dark?: boolean }) {
 }
 
 export function SiteHeader() {
+  const [open, setOpen] = useState(false);
+  const { account, logout } = useDemoAccount();
+  const navigate = useNavigate();
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-        <Logo />
+        <div className="flex items-center gap-3">
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild><Button variant="ghost" size="icon" aria-label="Open menu" title="Open menu"><Menu /></Button></SheetTrigger>
+            <SheetContent side="left" className="flex w-[min(90vw,360px)] flex-col overflow-y-auto motion-reduce:animate-none">
+              <SheetTitle><Logo /></SheetTitle><SheetDescription className="sr-only">Trustferly navigation</SheetDescription>
+              <nav aria-label="Main menu" className="mt-8 space-y-2">
+                <Button asChild variant="cta" className="mb-4 w-full justify-start"><Link to="/book" onClick={() => setOpen(false)}><Plus />Book now</Link></Button>
+                <Link to="/" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Home</Link>
+                {nav.map(n => <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">{n.label}</Link>)}
+              </nav>
+              <div className="mt-6 border-t pt-6">
+                {account ? <><p className="mb-4 break-words px-3 text-sm font-semibold">{account.name}</p><nav aria-label="Your account" className="space-y-2">
+                  {([{ to: '/account', label: 'Your account', icon: UserRound }, { to: '/account/settings', label: 'Account settings', icon: Settings }, { to: '/bookings', label: 'Your Bookings', icon: CalendarDays }] as const).map(n => <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><n.icon size={17} />{n.label}</Link>)}
+                  <Button variant="ghost" className="w-full justify-start" onClick={() => { logout(); setOpen(false); navigate({ to: '/auth', replace: true }); }}><LogOut />Log out</Button>
+                </nav></> : <Button asChild variant="outline" className="w-full"><Link to="/auth" onClick={() => setOpen(false)}><UserRound />Log in / Sign up</Link></Button>}
+              </div>
+            </SheetContent>
+          </Sheet>
+          <Logo />
+        </div>
         <nav className="hidden items-center gap-8 md:flex">
           {nav.map((n) => (
             <Link
@@ -38,9 +63,12 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
+        <div className="flex items-center gap-3">
+        <Button asChild variant="ghost" size="sm" className="hidden lg:inline-flex"><Link to={account ? '/bookings' : '/auth'}>{account ? 'Your Bookings' : 'Log in'}</Link></Button>
         <Button asChild variant="cta" size="sm">
           <Link to="/book">Book inspection</Link>
         </Button>
+        </div>
       </div>
     </header>
   );
