@@ -20,7 +20,7 @@ export function AuthScreen({ next = '/bookings' }: { next?: '/book' | '/bookings
     const sample = !signup && identity.toLowerCase() === 'test user';
     if (sample && password !== 'password') { setError('The sample account password is password.'); return; }
     login(signup ? String(data.get('name') || identity).trim() : identity, signup ? identity : '', sample);
-    navigate({ to: next });
+    navigate({ to: sample || signup ? '/bookings' : next });
   }
   return <section className="mx-auto max-w-md px-5 py-16 md:py-24">
     <div className="mb-7 flex items-center gap-2 text-sm font-medium text-accent"><ShieldCheck size={20} /> Buyer account <span className="ml-auto rounded-md bg-secondary px-2 py-1 text-xs text-muted-foreground">Demo</span></div>
