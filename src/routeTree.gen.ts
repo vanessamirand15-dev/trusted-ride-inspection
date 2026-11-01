@@ -10,19 +10,39 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AccountRouteImport } from './routes/account'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookRouteImport } from './routes/book'
+import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as ForInspectorsRouteImport } from './routes/for-inspectors'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as AccountSettingsRouteImport } from './routes/account.settings'
+import { Route as BookingsBookingIdRouteImport } from './routes/bookings.$bookingId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BookRoute = BookRouteImport.update({
   id: '/book',
   path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingsRoute = BookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForInspectorsRoute = ForInspectorsRouteImport.update({
@@ -40,46 +60,99 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountSettingsRoute = AccountSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AccountRoute,
+} as any)
+const BookingsBookingIdRoute = BookingsBookingIdRouteImport.update({
+  id: '/$bookingId',
+  path: '/$bookingId',
+  getParentRoute: () => BookingsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/account': typeof AccountRouteWithChildren
+  '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/bookings': typeof BookingsRouteWithChildren
   '/for-inspectors': typeof ForInspectorsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
+  '/account/settings': typeof AccountSettingsRoute
+  '/bookings/$bookingId': typeof BookingsBookingIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/account': typeof AccountRouteWithChildren
+  '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/bookings': typeof BookingsRouteWithChildren
   '/for-inspectors': typeof ForInspectorsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
+  '/account/settings': typeof AccountSettingsRoute
+  '/bookings/$bookingId': typeof BookingsBookingIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/account': typeof AccountRouteWithChildren
+  '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/bookings': typeof BookingsRouteWithChildren
   '/for-inspectors': typeof ForInspectorsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
+  '/account/settings': typeof AccountSettingsRoute
+  '/bookings/$bookingId': typeof BookingsBookingIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/book' | '/for-inspectors' | '/how-it-works' | '/pricing'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/book' | '/for-inspectors' | '/how-it-works' | '/pricing'
-  id:
-    | '__root__'
+  fullPaths:
     | '/'
+    | '/account'
+    | '/auth'
     | '/book'
+    | '/bookings'
     | '/for-inspectors'
     | '/how-it-works'
     | '/pricing'
+    | '/account/settings'
+    | '/bookings/$bookingId'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/account'
+    | '/auth'
+    | '/book'
+    | '/bookings'
+    | '/for-inspectors'
+    | '/how-it-works'
+    | '/pricing'
+    | '/account/settings'
+    | '/bookings/$bookingId'
+  id:
+    | '__root__'
+    | '/'
+    | '/account'
+    | '/auth'
+    | '/book'
+    | '/bookings'
+    | '/for-inspectors'
+    | '/how-it-works'
+    | '/pricing'
+    | '/account/settings'
+    | '/bookings/$bookingId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccountRoute: typeof AccountRouteWithChildren
+  AuthRoute: typeof AuthRoute
   BookRoute: typeof BookRoute
+  BookingsRoute: typeof BookingsRouteWithChildren
   ForInspectorsRoute: typeof ForInspectorsRoute
   HowItWorksRoute: typeof HowItWorksRoute
   PricingRoute: typeof PricingRoute
@@ -94,11 +167,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/book': {
       id: '/book'
       path: '/book'
       fullPath: '/book'
       preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bookings': {
+      id: '/bookings'
+      path: '/bookings'
+      fullPath: '/bookings'
+      preLoaderRoute: typeof BookingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/for-inspectors': {
@@ -122,12 +216,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account/settings': {
+      id: '/account/settings'
+      path: '/settings'
+      fullPath: '/account/settings'
+      preLoaderRoute: typeof AccountSettingsRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/bookings/$bookingId': {
+      id: '/bookings/$bookingId'
+      path: '/$bookingId'
+      fullPath: '/bookings/$bookingId'
+      preLoaderRoute: typeof BookingsBookingIdRouteImport
+      parentRoute: typeof BookingsRoute
+    }
   }
 }
 
+interface AccountRouteChildren {
+  AccountSettingsRoute: typeof AccountSettingsRoute
+}
+
+const AccountRouteChildren: AccountRouteChildren = {
+  AccountSettingsRoute: AccountSettingsRoute,
+}
+
+const AccountRouteWithChildren =
+  AccountRoute._addFileChildren(AccountRouteChildren)
+
+interface BookingsRouteChildren {
+  BookingsBookingIdRoute: typeof BookingsBookingIdRoute
+}
+
+const BookingsRouteChildren: BookingsRouteChildren = {
+  BookingsBookingIdRoute: BookingsBookingIdRoute,
+}
+
+const BookingsRouteWithChildren = BookingsRoute._addFileChildren(
+  BookingsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccountRoute: AccountRouteWithChildren,
+  AuthRoute: AuthRoute,
   BookRoute: BookRoute,
+  BookingsRoute: BookingsRouteWithChildren,
   ForInspectorsRoute: ForInspectorsRoute,
   HowItWorksRoute: HowItWorksRoute,
   PricingRoute: PricingRoute,
