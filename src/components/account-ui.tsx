@@ -12,6 +12,7 @@ export function AuthScreen({ next = '/bookings', bookingPlan }: { next?: '/book'
   const [error, setError] = useState('');
   const { login } = useDemoAccount();
   const navigate = useNavigate();
+  const bookingFlow = next === '/book';
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -26,8 +27,13 @@ export function AuthScreen({ next = '/bookings', bookingPlan }: { next?: '/book'
   }
   return <section className="mx-auto max-w-md px-5 py-16 md:py-24">
     <div className="mb-7 flex items-center gap-2 text-sm font-medium text-accent"><img src={logoAsset.url} alt="Trustferly logo" width={32} height={32} className="h-8 w-8" /> Buyer account <span className="ml-auto rounded-md bg-secondary px-2 py-1 text-xs text-muted-foreground">Demo</span></div>
-    <h1 className="text-4xl font-semibold">{signup ? 'Create your account' : 'Welcome back'}</h1>
-    <p className="mt-3 text-muted-foreground">{signup ? 'A fresh start for your next vehicle inspection.' : 'Your inspections, all in one place.'}</p>
+    <h1 className="text-4xl font-semibold">{bookingFlow ? 'Request your inspection' : signup ? 'Create your account' : 'Welcome back'}</h1>
+    <p className="mt-3 text-muted-foreground">{bookingFlow ? 'First, create your free account. Your inspection requests are saved to it, so you can track every booking and its status.' : signup ? 'A fresh start for your next vehicle inspection.' : 'Your inspections, all in one place.'}</p>
+    {bookingFlow && <ol className="mt-5 flex items-center gap-2 text-xs font-medium" aria-label="Booking steps">
+      <li className="rounded-full bg-secondary px-3 py-1.5 text-accent" aria-current="step">1 · Your account</li>
+      <li aria-hidden className="text-muted-foreground">→</li>
+      <li className="rounded-full px-3 py-1.5 text-muted-foreground">2 · Inspection request</li>
+    </ol>}
     <div className="my-7 grid grid-cols-2 border-b" role="tablist" aria-label="Account access">
       <Button role="tab" aria-selected={!signup} variant="ghost" className={!signup ? 'rounded-none border-b-2 border-primary text-primary' : 'rounded-none'} onClick={() => { setSignup(false); setError(''); }}>Log in</Button>
       <Button role="tab" aria-selected={signup} variant="ghost" className={signup ? 'rounded-none border-b-2 border-primary text-primary' : 'rounded-none'} onClick={() => { setSignup(true); setError(''); }}>Sign up</Button>
