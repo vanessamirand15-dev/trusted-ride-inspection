@@ -13,3 +13,5 @@
 - Account and booking flows are a frontend-only demonstration using a shared React provider and sessionStorage, never real authentication or server authorization; this keeps sample data isolated to the browser tab without implying production accounts.
 - Booking lifecycle rules and sample entities live in a browser-safe domain module with tests so lists and details use the same statuses and ownership rules.
 - The completed sample booking's report is a presentation-only component with condition, history, and photo views; fictional findings remain separate from lifecycle data and never imply verified records.
+- Inspection packages come from one browser-safe catalog shared by home, pricing and booking controls, with price and coverage tests, so offered packages stay consistent.
+- The public Honda sample report is independent of account booking reports so fictional preview findings never change booking lifecycle records.

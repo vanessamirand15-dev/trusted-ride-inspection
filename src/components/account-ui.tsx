@@ -7,7 +7,7 @@ import { statusOf, type Booking } from '@/lib/demo-bookings';
 import logoAsset from '@/assets/trustferly_logo.png.asset.json';
 
 export const inputClass = 'mt-2 w-full rounded-md border bg-card px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-ring';
-export function AuthScreen({ next = '/bookings' }: { next?: '/book' | '/bookings' | '/account' | '/account/settings' }) {
+export function AuthScreen({ next = '/bookings', bookingPlan }: { next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined }) {
   const [signup, setSignup] = useState(false);
   const [error, setError] = useState('');
   const { login } = useDemoAccount();
@@ -21,7 +21,8 @@ export function AuthScreen({ next = '/bookings' }: { next?: '/book' | '/bookings
     const sample = !signup && identity.toLowerCase() === 'test user';
     if (sample && password !== 'password') { setError('The sample account password is password.'); return; }
     login(signup ? String(data.get('name') || identity).trim() : identity, signup ? identity : '', sample);
-    navigate({ to: sample || signup ? '/bookings' : next });
+    if (!sample && !signup && next === '/book') navigate({ to: '/book', search: bookingPlan ? { plan: bookingPlan } : {} });
+    else navigate({ to: sample || signup ? '/bookings' : next });
   }
   return <section className="mx-auto max-w-md px-5 py-16 md:py-24">
     <div className="mb-7 flex items-center gap-2 text-sm font-medium text-accent"><img src={logoAsset.url} alt="Trustferly logo" width={32} height={32} className="h-8 w-8" /> Buyer account <span className="ml-auto rounded-md bg-secondary px-2 py-1 text-xs text-muted-foreground">Demo</span></div>
@@ -42,10 +43,10 @@ export function AuthScreen({ next = '/bookings' }: { next?: '/book' | '/bookings
     {!signup && <div className="mt-6 border-t pt-5 text-sm"><p className="font-medium">Sample account</p><p className="mt-1 text-muted-foreground">Username: test user · Password: password</p></div>}
   </section>;
 }
-export function AccountGate({ children, next = '/bookings' }: { children: ReactNode; next?: '/book' | '/bookings' | '/account' | '/account/settings' }) {
+export function AccountGate({ children, next = '/bookings', bookingPlan }: { children: ReactNode; next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined }) {
   const { ready, account } = useDemoAccount();
   if (!ready) return <div className="mx-auto max-w-5xl px-5 py-20 text-muted-foreground" role="status">Loading account…</div>;
-  return account ? children : <AuthScreen next={next} />;
+  return account ? children : <AuthScreen next={next} bookingPlan={bookingPlan} />;
 }
 export function AccountLayout({ title, subtitle, children, action }: { title: string; subtitle: string; children: ReactNode; action?: ReactNode }) {
   return <section className="mx-auto max-w-5xl px-5 py-10 md:py-16">

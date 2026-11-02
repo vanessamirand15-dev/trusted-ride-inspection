@@ -54,6 +54,8 @@
   --color-navy: var(--navy);
   --color-navy-foreground: var(--navy-foreground);
   --color-teal-soft: var(--teal-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
   --font-display: "Figtree", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
   --shadow-soft: var(--shadow-soft);
@@ -87,6 +89,8 @@
   --accent: oklch(0.6 0.11 182.5);
   --accent-foreground: oklch(0.99 0 0);
   --teal-soft: oklch(0.95 0.04 182);
+  --warning: oklch(0.48 0.12 70);
+  --warning-soft: oklch(0.96 0.04 85);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(0.91 0.015 250);
@@ -111,6 +115,8 @@
 }
 
 .dark {
+  --warning: oklch(0.83 0.14 85);
+  --warning-soft: oklch(0.29 0.04 70);
   --background: oklch(0.129 0.042 264.695);
   --foreground: oklch(0.984 0.003 247.858);
   --card: oklch(0.208 0.042 265.755);
@@ -158,7 +164,7 @@
 
 @layer base {
   html { font-size: 17px; }
-  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-navy); letter-spacing: -0.01em; }
+  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-navy); letter-spacing: 0; }
   body { font-family: var(--font-sans); }
 }
 @utility bg-navy-gradient { background-image: var(--gradient-navy); }
