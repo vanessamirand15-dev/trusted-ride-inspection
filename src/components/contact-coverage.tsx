@@ -177,7 +177,7 @@ export function ZipChecker() {
 export function CoverageSection() {
   const [active, setActive] = useState<string>(COVERAGE_HUBS[0].name);
   return (
-    <section id="coverage-areas" className="mx-auto max-w-6xl scroll-mt-32 px-5 py-16">
+    <section id="coverage" className="mx-auto max-w-6xl scroll-mt-32 px-5 py-16">
       <p className="text-sm font-semibold uppercase tracking-wide text-accent">Coverage</p>
       <h2 className="mt-2 text-3xl font-semibold md:text-4xl">Coverage & Service Areas</h2>
       <p className="mt-3 max-w-2xl text-muted-foreground">Verified inspectors travel up to {COVERAGE_RADIUS_MILES} miles from each Puget Sound hub.</p>
