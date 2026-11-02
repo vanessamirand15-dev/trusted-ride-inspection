@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import inspectionPhotos from '@/lib/inspection-photos';
+import { InspectionReport } from '@/components/inspection-report';
 import { useState } from 'react';
 import { ArrowLeft, Check, MessageSquare, X, FileText } from 'lucide-react';
 import { AccountGate, StatusBadge, displayTime, displayDate } from '@/components/account-ui';
@@ -32,11 +33,12 @@ function Detail() {
         {statusOf(booking) === 'Completed' && <figure className="mt-8 border-t pt-6"><figcaption className="text-sm text-muted-foreground">Photos from the inspection</figcaption><div className="mt-3 grid grid-cols-2 gap-3">{inspectionPhotos.map(photo => <img key={photo.alt} src={photo.src} alt={photo.alt} width={1600} height={1008} loading="lazy" className="w-full rounded-lg border object-cover" />)}</div><p className="mt-2 text-xs text-muted-foreground">Sample photos for demonstration purposes.</p></figure>}
         <div className="mt-8 flex flex-col items-start gap-3 border-t pt-6">
           {booking.inspector && <Button variant="outline" onClick={() => { setSent(false); setDialog('contact'); }}><MessageSquare />Contact your inspector</Button>}
-          {statusOf(booking) === 'Completed' && <Button onClick={() => setDialog('report')}><FileText />View inspection report</Button>}
+          {statusOf(booking) === 'Completed' && <Button asChild><a href="#inspection-report"><FileText />View inspection report</a></Button>}
           {canCancel(booking) && <Button variant="ghost" className="text-destructive" onClick={() => setDialog('cancel')}><X />Cancel inspection</Button>}
         </div>
       </div>
     </div>
+    {statusOf(booking) === 'Completed' && <section id="inspection-report" className="mt-12 scroll-mt-24 border-t pt-10"><InspectionReport booking={booking} /></section>}
     <Dialog open={dialog !== null} onOpenChange={open => { if (!open) setDialog(null); }}><DialogContent className="max-h-[85vh] w-[calc(100%-2rem)] overflow-y-auto rounded-lg">
       <DialogTitle>{dialog === 'cancel' ? 'Cancel this inspection?' : dialog === 'report' ? 'Sample inspection report' : `Contact ${booking.inspector}`}</DialogTitle>
       <DialogDescription>{dialog === 'cancel' ? 'The booking will remain in Your Bookings marked as cancelled.' : dialog === 'report' ? `${booking.vehicle} · Demonstration report` : 'Demonstration message only; no message will be sent to a real inspector.'}</DialogDescription>

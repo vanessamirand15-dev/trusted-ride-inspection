@@ -6,3 +6,9 @@
 - [x] Verify signup, sample login, booking creation, timelines, cancellation, and mobile navigation.
 - [x] Add sample multi-angle photo gallery to the completed demonstration booking.
 - Inspector accounts are deferred by request.
+
+## Inspection report and visual identity
+- [x] Add the uploaded company logo and browser icon.
+- [x] Add a full sample condition report and vehicle history to the completed sample booking.
+- [x] Refine headings and darken gray text.
+- [x] Verify the sample report and logo on wide and narrow screens.
