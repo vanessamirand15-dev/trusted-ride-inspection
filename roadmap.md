@@ -67,5 +67,5 @@
 - [x] Mobile drawer with all nav, support and professional links
 
 ## Coverage & contact
-- [x] Coverage section with map, hubs, ZIP checker, waitlist form
+- [x] Nationwide coverage section: US map with regional pins, ZIP checker (every valid US ZIP is active)
 - [x] Contact Support footer column, Contact Us section + dialog with saved form
