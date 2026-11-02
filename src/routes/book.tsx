@@ -7,7 +7,10 @@ import { useDemoAccount } from '@/components/demo-account';
 import { inspectionPlans, packageLabel } from '@/lib/inspection-plans';
 
 export const Route = createFileRoute("/book")({
-  validateSearch: (search: Record<string, unknown>): { plan?: 'standard' | 'premium' } => ({ plan: search.plan === 'premium' ? 'premium' : search.plan === 'standard' ? 'standard' : undefined }),
+  validateSearch: (search: Record<string, unknown>): { plan?: 'standard' | 'premium' } => {
+    const plan = search['plan'];
+    return plan === 'standard' || plan === 'premium' ? { plan } : {};
+  },
   head: () => ({
     meta: [
       { property: 'og:type', content: 'website' },
