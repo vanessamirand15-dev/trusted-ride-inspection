@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { SampleReportDialog } from "@/components/sample-report-dialog";
+import { InspectionPricing } from '@/components/inspection-pricing';
 import hero from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
@@ -59,11 +60,12 @@ function AvailabilityCheck() {
   return (
     <form className="mt-8 max-w-lg" onSubmit={(e) => { e.preventDefault(); if (value.trim()) setChecked(true); }}>
       <label htmlFor="availability-search" className="text-sm font-medium text-navy">
-        Enter your zip code or city to check availability (demo search)
+        Enter your zip code or city
       </label>
       <div className="mt-2 flex flex-wrap gap-2">
         <Input
           id="availability-search"
+          required
           value={value}
           onChange={(e) => { setValue(e.target.value); setChecked(false); }}
           placeholder="e.g. Los Angeles or 90001"
@@ -72,9 +74,9 @@ function AvailabilityCheck() {
         <Button type="submit" variant="cta"><MapPin />Check Availability</Button>
       </div>
       {checked && (
-        <p className="mt-3 flex items-center gap-2 rounded-lg bg-teal-soft px-3 py-2 text-sm font-medium text-accent">
+        <p role="status" className="mt-3 flex items-center gap-2 rounded-lg bg-teal-soft px-3 py-2 text-sm font-medium text-accent">
           <BadgeCheck className="h-4 w-4 shrink-0" />
-          Good news: inspectors are available in your area. Simulated result for demonstration.
+          Example availability for {value.trim()}: an inspector match would appear here. Live coverage is not connected.
         </p>
       )}
     </form>
@@ -90,7 +92,7 @@ function Index() {
             <BadgeCheck className="h-4 w-4" /> Independent. Unbiased. Verified.
           </span>
           <h1 className="mt-5 text-4xl font-bold leading-tight md:text-6xl">
-            Know the car before you hand over the cash.
+            Trustferly vehicle inspections
           </h1>
           <p className="mt-5 max-w-lg text-lg text-muted-foreground">
             Trustferly connects used-car buyers with independent professional inspectors, so private
@@ -121,9 +123,9 @@ function Index() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-4">
-        <div className="rounded-3xl border bg-card p-8 shadow-soft">
-          <p className="text-center text-xs font-semibold uppercase tracking-widest text-accent">Projected metrics · simulated for demonstration</p>
+      <section className="border-y bg-card">
+        <div className="mx-auto max-w-6xl px-5 py-10">
+          <p className="text-center text-xs font-medium text-muted-foreground">Illustrative platform figures, not measured results</p>
           <dl className="mt-6 grid gap-6 text-center sm:grid-cols-3">
             {metrics.map((m) => (
               <div key={m.label}>
@@ -183,9 +185,18 @@ function Index() {
         </div>
       </section>
 
+      <section aria-labelledby="home-pricing" className="border-t bg-card">
+        <div className="mx-auto max-w-5xl px-5 py-20">
+          <p className="text-center text-sm font-semibold text-accent">Transparent pricing</p>
+          <h2 id="home-pricing" className="mt-3 text-center text-3xl font-bold md:text-4xl">Choose the inspection your car needs</h2>
+          <p className="mx-auto mb-10 mt-4 max-w-xl text-center text-muted-foreground">Two clear packages. Independent advice. No commission on the vehicle sale.</p>
+          <InspectionPricing />
+        </div>
+      </section>
+
       <section className="mx-auto max-w-6xl px-5 py-20">
-        <p className="text-center text-xs font-semibold uppercase tracking-widest text-accent">Sample reviews · simulated case studies</p>
-        <h2 className="mt-3 text-center text-3xl font-bold md:text-4xl">What buyers say about Trustferly</h2>
+        <p className="text-center text-xs font-medium text-muted-foreground">Illustrative buyer stories, not verified customer reviews</p>
+        <h2 className="mt-3 text-center text-3xl font-bold md:text-4xl">A clearer picture before you buy</h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {reviews.map((r) => (
             <figure key={r.name} className="rounded-2xl border bg-card p-7 shadow-soft">
