@@ -166,5 +166,6 @@
   html { font-size: 17px; }
   h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-navy); font-weight: 600; letter-spacing: normal; }
   body { font-family: var(--font-sans); font-weight: 400; line-height: 1.6; }
+  input, select, textarea, label, button { font-family: var(--font-sans); }
 }
 @utility bg-navy-gradient { background-image: var(--gradient-navy); }

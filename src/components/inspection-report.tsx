@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Check, ClipboardCheck, History, Images, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { FindingsExplainer } from '@/components/findings-explainer';
 import inspectionPhotos from '@/lib/inspection-photos';
 import { displayTime } from '@/components/account-ui';
 import type { Booking } from '@/lib/demo-bookings';
@@ -31,6 +32,7 @@ export function InspectionReport({ booking }: { booking: Booking }) {
         <h3 className="text-2xl">Overall condition</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">Generally good condition with minor cosmetic wear. Front tire replacement and an alignment check are recommended before regular use.</p>
         <dl className="mt-6 grid grid-cols-2 gap-5 border-y py-5 text-sm md:grid-cols-4">{[['Mileage', '68,420 miles'], ['Fuel', 'Gasoline'], ['Transmission', 'Automatic'], ['Inspection', 'Visual & road test']].map(([label, value]) => <div key={label}><dt className="text-muted-foreground">{label}</dt><dd className="mt-1 font-medium">{value}</dd></div>)}</dl>
         <div className="divide-y">{findings.map(item => <div key={item.area} className="py-5"><div className="flex flex-wrap items-center justify-between gap-2"><h3 className="font-sans text-base font-semibold">{item.area}</h3><span className={`inline-flex items-center gap-1.5 text-xs font-medium ${item.attention ? 'text-foreground' : 'text-accent'}`}>{item.attention ? <AlertTriangle size={14} /> : <Check size={14} />}{item.result}</span></div><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.detail}</p></div>)}</div>
+        <FindingsExplainer vehicle={booking.vehicle} findings={findings.map(f => ({ title: f.area, note: f.detail, action: f.result }))} />
         <div className="border-t pt-5"><h3 className="text-2xl">Inspector’s recommendations</h3><ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground"><li>Replace the worn front tires and check alignment.</li><li>Ask the seller for the latest service invoices and confirm upcoming maintenance.</li><li>Confirm title, mileage, and recall status independently before purchase.</li></ul><p className="mt-5 text-xs leading-relaxed text-muted-foreground">Inspection reflects accessible areas at the time of assessment. Internal engine components were not dismantled. A visual inspection cannot establish accident history, title status, or future reliability.</p></div>
       </>}
       {tab === 'history' && <>

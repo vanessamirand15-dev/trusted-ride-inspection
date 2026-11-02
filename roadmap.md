@@ -27,3 +27,16 @@
 - [x] Add the two requested pricing tiers to home, pricing and booking selection, with price tests.
 - [x] Verify report interactions, pricing selection and narrow-screen layouts.
 - The uploaded brief ends at “Include”; any missing requirements await the remainder.
+
+## Interactive MVP flows (latest brief, cut off after item 3)
+- [x] Enrich the sample report modal: VIN/mileage overview, inspector rating, summary recommendation, print/download placeholder.
+- [x] Rebuild booking as a 4-step wizard: vehicle details, service level, date & time slot, simulated checkout success.
+- [x] Make the hero ZIP search show a dynamic inspector-count banner.
+- [x] Verify form inputs and labels render in Inter like the rest of the site (no layout or color changes).
+- [x] Add an AI Gateway "explain findings in plain English" action on reports, shown beside originals and marked as a draft pending inspector confirmation.
+- [x] Fix signup from the booking gate returning to the booking form instead of the bookings list.
+
+## Final MVP polish
+- [x] Add "Estimate Your Inspection Value" calculator (vehicle age + class → recommended inspection, cost, potential savings).
+- [x] Add "Buying Blind" vs "Inspected by Trustferly" comparison section.
+- [x] Add 3-pillar trust section: background checks, same/next-day service, reschedule protection.
