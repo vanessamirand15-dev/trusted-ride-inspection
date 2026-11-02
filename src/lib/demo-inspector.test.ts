@@ -24,3 +24,13 @@ describe('inspector earnings', () => {
     expect(earnings(completeJob(sampleJobs, 'm2'))).toEqual({ completed: 2, total: 190, pending: 95 });
   });
 });
+import { payoutTiers } from './demo-inspector';
+describe('payout tiers', () => {
+  it('every job payout sits inside its category tier', () => {
+    for (const j of sampleJobs) {
+      const t = payoutTiers.find(t => t.category === j.category)!;
+      expect(j.payout).toBeGreaterThanOrEqual(t.min);
+      if (j.category === 'Standard') expect(j.payout).toBeLessThanOrEqual(100);
+    }
+  });
+});
