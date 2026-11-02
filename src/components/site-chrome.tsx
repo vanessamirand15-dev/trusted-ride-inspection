@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from 'react';
-import { Menu, LogOut, UserRound, CalendarDays, Settings, Plus } from "lucide-react";
+import { Menu, LogOut, UserRound, CalendarDays, Settings, Plus, ShieldCheck, Lock, CreditCard } from "lucide-react";
 import logoAsset from '@/assets/trustferly_logo.png.asset.json';
 import { Button } from "@/components/ui/button";
 import { useDemoAccount } from '@/components/demo-account';
@@ -99,8 +99,16 @@ export function SiteFooter() {
           <Link to="/for-inspectors" className="block text-navy-foreground/70 hover:text-navy-foreground">Apply as inspector</Link>
         </div>
       </div>
-      <div className="border-t border-navy-foreground/10 py-5 text-center text-xs text-navy-foreground/50">
-        © {new Date().getFullYear()} Trustferly. Independent inspections only.
+      <div className="border-t border-navy-foreground/10">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-5 py-6 text-xs font-medium text-navy-foreground/70">
+          <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-4 w-4" />Satisfaction Guarantee</span>
+          <span className="inline-flex items-center gap-1.5"><Lock className="h-4 w-4" />Secure SSL Checkout</span>
+          <span className="inline-flex items-center gap-1.5"><CreditCard className="h-4 w-4" />Visa · Mastercard · American Express</span>
+        </div>
+        <p className="border-t border-navy-foreground/10 px-5 py-4 text-center text-xs text-navy-foreground/50">Academic Project Prototype · All data shown is simulated for demonstration purposes</p>
+        <div className="border-t border-navy-foreground/10 py-5 text-center text-xs text-navy-foreground/50">
+          © {new Date().getFullYear()} Trustferly. Independent inspections only.
+        </div>
       </div>
     </footer>
   );
