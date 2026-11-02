@@ -27,7 +27,8 @@ export const Route = createFileRoute("/book")({
 const field = "mt-1 w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring";
 
 function Page() {
-  return <AccountGate next="/book"><BookingForm /></AccountGate>;
+  const { plan } = Route.useSearch();
+  return <AccountGate next="/book" bookingPlan={plan}><BookingForm /></AccountGate>;
 }
 function BookingForm() {
   const { plan } = Route.useSearch();
