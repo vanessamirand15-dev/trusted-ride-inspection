@@ -119,6 +119,8 @@ export function Logo({ dark = false }: { dark?: boolean }) {
   );
 }
 
+const mainNavLinkClass = "text-sm font-medium text-navy/70 transition-colors hover:text-navy";
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { account, logout } = useDemoAccount();
@@ -126,6 +128,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
       <p className="bg-secondary px-5 py-1.5 text-center text-[11px] font-medium text-muted-foreground">{prototypeNotice}</p>
+      <UtilityBar />
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
         <div className="flex items-center gap-3">
           <Sheet open={open} onOpenChange={setOpen}>
@@ -136,7 +139,25 @@ export function SiteHeader() {
                 <Button asChild variant="cta" className="mb-4 w-full justify-start"><Link to="/book" onClick={() => setOpen(false)}><Plus />Book now</Link></Button>
                 <Link to="/" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Home</Link>
                 {nav.map(n => <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">{n.label}</Link>)}
+                <Link to="/" hash="coverage" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Coverage Area</Link>
+                <SampleReportDialog trigger={<button type="button" className="block w-full rounded-md px-3 py-3 text-left text-sm hover:bg-secondary">Sample Report</button>} />
+                <Link to="/" hash="faq" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">FAQ</Link>
               </nav>
+              <div className="mt-6 border-t pt-6">
+                <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Support</p>
+                <nav aria-label="Support" className="space-y-2">
+                  <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><MessageCircle size={17} />Chat on WhatsApp</a>
+                  <a href={PHONE_HREF} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><Phone size={17} />{PHONE_DISPLAY}</a>
+                  <SupportDialog trigger={<button type="button" className="flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-sm hover:bg-secondary"><LifeBuoy size={17} />Need Help?</button>} />
+                </nav>
+              </div>
+              <div className="mt-6 border-t pt-6">
+                <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">For professionals</p>
+                <nav aria-label="For professionals" className="space-y-2">
+                  <Link to="/apply" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Become an Inspector</Link>
+                  <Link to="/inspector/login" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Inspector Login</Link>
+                </nav>
+              </div>
               <div className="mt-6 border-t pt-6">
                 {account ? <><p className="mb-4 break-words px-3 text-sm font-semibold">{account.name}</p><nav aria-label="Your account" className="space-y-2">
                   {([{ to: '/account', label: 'Your account', icon: UserRound }, { to: '/account/settings', label: 'Account settings', icon: Settings }, { to: '/bookings', label: 'Your Bookings', icon: CalendarDays }] as const).map(n => <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><n.icon size={17} />{n.label}</Link>)}
@@ -147,20 +168,23 @@ export function SiteHeader() {
           </Sheet>
           <Logo />
         </div>
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {nav.map((n) => (
             <Link
               key={n.to}
               to={n.to}
-              className="text-sm font-medium text-navy/70 transition-colors hover:text-navy"
+              className={mainNavLinkClass}
               activeProps={{ className: "text-navy" }}
             >
               {n.label}
             </Link>
           ))}
+          <Link to="/" hash="coverage" className={mainNavLinkClass}>Coverage Area</Link>
+          <SampleReportDialog trigger={<button type="button" className={mainNavLinkClass}>Sample Report</button>} />
+          <Link to="/" hash="faq" className={mainNavLinkClass}>FAQ</Link>
         </nav>
         <div className="flex items-center gap-3">
-        <Button asChild variant="ghost" size="sm" className="hidden lg:inline-flex"><Link to={account ? '/bookings' : '/auth'}>{account ? 'Your Bookings' : 'Log in'}</Link></Button>
+        <Button asChild variant="outline" size="sm" className="hidden lg:inline-flex"><Link to={account ? '/bookings' : '/auth'}>{account ? 'Your Bookings' : 'Sign in'}</Link></Button>
         <Button asChild variant="cta" size="sm">
           <Link to="/book">Book inspection</Link>
         </Button>
