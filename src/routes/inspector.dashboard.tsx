@@ -62,9 +62,10 @@ function Page() {
 function JobCard({ job, children }: { job: Job; children?: React.ReactNode }) {
   return <article className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border bg-card p-5 shadow-soft">
     <div>
-      <h4 className="text-lg font-semibold">{job.vehicle}</h4>
+      <div className="flex flex-wrap items-center gap-2"><h4 className="text-lg font-semibold">{job.vehicle}</h4>
+        <span className={`rounded-md px-2 py-0.5 text-xs font-medium ${job.category === 'Luxury' ? 'bg-warning-soft text-warning' : 'bg-secondary text-muted-foreground'}`}>{job.category} Tier</span></div>
       <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
-        <li className="flex items-center gap-1.5"><MapPin size={14} />{job.location} · {job.distance.toFixed(1)} mi away</li>
+        <li className="flex items-center gap-1.5"><MapPin size={14} />{job.location} · {job.distance.toFixed(1)} mi from your ZIP</li>
         <li className="flex items-center gap-1.5"><CalendarClock size={14} />{when(job.scheduledAt)}</li>
         <li className="flex items-center gap-1.5 font-medium text-accent"><DollarSign size={14} />{job.payout} payout</li>
       </ul>

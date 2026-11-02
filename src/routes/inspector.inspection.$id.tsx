@@ -11,7 +11,7 @@ export const Route = createFileRoute('/inspector/inspection/$id')({
   component: Page,
 });
 
-const sections = ['Engine', 'Transmission', 'Exterior', 'Interior', 'Test Drive'];
+const sections = ['Vehicle exterior', 'Interior', 'Engine', 'Transmission', 'Road test'];
 const results = ['Pass', 'Needs attention', 'Fail'] as const;
 
 function Page() {
@@ -36,6 +36,9 @@ function Page() {
         <textarea rows={2} placeholder={`${s} notes`} className="mt-4 w-full rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
         <div className="mt-3"><PhotoUpload label={`Add ${s.toLowerCase()} photos`} /></div>
       </fieldset>)}
+      <label className="block rounded-2xl border bg-card p-6 text-lg font-semibold shadow-soft">Luxury / exotic diagnostic notes{job.category === 'Luxury' && <span className="ml-2 rounded-md bg-warning-soft px-2 py-0.5 text-xs text-warning">Luxury Tier job</span>}
+        <textarea rows={3} placeholder="Manufacturer scan codes, paint depth readings, compression results, specialty systems" className="mt-3 w-full rounded-lg border bg-background px-3 py-2 text-sm font-normal outline-none focus:ring-2 focus:ring-ring" />
+      </label>
       <label className="block rounded-2xl border bg-card p-6 text-lg font-semibold shadow-soft">Summary notes
         <textarea required rows={4} placeholder="Overall condition and recommendation for the buyer" className="mt-3 w-full rounded-lg border bg-background px-3 py-2 text-sm font-normal outline-none focus:ring-2 focus:ring-ring" />
       </label>

@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { useEffect, useState, type ReactNode } from 'react';
-import { sampleInspector, sampleJobs, type InspectorProfile, type Job } from '@/lib/demo-inspector';
+import { payoutTiers, specialties, sampleInspector, sampleJobs, type InspectorProfile, type Job } from '@/lib/demo-inspector';
 
 // Demo-only inspector state kept in the browser tab (sessionStorage), shared by portal pages.
 const key = 'trustferly-inspector';
@@ -40,4 +40,14 @@ export function PhotoUpload({ label }: { label: string }) {
     </label>
     {files.length > 0 && <ul className="mt-3 flex flex-wrap gap-2">{files.map((f, i) => <li key={i} className="rounded-md border bg-background p-1 text-xs">{f.url ? <img src={f.url} alt={f.name} className="h-16 w-16 rounded object-cover" /> : <span className="block max-w-32 truncate p-2">{f.name}</span>}</li>)}</ul>}
   </div>;
+}
+
+export function SpecialtiesAndPayouts() {
+  return <fieldset>
+    <legend className="mb-4 text-lg font-semibold">Specialties & Vehicle Experience</legend>
+    <div className="grid gap-2.5 sm:grid-cols-2">{specialties.map((s, i) => <label key={s} className="flex items-center gap-2.5 rounded-lg border bg-background px-3 py-2.5 text-sm">
+      <input type="checkbox" name="specialties" value={s} defaultChecked={i < 2} className="h-4 w-4 accent-primary" />{s}</label>)}</div>
+    <div className="mt-5 grid gap-3 sm:grid-cols-2">{payoutTiers.map(t => <div key={t.label} className="rounded-lg border bg-teal-soft p-4">
+      <p className="text-sm text-muted-foreground">{t.label} payout</p><p className="mt-1 text-xl font-semibold text-accent">{t.display}</p></div>)}</div>
+  </fieldset>;
 }

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { BadgeCheck, Clock } from 'lucide-react';
-import { InspectorShell, PhotoUpload, useInspectorState } from '@/components/inspector-state';
+import { InspectorShell, PhotoUpload, SpecialtiesAndPayouts, useInspectorState } from '@/components/inspector-state';
 import { pageHead } from '@/lib/page-head';
 
 export const Route = createFileRoute('/inspector/profile')({
@@ -32,6 +32,7 @@ function Page() {
         <PhotoUpload label="Upload document" />
       </div>)}
     </div>
+    <div className="mt-8 rounded-2xl border bg-card p-6 shadow-soft"><SpecialtiesAndPayouts /></div>
     <p className="mt-6 text-xs text-muted-foreground">Demonstration only · Documents are not sent or reviewed.</p>
   </InspectorShell>;
 }

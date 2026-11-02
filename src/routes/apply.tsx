@@ -3,6 +3,7 @@ import { useState, type FormEvent } from 'react';
 import { BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PageIntro } from '@/components/site-chrome';
+import { SpecialtiesAndPayouts } from '@/components/inspector-state';
 import { pageHead } from '@/lib/page-head';
 
 export const Route = createFileRoute('/apply')({
@@ -38,8 +39,8 @@ function Page() {
           <legend className="mb-4 text-lg font-semibold">Certification and experience</legend>
           <label className="text-sm font-medium">ASE / mechanic certification #<input required name="cert" placeholder="ASE-1234567" className={field} autoComplete="off" /></label>
           <label className="text-sm font-medium">Years of experience<input required name="years" type="number" min="0" max="60" className={field} /></label>
-          <label className="text-sm font-medium md:col-span-2">Specialties<textarea name="notes" rows={3} placeholder="European cars, trucks, EVs…" className={field} /></label>
         </fieldset>
+        <SpecialtiesAndPayouts />
         <fieldset>
           <legend className="mb-4 text-lg font-semibold">Service radius</legend>
           <label className="text-sm font-medium">Maximum distance willing to travel: <span className="text-primary">{radius} miles</span>
