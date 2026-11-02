@@ -8,7 +8,7 @@
 - Inspector accounts are deferred by request.
 
 ## Inspection report and visual identity
-- [ ] Add the uploaded company logo and browser icon.
-- [ ] Add a full sample condition report and vehicle history to the completed sample booking.
-- [ ] Refine headings and darken gray text.
-- [ ] Verify the sample report and logo on wide and narrow screens.
+- [x] Add the uploaded company logo and browser icon.
+- [x] Add a full sample condition report and vehicle history to the completed sample booking.
+- [x] Refine headings and darken gray text.
+- [x] Verify the sample report and logo on wide and narrow screens.
