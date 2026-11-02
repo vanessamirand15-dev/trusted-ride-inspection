@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Application architecture
+- Mock financial screens share a presentation-only component; financial inputs remain in transient forms and never enter browser storage, booking records or backend requests, keeping simulated banking separate from real inspector accounts.
 - Account and booking flows are a frontend-only demonstration using a shared React provider and sessionStorage, never real authentication or server authorization; this keeps sample data isolated to the browser tab without implying production accounts.
 - Booking lifecycle rules and sample entities live in a browser-safe domain module with tests so lists and details use the same statuses and ownership rules.
 - The completed sample booking's report is a presentation-only component with condition, history, and photo views; fictional findings remain separate from lifecycle data and never imply verified records.

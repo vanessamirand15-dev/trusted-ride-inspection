@@ -1,4 +1,9 @@
 # Account and booking demonstration
+## Academic financial screens
+- [ ] Add a dedicated dummy payment step before buyer confirmation, including billing address and disclaimer.
+- [ ] Add Wallet & Payouts to real and sample inspector portals with mock setup and fictional ledger.
+- [ ] Verify booking completion, mock setup, financial input non-persistence and narrow-screen layout.
+
 - [x] Add shared demonstration accounts and booking entities with tested lifecycle rules.
 - [x] Add login/signup, account, settings, booking list and booking detail pages.
 - [x] Tie the booking form to the signed-in demonstration account.
