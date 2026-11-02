@@ -32,3 +32,5 @@
 - [ ] Enrich the sample report modal: VIN/mileage overview, inspector rating, summary recommendation, print/download placeholder.
 - [ ] Rebuild booking as a 4-step wizard: vehicle details, service level, date & time slot, simulated checkout success.
 - [ ] Make the hero ZIP search show a dynamic inspector-count banner.
+- [ ] Verify form inputs and labels render in Inter like the rest of the site (no layout or color changes).
+- [ ] Add an AI Gateway "explain findings in plain English" action on reports, shown beside originals and marked as a draft pending inspector confirmation.
