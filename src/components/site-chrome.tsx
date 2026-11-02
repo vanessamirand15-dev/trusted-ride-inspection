@@ -122,7 +122,7 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="bg-navy-gradient text-navy-foreground">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-5">
         <div className="md:col-span-2">
           <Logo dark />
           <p className="mt-4 max-w-sm text-sm text-navy-foreground/70">
