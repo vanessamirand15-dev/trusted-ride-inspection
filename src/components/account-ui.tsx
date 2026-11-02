@@ -4,6 +4,7 @@ import { ArrowRight, Check, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useDemoAccount } from '@/components/demo-account';
 import { statusOf, type Booking } from '@/lib/demo-bookings';
+import logoAsset from '@/assets/trustferly_logo.png.asset.json';
 
 export const inputClass = 'mt-2 w-full rounded-md border bg-card px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-ring';
 export function AuthScreen({ next = '/bookings' }: { next?: '/book' | '/bookings' | '/account' | '/account/settings' }) {
@@ -23,7 +24,7 @@ export function AuthScreen({ next = '/bookings' }: { next?: '/book' | '/bookings
     navigate({ to: sample || signup ? '/bookings' : next });
   }
   return <section className="mx-auto max-w-md px-5 py-16 md:py-24">
-    <div className="mb-7 flex items-center gap-2 text-sm font-medium text-accent"><ShieldCheck size={20} /> Buyer account <span className="ml-auto rounded-md bg-secondary px-2 py-1 text-xs text-muted-foreground">Demo</span></div>
+    <div className="mb-7 flex items-center gap-2 text-sm font-medium text-accent"><img src={logoAsset.url} alt="Trustferly logo" width={32} height={32} className="h-8 w-8" /> Buyer account <span className="ml-auto rounded-md bg-secondary px-2 py-1 text-xs text-muted-foreground">Demo</span></div>
     <h1 className="text-4xl font-semibold">{signup ? 'Create your account' : 'Welcome back'}</h1>
     <p className="mt-3 text-muted-foreground">{signup ? 'A fresh start for your next vehicle inspection.' : 'Your inspections, all in one place.'}</p>
     <div className="my-7 grid grid-cols-2 border-b" role="tablist" aria-label="Account access">

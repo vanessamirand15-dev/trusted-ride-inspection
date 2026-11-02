@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from 'react';
-import { ShieldCheck, Menu, LogOut, UserRound, CalendarDays, Settings, Plus } from "lucide-react";
+import { Menu, LogOut, UserRound, CalendarDays, Settings, Plus } from "lucide-react";
+import logoAsset from '@/assets/trustferly_logo.png.asset.json';
 import { Button } from "@/components/ui/button";
 import { useDemoAccount } from '@/components/demo-account';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
@@ -14,9 +15,7 @@ const nav = [
 export function Logo({ dark = false }: { dark?: boolean }) {
   return (
     <Link to="/" className="flex items-center gap-2">
-      <span className="grid h-9 w-9 place-items-center rounded-lg bg-accent text-accent-foreground">
-        <ShieldCheck className="h-5 w-5" />
-      </span>
+      <img src={logoAsset.url} alt="" width={40} height={40} className="h-10 w-10 shrink-0 object-contain" />
       <span className={`font-display text-xl font-bold ${dark ? "text-navy-foreground" : "text-navy"}`}>
         Trustferly
       </span>

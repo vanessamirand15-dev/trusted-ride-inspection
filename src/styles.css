@@ -54,7 +54,7 @@
   --color-navy: var(--navy);
   --color-navy-foreground: var(--navy-foreground);
   --color-teal-soft: var(--teal-soft);
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
   --font-sans: "Figtree", ui-sans-serif, sans-serif;
   --shadow-soft: var(--shadow-soft);
   --shadow-cta: var(--shadow-cta);
@@ -83,7 +83,7 @@
   --secondary: oklch(0.95 0.012 250);
   --secondary-foreground: oklch(0.28 0.06 248);
   --muted: oklch(0.95 0.012 250);
-  --muted-foreground: oklch(0.5 0.035 250);
+  --muted-foreground: oklch(0.40 0.012 250);
   --accent: oklch(0.6 0.11 182.5);
   --accent-foreground: oklch(0.99 0 0);
   --teal-soft: oklch(0.95 0.04 182);
@@ -122,7 +122,7 @@
   --secondary: oklch(0.279 0.041 260.031);
   --secondary-foreground: oklch(0.984 0.003 247.858);
   --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
+  --muted-foreground: oklch(0.80 0.02 256.788);
   --accent: oklch(0.279 0.041 260.031);
   --accent-foreground: oklch(0.984 0.003 247.858);
   --destructive: oklch(0.704 0.191 22.216);
