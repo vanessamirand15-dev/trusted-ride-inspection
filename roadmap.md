@@ -65,3 +65,7 @@
 - [x] Utility bar: phone, Need Help dialog, Become an Inspector, Inspector Login (WhatsApp removed at user request)
 - [x] Main nav: How it works, Pricing, Coverage Area, Sample Report, FAQ + Sign in + Book inspection
 - [x] Mobile drawer with all nav, support and professional links
+
+## Coverage & contact
+- [x] Coverage section with map, hubs, ZIP checker, waitlist form
+- [x] Contact Support footer column, Contact Us section + dialog with saved form
