@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Check, ClipboardCheck, History, Images, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { FindingsExplainer } from '@/components/findings-explainer';
 import inspectionPhotos from '@/lib/inspection-photos';
 import { displayTime } from '@/components/account-ui';
 import type { Booking } from '@/lib/demo-bookings';

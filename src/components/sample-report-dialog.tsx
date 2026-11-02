@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BadgeCheck, CheckCircle2, FileText, Flag, Printer, Star, TriangleAlert } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
+import { FindingsExplainer } from '@/components/findings-explainer';
 import brakePhoto from '@/assets/report-honda-brakes.jpg';
 import tirePhoto from '@/assets/report-honda-tire.jpg';
 import enginePhoto from '@/assets/report-honda-engine.jpg';
