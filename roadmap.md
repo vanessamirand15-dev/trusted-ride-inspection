@@ -27,3 +27,8 @@
 - [x] Add the two requested pricing tiers to home, pricing and booking selection, with price tests.
 - [x] Verify report interactions, pricing selection and narrow-screen layouts.
 - The uploaded brief ends at “Include”; any missing requirements await the remainder.
+
+## Interactive MVP flows (latest brief, cut off after item 3)
+- [ ] Enrich the sample report modal: VIN/mileage overview, inspector rating, summary recommendation, print/download placeholder.
+- [ ] Rebuild booking as a 4-step wizard: vehicle details, service level, date & time slot, simulated checkout success.
+- [ ] Make the hero ZIP search show a dynamic inspector-count banner.
