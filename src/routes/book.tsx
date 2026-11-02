@@ -10,7 +10,7 @@ export const Route = createFileRoute("/book")({
     meta: [
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
-      { title: "Book an inspection — Trustferly" },
+      { title: "Book an inspection · Trustferly" },
       { name: "description", content: "Request an independent pre-purchase inspection for a used vehicle." },
       { property: "og:title", content: "Book a Trustferly inspection" },
       { property: "og:description", content: "Request a verified inspector for the car you're considering." },
@@ -46,7 +46,7 @@ function BookingForm() {
             <label className="text-sm font-medium text-navy md:col-span-2">Vehicle location<input name="location" required placeholder="City or address" className={field} /></label>
             <label className="text-sm font-medium text-navy">Preferred date<input name="date" required type="date" className={field} /></label>
             <label className="text-sm font-medium text-navy">Package
-              <select name="package" className={field}><option>Essential — $129</option><option>Complete — $189</option><option>Specialty — $249</option></select>
+              <select name="package" className={field}><option>Essential · $129</option><option>Complete · $189</option><option>Specialty · $249</option></select>
             </label>
             <Button type="submit" variant="cta" size="lg" className="md:col-span-2">Request inspection</Button>
             <p className="text-xs text-muted-foreground md:col-span-2">Demonstration booking · No real inspection is arranged.</p>

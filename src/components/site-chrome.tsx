@@ -81,7 +81,7 @@ export function SiteFooter() {
           <Logo dark />
           <p className="mt-4 max-w-sm text-sm text-navy-foreground/70">
             Independent pre-purchase inspections for private-party used vehicles. We don't sell cars,
-            offer loans, or act as a dealership — we help you buy with confidence.
+            offer loans, or act as a dealership. We help you buy with confidence.
           </p>
         </div>
         <div className="space-y-2 text-sm">

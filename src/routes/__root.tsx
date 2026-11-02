@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Trustferly — Independent Vehicle Inspections" },
+      { title: "Trustferly · Independent Vehicle Inspections" },
       { name: "description", content: "Book an independent pre-purchase inspection before buying a used car." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

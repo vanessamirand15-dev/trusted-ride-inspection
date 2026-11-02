@@ -21,7 +21,7 @@ export function createBooking(accountId: string, input: Omit<Booking, 'id' | 'ac
 }
 export function sampleState(): DemoState {
   const account = { id: 'sample-buyer', name: 'Test User', email: 'test@example.com' };
-  const base = { accountId: account.id, vin: '', location: 'Los Angeles, CA', package: 'Complete — $189', inspector: 'Alex Morgan' };
+  const base = { accountId: account.id, vin: '', location: 'Los Angeles, CA', package: 'Complete · $189', inspector: 'Alex Morgan' };
   return { account, bookings: [
     { ...base, id: 'sample-honda', vehicle: '2018 Honda Accord', date: '2026-11-02', timestamps: ['2026-10-31T16:00:00-07:00', '2026-11-01T09:30:00-08:00'] },
     { ...base, id: 'sample-toyota', vehicle: '2021 Toyota RAV4', date: '2026-11-01', timestamps: ['2026-10-29T10:00:00-07:00', '2026-10-30T12:00:00-07:00', '2026-11-01T10:00:00-08:00'] },
