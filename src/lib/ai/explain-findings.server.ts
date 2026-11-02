@@ -5,8 +5,8 @@ import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayRunId } from "./ru
 export interface FindingInput {
   title: string;
   note: string;
-  action?: string;
-  cost?: string;
+  action?: string | undefined;
+  cost?: string | undefined;
 }
 
 const INSTRUCTIONS = [
@@ -18,7 +18,7 @@ const INSTRUCTIONS = [
 ].join(" ");
 
 export async function explainFindings(request: Request, vehicle: string, findings: FindingInput[]) {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env['LOVABLE_API_KEY'];
   if (!apiKey) throw new Error("AI is not configured");
 
   const runIdFetch = createLovableAiGatewayRunIdFetch(getLovableAiGatewayRunId(request));
