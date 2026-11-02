@@ -49,6 +49,7 @@ function BookingWizard() {
   const navigate = useNavigate();
 
   const [step, setStep] = useState(0);
+  const [listingUrl, setListingUrl] = useState('');
   const [vehicle, setVehicle] = useState('');
   const [vin, setVin] = useState('');
   const [location, setLocation] = useState('');
@@ -131,6 +132,13 @@ function BookingWizard() {
         {step === 0 && (
           <section className="grid gap-5 border-y py-8 md:grid-cols-2" aria-label="Vehicle details">
             <h2 className="text-xl font-semibold md:col-span-2">Vehicle details</h2>
+            <div className="grid gap-3 border-b pb-5 md:col-span-2">
+              <label className="text-sm font-medium text-navy">Car listing URL (optional)<input type="url" value={listingUrl} onChange={e => setListingUrl(e.target.value)} placeholder="https://example.com/vehicle-listing" className={field} autoComplete="off" /></label>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button variant="outline" disabled>Read listing</Button>
+                <p role="status" className="text-sm text-muted-foreground">Listing import is not connected yet. Enter the vehicle details below to continue.</p>
+              </div>
+            </div>
             <label className="text-sm font-medium text-navy md:col-span-2">Year, make & model<input required value={vehicle} onChange={e => setVehicle(e.target.value)} placeholder="2021 Honda CR-V" className={field} /></label>
             <label className="text-sm font-medium text-navy">VIN (optional)<input value={vin} onChange={e => setVin(e.target.value)} placeholder="1HGCV1F34LA000000" className={field} /></label>
             <label className="text-sm font-medium text-navy">Vehicle location ZIP or city<input required value={location} onChange={e => setLocation(e.target.value)} placeholder="90001 or Los Angeles" className={field} /></label>

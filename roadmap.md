@@ -1,4 +1,9 @@
 # Account and booking demonstration
+## Car listing intake
+- [x] Add an optional Car listing URL field without blocking manual booking entry.
+- [ ] Extract available vehicle details for review: blocked because Firecrawl connection creation was denied by workspace permissions and no accessible connection exists. A workspace member with connection permissions must connect Firecrawl before extraction can be implemented and tested.
+- [ ] Verify successful and failed live extraction after Firecrawl is connected.
+
 ## Academic financial screens
 - [x] Add a dedicated dummy payment step before buyer confirmation, including billing address and disclaimer.
 - [x] Add Wallet & Payouts to real and sample inspector portals with mock setup and fictional ledger.
