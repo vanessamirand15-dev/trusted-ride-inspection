@@ -99,8 +99,7 @@ export function ZipChecker() {
   return (
     <div>
       <form className="flex flex-wrap gap-2" onSubmit={e => { e.preventDefault(); setResult({ zip: zip.trim(), status: checkCoverage(zip) }); }}>
-        <label htmlFor="coverage-zip" className="sr-only">ZIP code</label>
-        <Input id="coverage-zip" inputMode="numeric" maxLength={5} value={zip} onChange={e => { setZip(e.target.value); setResult(null); }} placeholder="e.g. 98101" className="max-w-[12rem] bg-card" />
+        <Input aria-label="ZIP code" inputMode="numeric" maxLength={5} value={zip} onChange={e => { setZip(e.target.value); setResult(null); }} placeholder="e.g. 98101" className="max-w-[12rem] bg-card" />
         <Button type="submit" variant="cta"><MapPin />Check ZIP</Button>
       </form>
       {result && (
