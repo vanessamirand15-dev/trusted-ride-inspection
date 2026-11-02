@@ -8,7 +8,7 @@ export const Route = createFileRoute("/pricing")({
     meta: [
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
-      { title: "Pricing — Trustferly" },
+      { title: "Pricing · Trustferly" },
       { name: "description", content: "Transparent flat-rate pricing for pre-purchase vehicle inspections." },
       { property: "og:title", content: "Trustferly pricing" },
       { property: "og:description", content: "Flat-rate independent inspection packages." },

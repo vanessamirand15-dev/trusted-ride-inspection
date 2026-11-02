@@ -7,7 +7,7 @@ export const Route = createFileRoute("/how-it-works")({
     meta: [
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
-      { title: "How it works — Trustferly" },
+      { title: "How it works · Trustferly" },
       { name: "description", content: "How Trustferly matches used-car buyers with independent inspectors." },
       { property: "og:title", content: "How Trustferly works" },
       { property: "og:description", content: "From booking to report: independent pre-purchase inspections explained." },
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/how-it-works")({
 const steps = [
   ["Book online", "Enter the vehicle details, the seller's address and preferred times. Pay securely up front."],
   ["We match an inspector", "A background-checked, certified inspector near the vehicle accepts the job."],
-  ["Inspection on site", "The inspector meets the car wherever it is — driveway, street or garage."],
+  ["Inspection on site", "The inspector meets the car wherever it is: driveway, street or garage."],
   ["Report delivered", "You receive a photo-documented report with a clear summary and repair estimates."],
   ["You decide", "Negotiate, walk away or buy with confidence. We never take a cut of the sale."],
 ];
@@ -27,7 +27,7 @@ const steps = [
 function Page() {
   return (
     <>
-      <PageIntro eyebrow="How it works" title="Independent eyes on every deal" text="A simple process designed around the buyer — and only the buyer." />
+      <PageIntro eyebrow="How it works" title="Independent eyes on every deal" text="A simple process designed around the buyer, and only the buyer." />
       <ol className="mx-auto max-w-3xl space-y-4 px-5 pb-16">
         {steps.map(([t, d], i) => (
           <li key={t} className="flex gap-5 rounded-2xl bg-card p-6 shadow-soft">

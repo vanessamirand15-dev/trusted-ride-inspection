@@ -8,9 +8,9 @@ export const Route = createFileRoute("/")({
     meta: [
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
-      { title: "Trustferly — Inspect before you buy a used car" },
+      { title: "Trustferly · Inspect before you buy a used car" },
       { name: "description", content: "Connect with independent, verified vehicle inspectors before buying a used car from a private seller." },
-      { property: "og:title", content: "Trustferly — Inspect before you buy" },
+      { property: "og:title", content: "Trustferly · Inspect before you buy" },
       { property: "og:description", content: "Independent pre-purchase vehicle inspections for private-party sales." },
     ],
   }),
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
 const steps = [
   { icon: Search, title: "Tell us about the car", text: "Share the vehicle, the seller's location and a time that works." },
   { icon: UserCheck, title: "Matched with a verified pro", text: "A vetted, independent inspector near the car accepts your request." },
-  { icon: FileText, title: "Get a detailed report", text: "Photos, findings and a clear verdict — usually the same day." },
+  { icon: FileText, title: "Get a detailed report", text: "Photos, findings and a clear verdict, usually the same day." },
 ];
 
 const points = [
@@ -42,7 +42,7 @@ function Index() {
             Know the car before you hand over the cash.
           </h1>
           <p className="mt-5 max-w-lg text-lg text-muted-foreground">
-            Trustferly connects used-car buyers with independent professional inspectors — so private
+            Trustferly connects used-car buyers with independent professional inspectors, so private
             sales are safer and more transparent.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -86,7 +86,7 @@ function Index() {
       <section className="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-2 md:items-center">
         <div>
           <h2 className="text-3xl font-bold md:text-4xl">What every inspection covers</h2>
-          <p className="mt-4 text-muted-foreground">Inspectors work for you — not the seller. No commissions, no conflicts.</p>
+          <p className="mt-4 text-muted-foreground">Inspectors work for you, not the seller. No commissions, no conflicts.</p>
         </div>
         <ul className="space-y-3">
           {points.map((p) => (
