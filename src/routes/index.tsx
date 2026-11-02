@@ -56,9 +56,17 @@ const reviews = [
 
 function AvailabilityCheck() {
   const [value, setValue] = useState("");
-  const [checked, setChecked] = useState(false);
+  const [result, setResult] = useState<{ area: string; count: number } | null>(null);
+  const check = (e: React.FormEvent) => {
+    e.preventDefault();
+    const area = value.trim();
+    if (!area) return;
+    let hash = 0;
+    for (const ch of area) hash = (hash * 31 + ch.charCodeAt(0)) % 997;
+    setResult({ area, count: 2 + (hash % 5) });
+  };
   return (
-    <form className="mt-8 max-w-lg" onSubmit={(e) => { e.preventDefault(); if (value.trim()) setChecked(true); }}>
+    <form className="mt-8 max-w-lg" onSubmit={check}>
       <label htmlFor="availability-search" className="text-sm font-medium text-navy">
         Enter your zip code or city
       </label>
@@ -67,17 +75,20 @@ function AvailabilityCheck() {
           id="availability-search"
           required
           value={value}
-          onChange={(e) => { setValue(e.target.value); setChecked(false); }}
+          onChange={(e) => { setValue(e.target.value); setResult(null); }}
           placeholder="e.g. Los Angeles or 90001"
           className="max-w-xs bg-card"
         />
         <Button type="submit" variant="cta"><MapPin />Check Availability</Button>
       </div>
-      {checked && (
-        <p role="status" className="mt-3 flex items-center gap-2 rounded-lg bg-teal-soft px-3 py-2 text-sm font-medium text-accent">
-          <BadgeCheck className="h-4 w-4 shrink-0" />
-          Example availability for {value.trim()}: an inspector match would appear here. Live coverage is not connected.
-        </p>
+      {result && (
+        <div role="status" className="mt-3 rounded-lg bg-teal-soft px-4 py-3">
+          <p className="flex items-center gap-2 text-sm font-semibold text-accent">
+            <BadgeCheck className="h-4 w-4 shrink-0" />
+            Great news! {result.count} verified inspectors are available in {result.area}.
+          </p>
+          <p className="mt-1 text-xs text-accent/80">Example availability for demonstration. Live coverage is not connected.</p>
+        </div>
       )}
     </form>
   );
