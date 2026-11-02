@@ -56,8 +56,8 @@
   --color-teal-soft: var(--teal-soft);
   --color-warning: var(--warning);
   --color-warning-soft: var(--warning-soft);
-  --font-display: "Figtree", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --shadow-soft: var(--shadow-soft);
   --shadow-cta: var(--shadow-cta);
   --color-sidebar: var(--sidebar);
@@ -164,7 +164,7 @@
 
 @layer base {
   html { font-size: 17px; }
-  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-navy); letter-spacing: 0; }
-  body { font-family: var(--font-sans); }
+  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-navy); font-weight: 600; letter-spacing: normal; }
+  body { font-family: var(--font-sans); font-weight: 400; line-height: 1.6; }
 }
 @utility bg-navy-gradient { background-image: var(--gradient-navy); }
