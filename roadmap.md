@@ -22,8 +22,8 @@
 - [x] Add guarantee and secure payment badges to footer and CTAs.
 
 ## Startup pitch polish
-- [ ] Simplify landing labels without presenting invented proof as verified facts.
-- [ ] Replace the public sample report with a Honda Accord report, category flags, three findings and illustrative signature.
-- [ ] Add the two requested pricing tiers to home, pricing and booking selection, with price tests.
-- [ ] Verify report interactions, pricing selection and narrow-screen layouts.
+- [x] Simplify landing labels without presenting invented proof as verified facts.
+- [x] Replace the public sample report with a Honda Accord report, category flags, three findings and illustrative signature.
+- [x] Add the two requested pricing tiers to home, pricing and booking selection, with price tests.
+- [x] Verify report interactions, pricing selection and narrow-screen layouts.
 - The uploaded brief ends at “Include”; any missing requirements await the remainder.
