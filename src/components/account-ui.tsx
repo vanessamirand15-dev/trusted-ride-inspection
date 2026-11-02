@@ -21,7 +21,7 @@ export function AuthScreen({ next = '/bookings', bookingPlan }: { next?: '/book'
     const sample = !signup && identity.toLowerCase() === 'test user';
     if (sample && password !== 'password') { setError('The sample account password is password.'); return; }
     login(signup ? String(data.get('name') || identity).trim() : identity, signup ? identity : '', sample);
-    if (!sample && !signup && next === '/book') navigate({ to: '/book', search: bookingPlan ? { plan: bookingPlan } : {} });
+    if (next === '/book') navigate({ to: '/book', search: bookingPlan ? { plan: bookingPlan } : {} });
     else navigate({ to: sample || signup ? '/bookings' : next });
   }
   return <section className="mx-auto max-w-md px-5 py-16 md:py-24">
