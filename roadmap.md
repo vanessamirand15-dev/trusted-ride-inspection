@@ -37,6 +37,6 @@
 - [x] Fix signup from the booking gate returning to the booking form instead of the bookings list.
 
 ## Final MVP polish
-- [ ] Add "Estimate Your Inspection Value" calculator (vehicle age + class → recommended inspection, cost, potential savings).
-- [ ] Add "Buying Blind" vs "Inspected by Trustferly" comparison section.
-- [ ] Add 3-pillar trust section: background checks, same/next-day service, reschedule protection.
+- [x] Add "Estimate Your Inspection Value" calculator (vehicle age + class → recommended inspection, cost, potential savings).
+- [x] Add "Buying Blind" vs "Inspected by Trustferly" comparison section.
+- [x] Add 3-pillar trust section: background checks, same/next-day service, reschedule protection.
