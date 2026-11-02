@@ -60,3 +60,8 @@
 - [x] Real inspector sign up/login, saved profile + assigned jobs, private documents (inspector + reviewers)  (tested end to end)
 - [ ] Production refactor brief (3 tiers $149/$229/$349, multi-step /apply, maps link, extended report builder, chat/support) — uploaded file is cut off at item 5
 - [x] Header strictly Logo / How it works / Pricing / Book inspection; pro links only in footer For Professionals
+
+## Header rework (latest brief)
+- [ ] Utility bar: phone, Need Help dialog, Become an Inspector, Inspector Login (WhatsApp removed at user request)
+- [ ] Main nav: How it works, Pricing, Coverage Area, Sample Report, FAQ + Sign in + Book inspection
+- [ ] Mobile drawer with all nav, support and professional links
