@@ -24,7 +24,7 @@ export function InspectorShell({ title, subtitle, children }: { title: string; s
     <nav aria-label="Inspector portal" className="mb-10 flex flex-wrap gap-6 border-b pb-4 text-sm">
       {links.map(l => <Link key={l.to} to={l.to} activeProps={{ className: 'text-primary font-semibold' }} className="text-muted-foreground hover:text-primary">{l.label}</Link>)}
     </nav>
-    <p className="mb-2 text-xs font-semibold uppercase text-accent">Inspector portal · Demo</p>
+    <p className="mb-2 text-xs font-semibold uppercase text-accent">Sample inspector portal · Demo data only</p>
     <h1 className="text-3xl font-semibold md:text-4xl">{title}</h1>
     <p className="mt-3 text-muted-foreground">{subtitle}</p>
     <div className="mt-10">{children}</div>

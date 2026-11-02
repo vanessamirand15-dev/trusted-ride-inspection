@@ -80,7 +80,7 @@ function Page() {
                   <li className="flex items-center gap-1.5 font-medium text-accent"><DollarSign size={14} />{(j.payout_cents / 100).toFixed(0)} payout</li>
                 </ul>
               </div>
-              {nextStatus[j.status] && <Button variant="cta" onClick={async () => { await supabase.from('inspection_jobs').update({ status: nextStatus[j.status] }).eq('id', j.id); refresh(); }}>
+              {nextStatus[j.status] && <Button variant="cta" onClick={async () => { await supabase.from('inspection_jobs').update({ status: nextStatus[j.status]! }).eq('id', j.id); refresh(); }}>
                 {j.status === 'Upcoming' ? 'Start inspection' : 'Mark completed'}</Button>}
             </article>)}
             {data.jobs.filter(j => j.status === s).length === 0 && <p className="text-sm text-muted-foreground">Nothing here.</p>}

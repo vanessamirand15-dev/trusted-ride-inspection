@@ -142,7 +142,8 @@ export function SiteFooter() {
           <Link to="/book" className="block text-navy-foreground/70 hover:text-navy-foreground">Book an inspection</Link>
           <p className="pt-3 font-semibold">For Professionals</p>
           <Link to="/apply" className="block text-navy-foreground/70 hover:text-navy-foreground">Apply as inspector</Link>
-          <Link to="/inspector/dashboard" className="block text-navy-foreground/70 hover:text-navy-foreground">Inspector Portal</Link>
+          <Link to="/inspector/login" className="block text-navy-foreground/70 hover:text-navy-foreground">Inspector Portal / Login</Link>
+          <Link to="/inspector/dashboard" className="block text-navy-foreground/70 hover:text-navy-foreground">Sample portal (demo)</Link>
         </div>
         <div className="space-y-2 text-sm">
           <p className="font-semibold">Legal</p>
