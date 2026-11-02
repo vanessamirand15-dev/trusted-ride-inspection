@@ -9,10 +9,10 @@ function Page() {
   return <AccountGate next="/account"><Overview /></AccountGate>;
 }
 function Overview() {
-  const { account } = useDemoAccount();
+  const { account, logout } = useDemoAccount();
   const bookings = useBookings();
-  return <AccountLayout title={`Hello, ${account?.name}`} subtitle="Your next car deserves an independent second opinion.">
+  return <AccountLayout title={`Hello, ${account?.name}`} subtitle="Your name, contact details, and all of your inspections in one place.">
     <dl className="grid gap-6 border-y py-8 sm:grid-cols-3"><div><dt className="text-sm text-muted-foreground">Name</dt><dd className="mt-2 break-words font-medium">{account?.name}</dd></div><div><dt className="text-sm text-muted-foreground">Email or username</dt><dd className="mt-2 break-words font-medium">{account?.email || 'Not provided'}</dd></div><div><dt className="text-sm text-muted-foreground">Inspection bookings</dt><dd className="mt-2 text-2xl font-semibold">{bookings.length}</dd></div></dl>
-    <div className="mt-8 flex flex-wrap gap-3"><Button asChild><Link to="/bookings">Your Bookings</Link></Button><Button asChild variant="outline"><Link to="/account/settings">Account settings</Link></Button></div>
+    <div className="mt-8 flex flex-wrap gap-3"><Button asChild><Link to="/bookings">Your Bookings</Link></Button><Button asChild variant="outline"><Link to="/account/settings">Edit your details</Link></Button><Button variant="ghost" onClick={logout}><LogOut />Sign out</Button></div>
   </AccountLayout>;
 }
