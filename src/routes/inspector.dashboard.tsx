@@ -1,37 +1,27 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { InspectorShell, useInspectorState } from '@/components/inspector-state';
 import { BadgeCheck, CalendarClock, Check, DollarSign, MapPin, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { pageHead } from '@/lib/page-head';
-import { acceptJob, availableJobs, jobsByStatus, sampleInspector, sampleJobs, type InspectorProfile, type Job, type JobStatus } from '@/lib/demo-inspector';
+import { acceptJob, availableJobs, jobsByStatus, type InspectorProfile, type Job, type JobStatus } from '@/lib/demo-inspector';
 
 export const Route = createFileRoute('/inspector/dashboard')({
   head: () => pageHead('Inspector dashboard', 'Manage your inspector profile, service radius and inspection jobs on Trustferly.'),
   component: Page,
 });
 
-const key = 'trustferly-inspector';
 const field = 'mt-1 w-full rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring';
 const when = (v: string) => new Date(v).toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 
 function Page() {
-  const [profile, setProfile] = useState<InspectorProfile>(sampleInspector);
-  const [jobs, setJobs] = useState<Job[]>(sampleJobs);
-  const [declined, setDeclined] = useState<string[]>([]);
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    try { const s = JSON.parse(sessionStorage.getItem(key) || 'null'); if (s) { setProfile(s.profile); setJobs(s.jobs); setDeclined(s.declined); } } catch { /* fresh demo */ }
-    setReady(true);
-  }, []);
-  useEffect(() => { if (ready) sessionStorage.setItem(key, JSON.stringify({ profile, jobs, declined })); }, [ready, profile, jobs, declined]);
-
+  const { profile, jobs, declined, update } = useInspectorState();
+  const setProfile = (p: InspectorProfile) => update({ profile: p });
+  const setJobs = (j: Job[]) => update({ jobs: j });
+  const setDeclined = (d: string[]) => update({ declined: d });
   const feed = availableJobs(jobs, profile.radius, declined);
-  return <section className="mx-auto max-w-6xl px-5 py-10 md:py-16">
-    <p className="mb-2 text-xs font-semibold uppercase text-accent">Inspector portal · Demo</p>
-    <h1 className="text-3xl font-semibold md:text-4xl">Welcome, {profile.name}</h1>
-    <p className="mt-3 text-muted-foreground">Sample inspector account with fictional jobs.</p>
-    <div className="mt-10 grid gap-8 lg:grid-cols-[320px_1fr]">
+  return <InspectorShell title={`Welcome, ${profile.name}`} subtitle="Sample inspector account with fictional jobs.">
+    <div className="grid gap-8 lg:grid-cols-[320px_1fr]">
       <aside className="h-fit rounded-2xl border bg-card p-6 shadow-soft">
         <h2 className="text-lg font-semibold">Profile</h2>
         <dl className="mt-4 space-y-2 text-sm">
@@ -59,14 +49,14 @@ function Page() {
           {(['Upcoming', 'In Progress', 'Completed'] as JobStatus[]).map(s => <div key={s}>
             <h3 className="mb-3 text-lg font-semibold">{s}</h3>
             <div className="space-y-4">
-              {jobsByStatus(jobs, s).map(j => <JobCard key={j.id} job={j} />)}
+              {jobsByStatus(jobs, s).map(j => <JobCard key={j.id} job={j}>{s !== 'Completed' && <Button asChild variant="cta"><Link to="/inspector/inspection/$id" params={{ id: j.id }}>{s === 'Upcoming' ? 'Start inspection' : 'Continue report'}</Link></Button>}</JobCard>)}
               {jobsByStatus(jobs, s).length === 0 && <p className="text-sm text-muted-foreground">Nothing here yet.</p>}
             </div>
           </div>)}
         </TabsContent>
       </Tabs>
     </div>
-  </section>;
+  </InspectorShell>;
 }
 
 function JobCard({ job, children }: { job: Job; children?: React.ReactNode }) {
