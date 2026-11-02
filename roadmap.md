@@ -14,7 +14,7 @@
 - [x] Verify the sample report and logo on wide and narrow screens.
 
 ## Academic prototype landing page (all copy in English)
-- [x] Add academic project badge noting all data is simulated.
+- [x] Add academic project badge noting all data is simulated. (Removed again at user request.)
 - [x] Add FAQ accordion below the coverage section.
 - [x] Add "View Sample Report (Demo)" modal on hero and coverage sections.
 - [x] Add projected metrics card and simulated testimonials.

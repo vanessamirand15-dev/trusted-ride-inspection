@@ -29,7 +29,6 @@ export function SiteHeader() {
   const navigate = useNavigate();
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
-      <p className="bg-teal-soft px-5 py-1.5 text-center text-xs font-medium text-accent">Academic Project Prototype · All data shown is simulated for demonstration purposes</p>
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
         <div className="flex items-center gap-3">
           <Sheet open={open} onOpenChange={setOpen}>
@@ -105,7 +104,6 @@ export function SiteFooter() {
           <span className="inline-flex items-center gap-1.5"><Lock className="h-4 w-4" />Secure SSL Checkout</span>
           <span className="inline-flex items-center gap-1.5"><CreditCard className="h-4 w-4" />Visa · Mastercard · American Express</span>
         </div>
-        <p className="border-t border-navy-foreground/10 px-5 py-4 text-center text-xs text-navy-foreground/50">Academic Project Prototype · All data shown is simulated for demonstration purposes</p>
         <div className="border-t border-navy-foreground/10 py-5 text-center text-xs text-navy-foreground/50">
           © {new Date().getFullYear()} Trustferly. Independent inspections only.
         </div>
