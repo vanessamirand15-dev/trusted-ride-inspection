@@ -53,23 +53,32 @@ function BookingWizard() {
   const [planId, setPlanId] = useState<'standard' | 'premium'>(plan === 'premium' ? 'premium' : 'standard');
   const [date, setDate] = useState('');
   const [slot, setSlot] = useState(timeSlots[0]);
+  const [sellerName, setSellerName] = useState('');
+  const [sellerContact, setSellerContact] = useState('');
+  const [address, setAddress] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardExpiry, setCardExpiry] = useState('');
+  const [cardCvc, setCardCvc] = useState('');
   const [done, setDone] = useState(false);
   const [bookingId, setBookingId] = useState<string | null>(null);
+  const [trackingId, setTrackingId] = useState('');
 
   const selectedPlan = inspectionPlans.find(p => p.id === planId) ?? inspectionPlans[0];
   const stepOneValid = vehicle.trim().length > 0 && location.trim().length > 0;
-  const stepThreeValid = date.length > 0;
+  const stepThreeValid = date.length > 0 && sellerName.trim().length > 0 && sellerContact.trim().length > 0 && address.trim().length > 0;
+  const cardValid = cardNumber.replace(/\D/g, '').length >= 12 && cardExpiry.trim().length >= 4 && cardCvc.trim().length >= 3;
 
   const confirm = () => {
     const booking = addBooking({
       vehicle: vehicle.trim(),
       vin: vin.trim(),
-      location: location.trim(),
+      location: `${address.trim()}, ${location.trim()}`,
       date: `${date} · ${slot}`,
       package: packageLabel(selectedPlan),
     });
     if (booking) {
       setBookingId(booking.id);
+      setTrackingId(`TF-${Math.random().toString(36).slice(2, 8).toUpperCase()}`);
       setDone(true);
     }
   };
@@ -85,6 +94,7 @@ function BookingWizard() {
             </span>
             <h2 className="mt-6 text-3xl font-semibold">Inspection Scheduled!</h2>
             <p className="mx-auto mt-3 max-w-md text-muted-foreground">An inspector will be assigned shortly. You can follow every step from your bookings page.</p>
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-teal-soft px-4 py-2 text-sm font-semibold text-accent">Tracking ID: {trackingId}</p>
             <dl className="mx-auto mt-8 grid max-w-md gap-3 rounded-2xl bg-background p-5 text-left text-sm">
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Vehicle</dt><dd className="font-medium text-navy">{vehicle}</dd></div>
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Package</dt><dd className="font-medium text-navy">{packageLabel(selectedPlan)}</dd></div>
