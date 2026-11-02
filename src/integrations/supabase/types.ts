@@ -14,16 +14,151 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      inspection_jobs: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          inspector_id: string
+          location: string
+          notes: string
+          payout_cents: number
+          scheduled_at: string
+          status: string
+          vehicle: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          id?: string
+          inspector_id: string
+          location?: string
+          notes?: string
+          payout_cents?: number
+          scheduled_at?: string
+          status?: string
+          vehicle: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          inspector_id?: string
+          location?: string
+          notes?: string
+          payout_cents?: number
+          scheduled_at?: string
+          status?: string
+          vehicle?: string
+        }
+        Relationships: []
+      }
+      inspector_documents: {
+        Row: {
+          created_at: string
+          doc_type: string
+          file_name: string
+          id: string
+          inspector_id: string
+          storage_path: string
+        }
+        Insert: {
+          created_at?: string
+          doc_type: string
+          file_name: string
+          id?: string
+          inspector_id: string
+          storage_path: string
+        }
+        Update: {
+          created_at?: string
+          doc_type?: string
+          file_name?: string
+          id?: string
+          inspector_id?: string
+          storage_path?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          base_zip: string
+          certification: string
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          phone: string
+          radius_miles: number
+          specialties: string[]
+          updated_at: string
+          verification_status: string
+          years_experience: number
+        }
+        Insert: {
+          base_zip?: string
+          certification?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id: string
+          phone?: string
+          radius_miles?: number
+          specialties?: string[]
+          updated_at?: string
+          verification_status?: string
+          years_experience?: number
+        }
+        Update: {
+          base_zip?: string
+          certification?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string
+          radius_miles?: number
+          specialties?: string[]
+          updated_at?: string
+          verification_status?: string
+          years_experience?: number
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_reviewer: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "reviewer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +285,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "reviewer"],
+    },
   },
 } as const
