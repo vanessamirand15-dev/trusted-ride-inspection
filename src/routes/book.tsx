@@ -168,8 +168,8 @@ function BookingWizard() {
         )}
 
         {step === 2 && (
-          <section className="grid gap-5 border-y py-8" aria-label="Date and time">
-            <h2 className="text-xl font-semibold">Pick a date & time slot</h2>
+          <section className="grid gap-5 border-y py-8" aria-label="Scheduling and seller contact">
+            <h2 className="text-xl font-semibold">Scheduling & seller contact</h2>
             <label className="max-w-xs text-sm font-medium text-navy">Preferred date<input required type="date" value={date} onChange={e => setDate(e.target.value)} className={field} /></label>
             <div className="grid gap-3 sm:grid-cols-3" role="radiogroup" aria-label="Preferred time slot">
               {timeSlots.map(t => (
@@ -185,6 +185,11 @@ function BookingWizard() {
                 </button>
               ))}
             </div>
+            <div className="grid gap-5 border-t pt-5 md:grid-cols-2">
+              <label className="text-sm font-medium text-navy">Seller name<input required value={sellerName} onChange={e => setSellerName(e.target.value)} placeholder="Jane Doe" className={field} autoComplete="off" /></label>
+              <label className="text-sm font-medium text-navy">Seller phone or email<input required value={sellerContact} onChange={e => setSellerContact(e.target.value)} placeholder="(555) 010-2030" className={field} autoComplete="off" /></label>
+              <label className="text-sm font-medium text-navy md:col-span-2">Inspection address<input required value={address} onChange={e => setAddress(e.target.value)} placeholder="Street address where the car will be" className={field} autoComplete="off" /></label>
+            </div>
             <div className="mt-2 flex justify-between">
               <Button variant="ghost" onClick={() => setStep(1)}><ChevronLeft />Back</Button>
               <Button variant="cta" size="lg" disabled={!stepThreeValid} onClick={() => setStep(3)}>Review & confirm</Button>
@@ -199,15 +204,22 @@ function BookingWizard() {
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Name</dt><dd className="font-medium text-navy">{account?.name}</dd></div>
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Vehicle</dt><dd className="font-medium text-navy">{vehicle}</dd></div>
               {vin && <div className="flex justify-between gap-4"><dt className="text-muted-foreground">VIN</dt><dd className="font-medium text-navy">{vin}</dd></div>}
-              <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Location</dt><dd className="font-medium text-navy">{location}</dd></div>
+              <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Location</dt><dd className="font-medium text-navy">{address}, {location}</dd></div>
+              <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Seller</dt><dd className="font-medium text-navy">{sellerName} · {sellerContact}</dd></div>
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">When</dt><dd className="font-medium text-navy">{date} · {slot}</dd></div>
               <div className="flex justify-between gap-4 border-t pt-3"><dt className="text-muted-foreground">Package</dt><dd className="font-medium text-navy">{selectedPlan.name}</dd></div>
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Total due today</dt><dd className="text-lg font-semibold text-navy">${selectedPlan.price}</dd></div>
             </dl>
-            <p className="flex items-center gap-2 text-xs text-muted-foreground"><CreditCard className="h-4 w-4 shrink-0" />Simulated checkout · No payment is processed in this demonstration.</p>
+            <fieldset className="grid gap-4 rounded-2xl border bg-card p-5 sm:grid-cols-2">
+              <legend className="px-1 text-sm font-semibold text-navy">Payment details</legend>
+              <label className="text-sm font-medium text-navy sm:col-span-2">Card number<input inputMode="numeric" value={cardNumber} onChange={e => setCardNumber(e.target.value)} placeholder="4242 4242 4242 4242" className={field} autoComplete="off" /></label>
+              <label className="text-sm font-medium text-navy">Expiry<input value={cardExpiry} onChange={e => setCardExpiry(e.target.value)} placeholder="MM/YY" className={field} autoComplete="off" /></label>
+              <label className="text-sm font-medium text-navy">CVC<input inputMode="numeric" value={cardCvc} onChange={e => setCardCvc(e.target.value)} placeholder="123" className={field} autoComplete="off" /></label>
+            </fieldset>
+            <p className="flex items-center gap-2 text-xs text-muted-foreground"><CreditCard className="h-4 w-4 shrink-0" />Simulated checkout · No payment is processed and card details are never stored.</p>
             <div className="mt-2 flex justify-between">
               <Button variant="ghost" onClick={() => setStep(2)}><ChevronLeft />Back</Button>
-              <Button variant="cta" size="lg" onClick={confirm}>Pay & schedule inspection</Button>
+              <Button variant="cta" size="lg" disabled={!cardValid} onClick={confirm}>Complete Booking</Button>
             </div>
           </section>
         )}
