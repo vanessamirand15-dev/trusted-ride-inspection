@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookRouteImport } from './routes/book'
@@ -22,12 +23,18 @@ import { Route as AccountSettingsRouteImport } from './routes/account.settings'
 import { Route as BookingsBookingIdRouteImport } from './routes/bookings_.$bookingId'
 import { Route as InspectorDashboardRouteImport } from './routes/inspector.dashboard'
 import { Route as InspectorFinancesRouteImport } from './routes/inspector.finances'
+import { Route as InspectorLoginRouteImport } from './routes/inspector.login'
 import { Route as InspectorProfileRouteImport } from './routes/inspector.profile'
+import { Route as AuthenticatedInspectorPortalRouteImport } from './routes/_authenticated/inspector.portal'
 import { Route as InspectorInspectionIdRouteImport } from './routes/inspector.inspection.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApplyRoute = ApplyRouteImport.update({
@@ -90,11 +97,22 @@ const InspectorFinancesRoute = InspectorFinancesRouteImport.update({
   path: '/inspector/finances',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InspectorLoginRoute = InspectorLoginRouteImport.update({
+  id: '/inspector/login',
+  path: '/inspector/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InspectorProfileRoute = InspectorProfileRouteImport.update({
   id: '/inspector/profile',
   path: '/inspector/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedInspectorPortalRoute =
+  AuthenticatedInspectorPortalRouteImport.update({
+    id: '/inspector/portal',
+    path: '/inspector/portal',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const InspectorInspectionIdRoute = InspectorInspectionIdRouteImport.update({
   id: '/inspector/inspection/$id',
   path: '/inspector/inspection/$id',
@@ -114,8 +132,10 @@ export interface FileRoutesByFullPath {
   '/bookings/$bookingId': typeof BookingsBookingIdRoute
   '/inspector/dashboard': typeof InspectorDashboardRoute
   '/inspector/finances': typeof InspectorFinancesRoute
+  '/inspector/login': typeof InspectorLoginRoute
   '/inspector/profile': typeof InspectorProfileRoute
   '/account/': typeof AccountIndexRoute
+  '/inspector/portal': typeof AuthenticatedInspectorPortalRoute
   '/inspector/inspection/$id': typeof InspectorInspectionIdRoute
 }
 export interface FileRoutesByTo {
@@ -131,13 +151,16 @@ export interface FileRoutesByTo {
   '/bookings/$bookingId': typeof BookingsBookingIdRoute
   '/inspector/dashboard': typeof InspectorDashboardRoute
   '/inspector/finances': typeof InspectorFinancesRoute
+  '/inspector/login': typeof InspectorLoginRoute
   '/inspector/profile': typeof InspectorProfileRoute
   '/account': typeof AccountIndexRoute
+  '/inspector/portal': typeof AuthenticatedInspectorPortalRoute
   '/inspector/inspection/$id': typeof InspectorInspectionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
@@ -149,8 +172,10 @@ export interface FileRoutesById {
   '/bookings_/$bookingId': typeof BookingsBookingIdRoute
   '/inspector/dashboard': typeof InspectorDashboardRoute
   '/inspector/finances': typeof InspectorFinancesRoute
+  '/inspector/login': typeof InspectorLoginRoute
   '/inspector/profile': typeof InspectorProfileRoute
   '/account/': typeof AccountIndexRoute
+  '/_authenticated/inspector/portal': typeof AuthenticatedInspectorPortalRoute
   '/inspector/inspection/$id': typeof InspectorInspectionIdRoute
 }
 export interface FileRouteTypes {
@@ -168,8 +193,10 @@ export interface FileRouteTypes {
     | '/bookings/$bookingId'
     | '/inspector/dashboard'
     | '/inspector/finances'
+    | '/inspector/login'
     | '/inspector/profile'
     | '/account/'
+    | '/inspector/portal'
     | '/inspector/inspection/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -185,12 +212,15 @@ export interface FileRouteTypes {
     | '/bookings/$bookingId'
     | '/inspector/dashboard'
     | '/inspector/finances'
+    | '/inspector/login'
     | '/inspector/profile'
     | '/account'
+    | '/inspector/portal'
     | '/inspector/inspection/$id'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/apply'
     | '/auth'
     | '/book'
@@ -202,13 +232,16 @@ export interface FileRouteTypes {
     | '/bookings_/$bookingId'
     | '/inspector/dashboard'
     | '/inspector/finances'
+    | '/inspector/login'
     | '/inspector/profile'
     | '/account/'
+    | '/_authenticated/inspector/portal'
     | '/inspector/inspection/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ApplyRoute: typeof ApplyRoute
   AuthRoute: typeof AuthRoute
   BookRoute: typeof BookRoute
@@ -220,6 +253,7 @@ export interface RootRouteChildren {
   BookingsBookingIdRoute: typeof BookingsBookingIdRoute
   InspectorDashboardRoute: typeof InspectorDashboardRoute
   InspectorFinancesRoute: typeof InspectorFinancesRoute
+  InspectorLoginRoute: typeof InspectorLoginRoute
   InspectorProfileRoute: typeof InspectorProfileRoute
   AccountIndexRoute: typeof AccountIndexRoute
   InspectorInspectionIdRoute: typeof InspectorInspectionIdRoute
@@ -232,6 +266,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apply': {
@@ -318,12 +359,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InspectorFinancesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/inspector/login': {
+      id: '/inspector/login'
+      path: '/inspector/login'
+      fullPath: '/inspector/login'
+      preLoaderRoute: typeof InspectorLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/inspector/profile': {
       id: '/inspector/profile'
       path: '/inspector/profile'
       fullPath: '/inspector/profile'
       preLoaderRoute: typeof InspectorProfileRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/inspector/portal': {
+      id: '/_authenticated/inspector/portal'
+      path: '/inspector/portal'
+      fullPath: '/inspector/portal'
+      preLoaderRoute: typeof AuthenticatedInspectorPortalRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/inspector/inspection/$id': {
       id: '/inspector/inspection/$id'
@@ -335,8 +390,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedInspectorPortalRoute: typeof AuthenticatedInspectorPortalRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedInspectorPortalRoute: AuthenticatedInspectorPortalRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ApplyRoute: ApplyRoute,
   AuthRoute: AuthRoute,
   BookRoute: BookRoute,
@@ -348,6 +415,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookingsBookingIdRoute: BookingsBookingIdRoute,
   InspectorDashboardRoute: InspectorDashboardRoute,
   InspectorFinancesRoute: InspectorFinancesRoute,
+  InspectorLoginRoute: InspectorLoginRoute,
   InspectorProfileRoute: InspectorProfileRoute,
   AccountIndexRoute: AccountIndexRoute,
   InspectorInspectionIdRoute: InspectorInspectionIdRoute,
