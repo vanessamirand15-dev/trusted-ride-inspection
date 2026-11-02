@@ -14,6 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          subject: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          subject?: string
+        }
+        Relationships: []
+      }
+      coverage_requests: {
+        Row: {
+          city: string | null
+          created_at: string
+          email: string
+          id: string
+          name: string
+          zip: string
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          zip: string
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          zip?: string
+        }
+        Relationships: []
+      }
       inspection_jobs: {
         Row: {
           category: string

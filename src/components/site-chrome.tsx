@@ -8,9 +8,7 @@ import { SampleReportDialog } from '@/components/sample-report-dialog';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 
-const PHONE_DISPLAY = "(800) 555-0199";
-const PHONE_HREF = "tel:8005550199";
-const SUPPORT_EMAIL = "support@trustferly.example";
+import { ContactDialog, FORM_NOTICE, PHONE_DISPLAY, PHONE_HREF, SUPPORT_EMAIL, SUPPORT_HOURS } from '@/components/contact-coverage';
 
 const prototypeNotice = 'Academic MVP Prototype — For demonstration purposes only. Not an active commercial service.';
 
@@ -189,8 +187,8 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="bg-navy-gradient text-navy-foreground">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-5">
-        <div className="md:col-span-2">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-3 lg:grid-cols-6">
+        <div className="md:col-span-3 lg:col-span-2">
           <Logo dark />
           <p className="mt-4 max-w-sm text-sm text-navy-foreground/70">
             Independent pre-purchase inspections for private-party used vehicles. We don't sell cars,
@@ -217,6 +215,13 @@ export function SiteFooter() {
           <p className="font-semibold">Legal</p>
           {legalDocs.map(d => <LegalDialog key={d.label} label={d.label} paragraphs={d.paragraphs} />)}
         </div>
+        <div className="space-y-2 text-sm">
+          <p className="font-semibold">Contact Support</p>
+          <a href={`mailto:${SUPPORT_EMAIL}`} className="block break-all text-navy-foreground/70 hover:text-navy-foreground">{SUPPORT_EMAIL}</a>
+          <a href={PHONE_HREF} className="block text-navy-foreground/70 hover:text-navy-foreground">{PHONE_DISPLAY}</a>
+          <p className="text-xs text-navy-foreground/50">{SUPPORT_HOURS}</p>
+          <ContactDialog trigger={<button type="button" className="block text-left text-navy-foreground/70 hover:text-navy-foreground">Contact form</button>} />
+        </div>
       </div>
       <div className="border-t border-navy-foreground/10">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-5 py-6 text-xs font-medium text-navy-foreground/70">
@@ -227,6 +232,7 @@ export function SiteFooter() {
         <div className="border-t border-navy-foreground/10 py-5 text-center text-xs text-navy-foreground/50">
           <p>© {new Date().getFullYear()} Trustferly. Independent inspections only.</p>
           <p className="mt-1.5">{prototypeNotice}</p>
+          <p className="mt-1">{FORM_NOTICE}</p>
         </div>
       </div>
     </footer>
