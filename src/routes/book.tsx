@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { PageIntro } from "@/components/site-chrome";
 import { AccountGate } from '@/components/account-ui';
 import { useDemoAccount } from '@/components/demo-account';
+import { inspectionPlans, packageLabel } from '@/lib/inspection-plans';
 
 export const Route = createFileRoute("/book")({
+  validateSearch: (search: Record<string, unknown>): { plan?: 'standard' | 'premium' } => ({ plan: search.plan === 'premium' ? 'premium' : search.plan === 'standard' ? 'standard' : undefined }),
   head: () => ({
     meta: [
       { property: 'og:type', content: 'website' },
@@ -25,6 +27,7 @@ function Page() {
   return <AccountGate next="/book"><BookingForm /></AccountGate>;
 }
 function BookingForm() {
+  const { plan } = Route.useSearch();
   const { account, addBooking } = useDemoAccount();
   const navigate = useNavigate();
   const submit = (e: FormEvent<HTMLFormElement>) => {
@@ -46,7 +49,7 @@ function BookingForm() {
             <label className="text-sm font-medium text-navy md:col-span-2">Vehicle location<input name="location" required placeholder="City or address" className={field} /></label>
             <label className="text-sm font-medium text-navy">Preferred date<input name="date" required type="date" className={field} /></label>
             <label className="text-sm font-medium text-navy">Package
-              <select name="package" className={field}><option>Essential · $129</option><option>Complete · $189</option><option>Specialty · $249</option></select>
+              <select name="package" className={field} defaultValue={plan === 'premium' ? packageLabel(inspectionPlans[1]) : packageLabel(inspectionPlans[0])}>{inspectionPlans.map(p => <option key={p.id}>{packageLabel(p)}</option>)}</select>
             </label>
             <Button type="submit" variant="cta" size="lg" className="md:col-span-2">Request inspection</Button>
             <p className="text-xs text-muted-foreground md:col-span-2">Demonstration booking · No real inspection is arranged.</p>
