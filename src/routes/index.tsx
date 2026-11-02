@@ -91,7 +91,7 @@ function Index() {
           <span className="inline-flex items-center gap-2 rounded-full bg-teal-soft px-3 py-1 text-xs font-semibold text-accent">
             <BadgeCheck className="h-4 w-4" /> Independent. Unbiased. Verified.
           </span>
-          <h1 className="mt-5 text-4xl font-bold leading-tight md:text-6xl">
+          <h1 className="mt-5 text-4xl font-semibold leading-tight md:text-6xl">
             Trustferly vehicle inspections
           </h1>
           <p className="mt-5 max-w-lg text-lg text-muted-foreground">
@@ -129,7 +129,7 @@ function Index() {
           <dl className="mt-6 grid gap-6 text-center sm:grid-cols-3">
             {metrics.map((m) => (
               <div key={m.label}>
-                <dd className="font-display text-4xl font-bold text-navy">{m.value}</dd>
+                <dd className="font-display text-4xl font-semibold text-navy">{m.value}</dd>
                 <dt className="mt-1 text-sm text-muted-foreground">{m.label}</dt>
               </div>
             ))}
@@ -139,7 +139,7 @@ function Index() {
 
       <section className="border-y bg-card">
         <div className="mx-auto max-w-6xl px-5 py-20">
-          <h2 className="text-center text-3xl font-bold md:text-4xl">Three steps to a confident purchase</h2>
+          <h2 className="text-center text-3xl font-semibold md:text-4xl">Three steps to a confident purchase</h2>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {steps.map((s, i) => (
               <div key={s.title} className="rounded-2xl border bg-background p-7">
@@ -157,7 +157,7 @@ function Index() {
 
       <section className="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-2 md:items-center">
         <div>
-          <h2 className="text-3xl font-bold md:text-4xl">What every inspection covers</h2>
+          <h2 className="text-3xl font-semibold md:text-4xl">What every inspection covers</h2>
           <p className="mt-4 text-muted-foreground">Inspectors work for you, not the seller. No commissions, no conflicts.</p>
           <div className="mt-6"><SampleReportDialog /></div>
         </div>
@@ -173,7 +173,7 @@ function Index() {
 
       <section className="border-t bg-card">
         <div className="mx-auto max-w-3xl px-5 py-20">
-          <h2 className="text-center text-3xl font-bold md:text-4xl">Frequently asked questions</h2>
+          <h2 className="text-center text-3xl font-semibold md:text-4xl">Frequently asked questions</h2>
           <Accordion type="single" collapsible className="mt-10">
             {faqs.map((f, i) => (
               <AccordionItem key={f.q} value={`faq-${i}`}>
@@ -188,7 +188,7 @@ function Index() {
       <section aria-labelledby="home-pricing" className="border-t bg-card">
         <div className="mx-auto max-w-5xl px-5 py-20">
           <p className="text-center text-sm font-semibold text-accent">Transparent pricing</p>
-          <h2 id="home-pricing" className="mt-3 text-center text-3xl font-bold md:text-4xl">Choose the inspection your car needs</h2>
+          <h2 id="home-pricing" className="mt-3 text-center text-3xl font-semibold md:text-4xl">Choose the inspection your car needs</h2>
           <p className="mx-auto mb-10 mt-4 max-w-xl text-center text-muted-foreground">Two clear packages. Independent advice. No commission on the vehicle sale.</p>
           <InspectionPricing />
         </div>
@@ -196,7 +196,7 @@ function Index() {
 
       <section className="mx-auto max-w-6xl px-5 py-20">
         <p className="text-center text-xs font-medium text-muted-foreground">Illustrative buyer stories, not verified customer reviews</p>
-        <h2 className="mt-3 text-center text-3xl font-bold md:text-4xl">A clearer picture before you buy</h2>
+        <h2 className="mt-3 text-center text-3xl font-semibold md:text-4xl">A clearer picture before you buy</h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {reviews.map((r) => (
             <figure key={r.name} className="rounded-2xl border bg-card p-7 shadow-soft">
@@ -215,7 +215,7 @@ function Index() {
 
       <section className="px-5 pb-20">
         <div className="mx-auto max-w-6xl rounded-3xl bg-navy-gradient px-8 py-14 text-center">
-          <h2 className="text-3xl font-bold text-navy-foreground md:text-4xl">Found a car you like?</h2>
+          <h2 className="text-3xl font-semibold text-navy-foreground md:text-4xl">Found a car you like?</h2>
           <p className="mx-auto mt-3 max-w-lg text-navy-foreground/70">Book an independent inspection before you commit.</p>
           <Button asChild variant="onDark" size="lg" className="mt-8"><Link to="/book">Book an inspection</Link></Button>
           <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs font-medium text-navy-foreground/70">

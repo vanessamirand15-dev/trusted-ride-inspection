@@ -16,7 +16,7 @@ export function Logo({ dark = false }: { dark?: boolean }) {
   return (
     <Link to="/" className="flex items-center gap-2">
       <img src={logoAsset.url} alt="" width={40} height={40} className="h-10 w-10 shrink-0 object-contain" />
-      <span className={`font-display text-xl font-bold ${dark ? "text-navy-foreground" : "text-navy"}`}>
+      <span className={`font-display text-xl font-semibold ${dark ? "text-navy-foreground" : "text-navy"}`}>
         Trustferly
       </span>
     </Link>
@@ -116,7 +116,7 @@ export function PageIntro({ eyebrow, title, text }: { eyebrow: string; title: st
   return (
     <section className="mx-auto max-w-3xl px-5 pb-10 pt-16 text-center md:pt-24">
       <p className="text-sm font-semibold uppercase tracking-widest text-accent">{eyebrow}</p>
-      <h1 className="mt-3 text-4xl font-bold md:text-5xl">{title}</h1>
+      <h1 className="mt-3 text-4xl font-semibold md:text-5xl">{title}</h1>
       <p className="mt-4 text-lg text-muted-foreground">{text}</p>
     </section>
   );
