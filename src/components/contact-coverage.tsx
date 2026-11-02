@@ -41,7 +41,7 @@ export function ContactForm() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = contactSchema.safeParse(form);
-    if (!parsed.success) return setError(parsed.error.issues[0].message);
+    if (!parsed.success) return setError(parsed.error.issues[0]?.message ?? "Please check the form");
     setError(""); setState("sending");
     const { error: dbError } = await supabase.from("contact_submissions").insert(parsed.data);
     if (dbError) { setState("idle"); return setError("Could not send your message. Please try again."); }
@@ -107,7 +107,7 @@ function WaitlistDialog({ open, onOpenChange, zip }: { open: boolean; onOpenChan
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = waitlistSchema.safeParse({ ...form, city: form.city || undefined });
-    if (!parsed.success) return setError(parsed.error.issues[0].message);
+    if (!parsed.success) return setError(parsed.error.issues[0]?.message ?? "Please check the form");
     setError(""); setSending(true);
     const { error: dbError } = await supabase.from("coverage_requests").insert({ ...parsed.data, city: parsed.data.city ?? null });
     setSending(false);
