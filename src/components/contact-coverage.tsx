@@ -169,7 +169,7 @@ export function ZipChecker() {
         Don't see your ZIP code?{" "}
         <button type="button" className="font-medium text-primary underline-offset-4 hover:underline" onClick={() => setWaitlist(true)}>Request Trustferly coverage in your city.</button>
       </p>
-      <WaitlistDialog open={waitlist} onOpenChange={setWaitlist} zip={result?.status === "expanding" ? result.zip : ""} />
+      <WaitlistDialog key={`${waitlist}-${result?.zip ?? ""}`} open={waitlist} onOpenChange={setWaitlist} zip={result?.status === "expanding" ? result.zip : ""} />
     </div>
   );
 }
