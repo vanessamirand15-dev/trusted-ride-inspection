@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { COVERAGE_HUBS, COVERAGE_RADIUS_MILES, checkCoverage } from "@/lib/coverage";
+import { COVERAGE_REGIONS, checkCoverage, type CoverageStatus } from "@/lib/coverage";
 
 export const SUPPORT_EMAIL = "support@trustferly.demo";
 export const PHONE_DISPLAY = "1-800-555-RIDE";
@@ -23,12 +23,6 @@ const contactSchema = z.object({
   message: z.string().trim().min(1, "Please write a message").max(2000),
 });
 
-const waitlistSchema = z.object({
-  name: z.string().trim().min(1, "Please enter your name").max(100),
-  email: z.string().trim().email("Enter a valid email").max(255),
-  zip: z.string().trim().regex(/^\d{5}$/, "Enter a 5 digit ZIP code"),
-  city: z.string().trim().max(100).optional(),
-});
 
 function Notice() {
   return <p className="text-xs text-muted-foreground">{FORM_NOTICE}</p>;
