@@ -62,6 +62,6 @@
 - [x] Header strictly Logo / How it works / Pricing / Book inspection; pro links only in footer For Professionals
 
 ## Header rework (latest brief)
-- [ ] Utility bar: phone, Need Help dialog, Become an Inspector, Inspector Login (WhatsApp removed at user request)
-- [ ] Main nav: How it works, Pricing, Coverage Area, Sample Report, FAQ + Sign in + Book inspection
-- [ ] Mobile drawer with all nav, support and professional links
+- [x] Utility bar: phone, Need Help dialog, Become an Inspector, Inspector Login (WhatsApp removed at user request)
+- [x] Main nav: How it works, Pricing, Coverage Area, Sample Report, FAQ + Sign in + Book inspection
+- [x] Mobile drawer with all nav, support and professional links
