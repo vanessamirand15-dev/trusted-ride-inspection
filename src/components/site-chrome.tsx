@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState, type ReactNode } from 'react';
-import { Menu, LogOut, UserRound, CalendarDays, Settings, Plus, ShieldCheck, Lock, CreditCard, MessageCircle, Phone, Mail, LifeBuoy } from "lucide-react";
+import { Menu, LogOut, UserRound, CalendarDays, Settings, Plus, ShieldCheck, Lock, CreditCard, Phone, Mail, LifeBuoy } from "lucide-react";
 import logoAsset from '@/assets/trustferly_logo.png.asset.json';
 import { Button } from "@/components/ui/button";
 import { useDemoAccount } from '@/components/demo-account';
@@ -8,7 +8,6 @@ import { SampleReportDialog } from '@/components/sample-report-dialog';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 
-const WHATSAPP_URL = "https://wa.me/15550192834?text=Hi%20Trustferly%20Support%2C%20I%20have%20a%20question%20about%20an%20inspection";
 const PHONE_DISPLAY = "(800) 555-0199";
 const PHONE_HREF = "tel:8005550199";
 const SUPPORT_EMAIL = "support@trustferly.example";
