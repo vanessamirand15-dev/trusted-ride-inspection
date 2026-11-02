@@ -48,3 +48,12 @@
 - [x] Add footer legal modals: Terms of Service, Privacy Policy, Cancellation Policy with sample terms.
 - Already covered by prior work: sample report modal, dynamic savings calculator, FAQ accordion, ZIP availability search.
 - Note: booking stays an account-linked page wizard (login-first requirement) rather than a modal; all four steps match the brief's content.
+
+## Inspector portal
+- [x] /apply onboarding form, /inspector/dashboard (profile, radius, job feed, accept/decline, my inspections), footer links
+- [x] /inspector/profile document uploads + verification badge
+- [x] /inspector/inspection/$id checklist, section photos, notes, submit report
+- [x] /inspector/finances earnings overview + availability calendar
+- [x] Header without "For inspectors"; footer "For Professionals" with Apply as inspector + Inspector Portal
+- [x] Specialties selection + payout tiers ($80–$100 standard, $150–$220+ luxury) on /apply and /inspector/profile
+- [x] Job cards show category badge and tier payout; inspection form sections + luxury diagnostic notes

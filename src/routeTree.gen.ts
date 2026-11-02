@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as BookingsRouteImport } from './routes/bookings'
@@ -19,10 +20,19 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as AccountIndexRouteImport } from './routes/account.index'
 import { Route as AccountSettingsRouteImport } from './routes/account.settings'
 import { Route as BookingsBookingIdRouteImport } from './routes/bookings_.$bookingId'
+import { Route as InspectorDashboardRouteImport } from './routes/inspector.dashboard'
+import { Route as InspectorFinancesRouteImport } from './routes/inspector.finances'
+import { Route as InspectorProfileRouteImport } from './routes/inspector.profile'
+import { Route as InspectorInspectionIdRouteImport } from './routes/inspector.inspection.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApplyRoute = ApplyRouteImport.update({
+  id: '/apply',
+  path: '/apply',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -70,9 +80,30 @@ const BookingsBookingIdRoute = BookingsBookingIdRouteImport.update({
   path: '/bookings/$bookingId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InspectorDashboardRoute = InspectorDashboardRouteImport.update({
+  id: '/inspector/dashboard',
+  path: '/inspector/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InspectorFinancesRoute = InspectorFinancesRouteImport.update({
+  id: '/inspector/finances',
+  path: '/inspector/finances',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InspectorProfileRoute = InspectorProfileRouteImport.update({
+  id: '/inspector/profile',
+  path: '/inspector/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InspectorInspectionIdRoute = InspectorInspectionIdRouteImport.update({
+  id: '/inspector/inspection/$id',
+  path: '/inspector/inspection/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/bookings': typeof BookingsRoute
@@ -81,10 +112,15 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/account/settings': typeof AccountSettingsRoute
   '/bookings/$bookingId': typeof BookingsBookingIdRoute
+  '/inspector/dashboard': typeof InspectorDashboardRoute
+  '/inspector/finances': typeof InspectorFinancesRoute
+  '/inspector/profile': typeof InspectorProfileRoute
   '/account/': typeof AccountIndexRoute
+  '/inspector/inspection/$id': typeof InspectorInspectionIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/bookings': typeof BookingsRoute
@@ -93,11 +129,16 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/account/settings': typeof AccountSettingsRoute
   '/bookings/$bookingId': typeof BookingsBookingIdRoute
+  '/inspector/dashboard': typeof InspectorDashboardRoute
+  '/inspector/finances': typeof InspectorFinancesRoute
+  '/inspector/profile': typeof InspectorProfileRoute
   '/account': typeof AccountIndexRoute
+  '/inspector/inspection/$id': typeof InspectorInspectionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/bookings': typeof BookingsRoute
@@ -106,12 +147,17 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/account/settings': typeof AccountSettingsRoute
   '/bookings_/$bookingId': typeof BookingsBookingIdRoute
+  '/inspector/dashboard': typeof InspectorDashboardRoute
+  '/inspector/finances': typeof InspectorFinancesRoute
+  '/inspector/profile': typeof InspectorProfileRoute
   '/account/': typeof AccountIndexRoute
+  '/inspector/inspection/$id': typeof InspectorInspectionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/apply'
     | '/auth'
     | '/book'
     | '/bookings'
@@ -120,10 +166,15 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/account/settings'
     | '/bookings/$bookingId'
+    | '/inspector/dashboard'
+    | '/inspector/finances'
+    | '/inspector/profile'
     | '/account/'
+    | '/inspector/inspection/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/apply'
     | '/auth'
     | '/book'
     | '/bookings'
@@ -132,10 +183,15 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/account/settings'
     | '/bookings/$bookingId'
+    | '/inspector/dashboard'
+    | '/inspector/finances'
+    | '/inspector/profile'
     | '/account'
+    | '/inspector/inspection/$id'
   id:
     | '__root__'
     | '/'
+    | '/apply'
     | '/auth'
     | '/book'
     | '/bookings'
@@ -144,11 +200,16 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/account/settings'
     | '/bookings_/$bookingId'
+    | '/inspector/dashboard'
+    | '/inspector/finances'
+    | '/inspector/profile'
     | '/account/'
+    | '/inspector/inspection/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApplyRoute: typeof ApplyRoute
   AuthRoute: typeof AuthRoute
   BookRoute: typeof BookRoute
   BookingsRoute: typeof BookingsRoute
@@ -157,7 +218,11 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   AccountSettingsRoute: typeof AccountSettingsRoute
   BookingsBookingIdRoute: typeof BookingsBookingIdRoute
+  InspectorDashboardRoute: typeof InspectorDashboardRoute
+  InspectorFinancesRoute: typeof InspectorFinancesRoute
+  InspectorProfileRoute: typeof InspectorProfileRoute
   AccountIndexRoute: typeof AccountIndexRoute
+  InspectorInspectionIdRoute: typeof InspectorInspectionIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -167,6 +232,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apply': {
+      id: '/apply'
+      path: '/apply'
+      fullPath: '/apply'
+      preLoaderRoute: typeof ApplyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -232,11 +304,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookingsBookingIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/inspector/dashboard': {
+      id: '/inspector/dashboard'
+      path: '/inspector/dashboard'
+      fullPath: '/inspector/dashboard'
+      preLoaderRoute: typeof InspectorDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inspector/finances': {
+      id: '/inspector/finances'
+      path: '/inspector/finances'
+      fullPath: '/inspector/finances'
+      preLoaderRoute: typeof InspectorFinancesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inspector/profile': {
+      id: '/inspector/profile'
+      path: '/inspector/profile'
+      fullPath: '/inspector/profile'
+      preLoaderRoute: typeof InspectorProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inspector/inspection/$id': {
+      id: '/inspector/inspection/$id'
+      path: '/inspector/inspection/$id'
+      fullPath: '/inspector/inspection/$id'
+      preLoaderRoute: typeof InspectorInspectionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApplyRoute: ApplyRoute,
   AuthRoute: AuthRoute,
   BookRoute: BookRoute,
   BookingsRoute: BookingsRoute,
@@ -245,7 +346,11 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   AccountSettingsRoute: AccountSettingsRoute,
   BookingsBookingIdRoute: BookingsBookingIdRoute,
+  InspectorDashboardRoute: InspectorDashboardRoute,
+  InspectorFinancesRoute: InspectorFinancesRoute,
+  InspectorProfileRoute: InspectorProfileRoute,
   AccountIndexRoute: AccountIndexRoute,
+  InspectorInspectionIdRoute: InspectorInspectionIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

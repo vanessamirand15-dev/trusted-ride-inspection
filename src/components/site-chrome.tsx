@@ -54,7 +54,6 @@ function LegalDialog({ label, paragraphs }: { label: string; paragraphs: string[
 const nav = [
   { to: "/how-it-works", label: "How it works" },
   { to: "/pricing", label: "Pricing" },
-  { to: "/for-inspectors", label: "For inspectors" },
 ] as const;
 
 export function Logo({ dark = false }: { dark?: boolean }) {
@@ -141,7 +140,9 @@ export function SiteFooter() {
         <div className="space-y-2 text-sm">
           <p className="font-semibold">Get started</p>
           <Link to="/book" className="block text-navy-foreground/70 hover:text-navy-foreground">Book an inspection</Link>
-          <Link to="/for-inspectors" className="block text-navy-foreground/70 hover:text-navy-foreground">Apply as inspector</Link>
+          <p className="pt-3 font-semibold">For Professionals</p>
+          <Link to="/apply" className="block text-navy-foreground/70 hover:text-navy-foreground">Apply as inspector</Link>
+          <Link to="/inspector/dashboard" className="block text-navy-foreground/70 hover:text-navy-foreground">Inspector Portal</Link>
         </div>
         <div className="space-y-2 text-sm">
           <p className="font-semibold">Legal</p>
