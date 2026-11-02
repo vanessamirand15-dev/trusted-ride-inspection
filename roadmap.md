@@ -54,3 +54,6 @@
 - [x] /inspector/profile document uploads + verification badge
 - [x] /inspector/inspection/$id checklist, section photos, notes, submit report
 - [x] /inspector/finances earnings overview + availability calendar
+- [x] Header without "For inspectors"; footer "For Professionals" with Apply as inspector + Inspector Portal
+- [x] Specialties selection + payout tiers ($80–$100 standard, $150–$220+ luxury) on /apply and /inspector/profile
+- [x] Job cards show category badge and tier payout; inspection form sections + luxury diagnostic notes
