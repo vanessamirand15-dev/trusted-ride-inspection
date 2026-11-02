@@ -34,3 +34,8 @@
 - [ ] Make the hero ZIP search show a dynamic inspector-count banner.
 - [ ] Verify form inputs and labels render in Inter like the rest of the site (no layout or color changes).
 - [ ] Add an AI Gateway "explain findings in plain English" action on reports, shown beside originals and marked as a draft pending inspector confirmation.
+
+## Final MVP polish
+- [ ] Add "Estimate Your Inspection Value" calculator (vehicle age + class → recommended inspection, cost, potential savings).
+- [ ] Add "Buying Blind" vs "Inspected by Trustferly" comparison section.
+- [ ] Add 3-pillar trust section: background checks, same/next-day service, reschedule protection.
