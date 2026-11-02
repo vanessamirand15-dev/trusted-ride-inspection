@@ -29,11 +29,12 @@
 - The uploaded brief ends at “Include”; any missing requirements await the remainder.
 
 ## Interactive MVP flows (latest brief, cut off after item 3)
-- [ ] Enrich the sample report modal: VIN/mileage overview, inspector rating, summary recommendation, print/download placeholder.
-- [ ] Rebuild booking as a 4-step wizard: vehicle details, service level, date & time slot, simulated checkout success.
-- [ ] Make the hero ZIP search show a dynamic inspector-count banner.
-- [ ] Verify form inputs and labels render in Inter like the rest of the site (no layout or color changes).
-- [ ] Add an AI Gateway "explain findings in plain English" action on reports, shown beside originals and marked as a draft pending inspector confirmation.
+- [x] Enrich the sample report modal: VIN/mileage overview, inspector rating, summary recommendation, print/download placeholder.
+- [x] Rebuild booking as a 4-step wizard: vehicle details, service level, date & time slot, simulated checkout success.
+- [x] Make the hero ZIP search show a dynamic inspector-count banner.
+- [x] Verify form inputs and labels render in Inter like the rest of the site (no layout or color changes).
+- [x] Add an AI Gateway "explain findings in plain English" action on reports, shown beside originals and marked as a draft pending inspector confirmation.
+- [x] Fix signup from the booking gate returning to the booking form instead of the bookings list.
 
 ## Final MVP polish
 - [ ] Add "Estimate Your Inspection Value" calculator (vehicle age + class → recommended inspection, cost, potential savings).
