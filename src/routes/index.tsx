@@ -67,7 +67,7 @@ function AvailabilityCheck() {
     setResult({ area, count: 2 + (hash % 5) });
   };
   return (
-    <form className="mt-8 max-w-lg" onSubmit={check}>
+    <form id="coverage" className="mt-8 max-w-lg scroll-mt-32" onSubmit={check}>
       <label htmlFor="availability-search" className="text-sm font-medium text-navy">
         Enter your zip code or city
       </label>
@@ -187,7 +187,7 @@ function Index() {
 
       <TrustPillars />
 
-      <section className="border-t bg-card">
+      <section id="faq" className="scroll-mt-24 border-t bg-card">
         <div className="mx-auto max-w-3xl px-5 py-20">
           <h2 className="text-center text-3xl font-semibold md:text-4xl">Frequently asked questions</h2>
           <Accordion type="single" collapsible className="mt-10">

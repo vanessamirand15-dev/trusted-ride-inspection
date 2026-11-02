@@ -1,11 +1,16 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useState } from 'react';
-import { Menu, LogOut, UserRound, CalendarDays, Settings, Plus, ShieldCheck, Lock, CreditCard } from "lucide-react";
+import { useState, type ReactNode } from 'react';
+import { Menu, LogOut, UserRound, CalendarDays, Settings, Plus, ShieldCheck, Lock, CreditCard, Phone, Mail, LifeBuoy } from "lucide-react";
 import logoAsset from '@/assets/trustferly_logo.png.asset.json';
 import { Button } from "@/components/ui/button";
 import { useDemoAccount } from '@/components/demo-account';
+import { SampleReportDialog } from '@/components/sample-report-dialog';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
+
+const PHONE_DISPLAY = "(800) 555-0199";
+const PHONE_HREF = "tel:8005550199";
+const SUPPORT_EMAIL = "support@trustferly.example";
 
 const prototypeNotice = 'Academic MVP Prototype — For demonstration purposes only. Not an active commercial service.';
 
@@ -56,6 +61,46 @@ const nav = [
   { to: "/pricing", label: "Pricing" },
 ] as const;
 
+function SupportDialog({ trigger }: { trigger: ReactNode }) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      <DialogContent className="max-h-[85dvh] w-[calc(100%-2rem)] max-w-md overflow-y-auto rounded-lg p-6 sm:p-8">
+        <DialogTitle className="text-2xl font-semibold">Need help?</DialogTitle>
+        <DialogDescription>Reach Trustferly support through any of these channels.</DialogDescription>
+        <div className="mt-5 space-y-3">
+          <a href={PHONE_HREF} className="flex items-center gap-3 rounded-lg border p-4 text-sm font-medium transition-colors hover:bg-secondary">
+            <Phone className="h-5 w-5 shrink-0 text-accent" />Call {PHONE_DISPLAY}
+          </a>
+          <a href={`mailto:${SUPPORT_EMAIL}`} className="flex items-center gap-3 rounded-lg border p-4 text-sm font-medium transition-colors hover:bg-secondary">
+            <Mail className="h-5 w-5 shrink-0 text-accent" />Email {SUPPORT_EMAIL}
+          </a>
+        </div>
+        <p className="mt-5 text-xs text-muted-foreground">Demo feature: in production, this opens live chat and the support portal.</p>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function UtilityBar() {
+  return (
+    <div className="hidden bg-navy-gradient text-navy-foreground lg:block">
+      <div className="mx-auto flex h-9 max-w-6xl items-center justify-between px-5 text-xs font-medium">
+        <div className="flex items-center gap-5">
+          <a href={PHONE_HREF} className="inline-flex items-center gap-1.5 text-navy-foreground/80 transition-colors hover:text-navy-foreground">
+            <Phone className="h-3.5 w-3.5" />{PHONE_DISPLAY}
+          </a>
+          <SupportDialog trigger={<button type="button" className="inline-flex items-center gap-1.5 text-navy-foreground/80 transition-colors hover:text-navy-foreground"><LifeBuoy className="h-3.5 w-3.5" />Need Help?</button>} />
+        </div>
+        <div className="flex items-center gap-5">
+          <Link to="/apply" className="text-navy-foreground/80 transition-colors hover:text-navy-foreground">Become an Inspector</Link>
+          <Link to="/inspector/login" className="text-navy-foreground/80 transition-colors hover:text-navy-foreground">Inspector Login</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Logo({ dark = false }: { dark?: boolean }) {
   return (
     <Link to="/" className="flex items-center gap-2">
@@ -67,6 +112,8 @@ export function Logo({ dark = false }: { dark?: boolean }) {
   );
 }
 
+const mainNavLinkClass = "text-sm font-medium text-navy/70 transition-colors hover:text-navy";
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { account, logout } = useDemoAccount();
@@ -74,6 +121,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
       <p className="bg-secondary px-5 py-1.5 text-center text-[11px] font-medium text-muted-foreground">{prototypeNotice}</p>
+      <UtilityBar />
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
         <div className="flex items-center gap-3">
           <Sheet open={open} onOpenChange={setOpen}>
@@ -84,7 +132,24 @@ export function SiteHeader() {
                 <Button asChild variant="cta" className="mb-4 w-full justify-start"><Link to="/book" onClick={() => setOpen(false)}><Plus />Book now</Link></Button>
                 <Link to="/" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Home</Link>
                 {nav.map(n => <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">{n.label}</Link>)}
+                <Link to="/" hash="coverage" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Coverage Area</Link>
+                <SampleReportDialog trigger={<button type="button" className="block w-full rounded-md px-3 py-3 text-left text-sm hover:bg-secondary">Sample Report</button>} />
+                <Link to="/" hash="faq" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">FAQ</Link>
               </nav>
+              <div className="mt-6 border-t pt-6">
+                <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Support</p>
+                <nav aria-label="Support" className="space-y-2">
+                  <a href={PHONE_HREF} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><Phone size={17} />{PHONE_DISPLAY}</a>
+                  <SupportDialog trigger={<button type="button" className="flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-sm hover:bg-secondary"><LifeBuoy size={17} />Need Help?</button>} />
+                </nav>
+              </div>
+              <div className="mt-6 border-t pt-6">
+                <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">For professionals</p>
+                <nav aria-label="For professionals" className="space-y-2">
+                  <Link to="/apply" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Become an Inspector</Link>
+                  <Link to="/inspector/login" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Inspector Login</Link>
+                </nav>
+              </div>
               <div className="mt-6 border-t pt-6">
                 {account ? <><p className="mb-4 break-words px-3 text-sm font-semibold">{account.name}</p><nav aria-label="Your account" className="space-y-2">
                   {([{ to: '/account', label: 'Your account', icon: UserRound }, { to: '/account/settings', label: 'Account settings', icon: Settings }, { to: '/bookings', label: 'Your Bookings', icon: CalendarDays }] as const).map(n => <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><n.icon size={17} />{n.label}</Link>)}
@@ -95,20 +160,23 @@ export function SiteHeader() {
           </Sheet>
           <Logo />
         </div>
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {nav.map((n) => (
             <Link
               key={n.to}
               to={n.to}
-              className="text-sm font-medium text-navy/70 transition-colors hover:text-navy"
+              className={mainNavLinkClass}
               activeProps={{ className: "text-navy" }}
             >
               {n.label}
             </Link>
           ))}
+          <Link to="/" hash="coverage" className={mainNavLinkClass}>Coverage Area</Link>
+          <SampleReportDialog trigger={<button type="button" className={mainNavLinkClass}>Sample Report</button>} />
+          <Link to="/" hash="faq" className={mainNavLinkClass}>FAQ</Link>
         </nav>
         <div className="flex items-center gap-3">
-        <Button asChild variant="ghost" size="sm" className="hidden lg:inline-flex"><Link to={account ? '/bookings' : '/auth'}>{account ? 'Your Bookings' : 'Log in'}</Link></Button>
+        <Button asChild variant="outline" size="sm" className="hidden lg:inline-flex"><Link to={account ? '/bookings' : '/auth'}>{account ? 'Your Bookings' : 'Sign in'}</Link></Button>
         <Button asChild variant="cta" size="sm">
           <Link to="/book">Book inspection</Link>
         </Button>
