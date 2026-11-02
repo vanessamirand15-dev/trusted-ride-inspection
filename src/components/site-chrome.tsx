@@ -62,6 +62,52 @@ const nav = [
   { to: "/pricing", label: "Pricing" },
 ] as const;
 
+function SupportDialog({ trigger }: { trigger: ReactNode }) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      <DialogContent className="max-h-[85dvh] w-[calc(100%-2rem)] max-w-md overflow-y-auto rounded-lg p-6 sm:p-8">
+        <DialogTitle className="text-2xl font-semibold">Need help?</DialogTitle>
+        <DialogDescription>Reach Trustferly support through any of these channels.</DialogDescription>
+        <div className="mt-5 space-y-3">
+          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-lg border p-4 text-sm font-medium transition-colors hover:bg-secondary">
+            <MessageCircle className="h-5 w-5 shrink-0 text-accent" />Chat on WhatsApp
+          </a>
+          <a href={PHONE_HREF} className="flex items-center gap-3 rounded-lg border p-4 text-sm font-medium transition-colors hover:bg-secondary">
+            <Phone className="h-5 w-5 shrink-0 text-accent" />Call {PHONE_DISPLAY}
+          </a>
+          <a href={`mailto:${SUPPORT_EMAIL}`} className="flex items-center gap-3 rounded-lg border p-4 text-sm font-medium transition-colors hover:bg-secondary">
+            <Mail className="h-5 w-5 shrink-0 text-accent" />Email {SUPPORT_EMAIL}
+          </a>
+        </div>
+        <p className="mt-5 text-xs text-muted-foreground">Demo feature: in production, this opens live chat and the support portal.</p>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function UtilityBar() {
+  return (
+    <div className="hidden bg-navy-gradient text-navy-foreground lg:block">
+      <div className="mx-auto flex h-9 max-w-6xl items-center justify-between px-5 text-xs font-medium">
+        <div className="flex items-center gap-5">
+          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-navy-foreground/80 transition-colors hover:text-navy-foreground">
+            <MessageCircle className="h-3.5 w-3.5" />Chat on WhatsApp
+          </a>
+          <a href={PHONE_HREF} className="inline-flex items-center gap-1.5 text-navy-foreground/80 transition-colors hover:text-navy-foreground">
+            <Phone className="h-3.5 w-3.5" />{PHONE_DISPLAY}
+          </a>
+          <SupportDialog trigger={<button type="button" className="inline-flex items-center gap-1.5 text-navy-foreground/80 transition-colors hover:text-navy-foreground"><LifeBuoy className="h-3.5 w-3.5" />Need Help?</button>} />
+        </div>
+        <div className="flex items-center gap-5">
+          <Link to="/apply" className="text-navy-foreground/80 transition-colors hover:text-navy-foreground">Become an Inspector</Link>
+          <Link to="/inspector/login" className="text-navy-foreground/80 transition-colors hover:text-navy-foreground">Inspector Login</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Logo({ dark = false }: { dark?: boolean }) {
   return (
     <Link to="/" className="flex items-center gap-2">
