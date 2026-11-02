@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { z } from "zod";
 import { BadgeCheck, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,6 +41,7 @@ export function ContactForm() {
     const { error: dbError } = await supabase.from("contact_submissions").insert(parsed.data);
     if (dbError) { setState("idle"); return setError("Could not send your message. Please try again."); }
     setState("sent");
+    toast.success("Thank you! Your inquiry has been received. [Academic MVP Demo]");
   };
   if (state === "sent") {
     return (
@@ -105,7 +107,7 @@ export function ZipChecker() {
       {result && (
         <div role="status" className={`mt-3 rounded-lg px-4 py-3 text-sm ${result.status === "active" ? "bg-teal-soft text-accent" : "bg-secondary text-foreground"}`}>
           {result.status === "active" && (
-            <p className="flex items-center gap-2 font-semibold"><BadgeCheck className="h-4 w-4 shrink-0" />Active coverage available in {result.zip}. Inspectors serve every US ZIP code.</p>
+            <p className="flex items-center gap-2 font-semibold"><BadgeCheck className="h-4 w-4 shrink-0" />Service available in {result.zip}! Inspectors serve every US ZIP code.</p>
           )}
           {result.status === "invalid" && <p>Please enter a 5 digit ZIP code.</p>}
         </div>

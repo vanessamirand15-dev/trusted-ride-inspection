@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader, SiteFooter } from "../components/site-chrome";
+import { Toaster } from '@/components/ui/sonner';
 import { DemoAccountProvider } from '@/components/demo-account';
 
 function NotFoundComponent() {
@@ -110,6 +111,7 @@ function RootShell({ children }: { children: ReactNode }) {
       </head>
       <body>
         {children}
+        <Toaster />
         <Scripts />
       </body>
     </html>
