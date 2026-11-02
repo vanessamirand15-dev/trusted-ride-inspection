@@ -33,3 +33,11 @@ export function acceptJob(jobs: Job[], id: string): Job[] {
   return jobs.map(j => (j.id === id && !j.status ? { ...j, status: 'Upcoming' } : j));
 }
 export function jobsByStatus(jobs: Job[], status: JobStatus) { return jobs.filter(j => j.status === status); }
+export function completeJob(jobs: Job[], id: string): Job[] {
+  return jobs.map(j => (j.id === id && (j.status === 'Upcoming' || j.status === 'In Progress') ? { ...j, status: 'Completed' } : j));
+}
+export function earnings(jobs: Job[]) {
+  const done = jobsByStatus(jobs, 'Completed');
+  const pending = jobs.filter(j => j.status === 'Upcoming' || j.status === 'In Progress');
+  return { completed: done.length, total: done.reduce((s, j) => s + j.payout, 0), pending: pending.reduce((s, j) => s + j.payout, 0) };
+}

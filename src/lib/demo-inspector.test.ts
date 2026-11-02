@@ -15,3 +15,12 @@ describe('inspector jobs', () => {
     expect(availableJobs(next, 25, []).map(j => j.id)).not.toContain('j1');
   });
 });
+import { completeJob, earnings } from './demo-inspector';
+describe('inspector earnings', () => {
+  it('sums completed and pending payouts', () => {
+    expect(earnings(sampleJobs)).toEqual({ completed: 1, total: 95, pending: 190 });
+  });
+  it('submitting a report completes the job', () => {
+    expect(earnings(completeJob(sampleJobs, 'm2'))).toEqual({ completed: 2, total: 190, pending: 95 });
+  });
+});

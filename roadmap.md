@@ -48,3 +48,9 @@
 - [x] Add footer legal modals: Terms of Service, Privacy Policy, Cancellation Policy with sample terms.
 - Already covered by prior work: sample report modal, dynamic savings calculator, FAQ accordion, ZIP availability search.
 - Note: booking stays an account-linked page wizard (login-first requirement) rather than a modal; all four steps match the brief's content.
+
+## Inspector portal
+- [x] /apply onboarding form, /inspector/dashboard (profile, radius, job feed, accept/decline, my inspections), footer links
+- [x] /inspector/profile document uploads + verification badge
+- [x] /inspector/inspection/$id checklist, section photos, notes, submit report
+- [x] /inspector/finances earnings overview + availability calendar
