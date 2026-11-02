@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { BadgeCheck, CheckCircle2, FileText, Flag, Printer, Star, TriangleAlert } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
@@ -13,12 +13,12 @@ const findings = [
   { title: 'Minor valve cover seepage', photo: enginePhoto, note: 'Dry residue near the valve cover. No active drip observed. Clean the area and monitor at the next oil change.', cost: '$0', action: 'Monitor' },
 ];
 
-export function SampleReportDialog({ variant = 'outline' }: { variant?: 'outline' | 'onDark' }) {
+export function SampleReportDialog({ variant = 'outline', trigger }: { variant?: 'outline' | 'onDark'; trigger?: ReactNode }) {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={variant} size="lg"><FileText />View Sample Report</Button>
+        {trigger ?? <Button variant={variant} size="lg"><FileText />View Sample Report</Button>}
       </DialogTrigger>
       <DialogContent className="max-h-[85dvh] w-[calc(100%-2rem)] max-w-3xl overflow-y-auto rounded-lg p-5 sm:p-8">
         <header className="border-b pb-6 pr-5">
