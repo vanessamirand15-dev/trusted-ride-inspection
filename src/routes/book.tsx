@@ -99,7 +99,8 @@ function BookingWizard() {
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Vehicle</dt><dd className="font-medium text-navy">{vehicle}</dd></div>
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Package</dt><dd className="font-medium text-navy">{packageLabel(selectedPlan)}</dd></div>
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">When</dt><dd className="font-medium text-navy">{date} · {slot}</dd></div>
-              <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Location</dt><dd className="font-medium text-navy">{location}</dd></div>
+              <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Location</dt><dd className="font-medium text-navy">{address}, {location}</dd></div>
+              <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Seller</dt><dd className="font-medium text-navy">{sellerName} · {sellerContact}</dd></div>
             </dl>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               {bookingId && <Button asChild variant="cta" size="lg"><Link to="/bookings/$bookingId" params={{ bookingId }}>View booking</Link></Button>}
