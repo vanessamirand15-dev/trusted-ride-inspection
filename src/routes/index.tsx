@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { SampleReportDialog } from "@/components/sample-report-dialog";
 import { InspectionPricing } from '@/components/inspection-pricing';
+import { CostEstimator, RiskCompare, TrustPillars } from '@/components/home-sections';
 import hero from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
@@ -182,6 +183,10 @@ function Index() {
         </ul>
       </section>
 
+      <RiskCompare />
+
+      <TrustPillars />
+
       <section className="border-t bg-card">
         <div className="mx-auto max-w-3xl px-5 py-20">
           <h2 className="text-center text-3xl font-semibold md:text-4xl">Frequently asked questions</h2>
@@ -195,6 +200,8 @@ function Index() {
           </Accordion>
         </div>
       </section>
+
+      <CostEstimator />
 
       <section aria-labelledby="home-pricing" className="border-t bg-card">
         <div className="mx-auto max-w-5xl px-5 py-20">
