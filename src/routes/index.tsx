@@ -7,6 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { SampleReportDialog } from "@/components/sample-report-dialog";
 import { InspectionPricing } from '@/components/inspection-pricing';
 import { CostEstimator, RiskCompare, TrustPillars } from '@/components/home-sections';
+import { ContactSection, CoverageSection, ZipChecker } from '@/components/contact-coverage';
 import hero from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
@@ -55,46 +56,6 @@ const reviews = [
   { name: "Priya K.", location: "Santa Monica, CA", text: "As a first-time buyer I had no idea what to look for. The report explained everything in plain language and gave me real confidence." },
 ];
 
-function AvailabilityCheck() {
-  const [value, setValue] = useState("");
-  const [result, setResult] = useState<{ area: string; count: number } | null>(null);
-  const check = (e: React.FormEvent) => {
-    e.preventDefault();
-    const area = value.trim();
-    if (!area) return;
-    let hash = 0;
-    for (const ch of area) hash = (hash * 31 + ch.charCodeAt(0)) % 997;
-    setResult({ area, count: 2 + (hash % 5) });
-  };
-  return (
-    <form id="coverage" className="mt-8 max-w-lg scroll-mt-32" onSubmit={check}>
-      <label htmlFor="availability-search" className="text-sm font-medium text-navy">
-        Enter your zip code or city
-      </label>
-      <div className="mt-2 flex flex-wrap gap-2">
-        <Input
-          id="availability-search"
-          required
-          value={value}
-          onChange={(e) => { setValue(e.target.value); setResult(null); }}
-          placeholder="e.g. Los Angeles or 90001"
-          className="max-w-xs bg-card"
-        />
-        <Button type="submit" variant="cta"><MapPin />Check Availability</Button>
-      </div>
-      {result && (
-        <div role="status" className="mt-3 rounded-lg bg-teal-soft px-4 py-3">
-          <p className="flex items-center gap-2 text-sm font-semibold text-accent">
-            <BadgeCheck className="h-4 w-4 shrink-0" />
-            Great news! {result.count} verified inspectors are available in {result.area}.
-          </p>
-          <p className="mt-1 text-xs text-accent/80">Example availability for demonstration. Live coverage is not connected.</p>
-        </div>
-      )}
-    </form>
-  );
-}
-
 function Index() {
   return (
     <>
@@ -118,7 +79,7 @@ function Index() {
             <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-accent" />Satisfaction Guarantee</span>
             <span className="inline-flex items-center gap-1.5"><Lock className="h-4 w-4 text-accent" />Secure SSL Checkout</span>
           </div>
-          <AvailabilityCheck />
+          <div className="mt-8 max-w-lg"><p className="mb-2 text-sm font-medium text-navy">Check coverage for your ZIP code</p><ZipChecker /></div>
           <p className="mt-6 text-sm text-muted-foreground">We never sell cars, list vehicles or offer financing.</p>
         </div>
         <div className="relative">
@@ -187,6 +148,7 @@ function Index() {
 
       <TrustPillars />
 
+      <CoverageSection />
       <section id="faq" className="scroll-mt-24 border-t bg-card">
         <div className="mx-auto max-w-3xl px-5 py-20">
           <h2 className="text-center text-3xl font-semibold md:text-4xl">Frequently asked questions</h2>
@@ -242,6 +204,7 @@ function Index() {
           </div>
         </div>
       </section>
+      <ContactSection />
     </>
   );
 }
