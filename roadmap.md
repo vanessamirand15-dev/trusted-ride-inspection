@@ -12,3 +12,11 @@
 - [x] Add a full sample condition report and vehicle history to the completed sample booking.
 - [x] Refine headings and darken gray text.
 - [x] Verify the sample report and logo on wide and narrow screens.
+
+## Academic prototype landing page (all copy in English)
+- [ ] Add academic project badge noting all data is simulated.
+- [ ] Add FAQ accordion below the coverage section.
+- [ ] Add "View Sample Report (Demo)" modal on hero and coverage sections.
+- [ ] Add projected metrics card and simulated testimonials.
+- [ ] Add zip/city availability demo lookup in the hero.
+- [ ] Add guarantee and secure payment badges to footer and CTAs.
