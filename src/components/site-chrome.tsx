@@ -69,9 +69,6 @@ function SupportDialog({ trigger }: { trigger: ReactNode }) {
         <DialogTitle className="text-2xl font-semibold">Need help?</DialogTitle>
         <DialogDescription>Reach Trustferly support through any of these channels.</DialogDescription>
         <div className="mt-5 space-y-3">
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-lg border p-4 text-sm font-medium transition-colors hover:bg-secondary">
-            <MessageCircle className="h-5 w-5 shrink-0 text-accent" />Chat on WhatsApp
-          </a>
           <a href={PHONE_HREF} className="flex items-center gap-3 rounded-lg border p-4 text-sm font-medium transition-colors hover:bg-secondary">
             <Phone className="h-5 w-5 shrink-0 text-accent" />Call {PHONE_DISPLAY}
           </a>
@@ -90,9 +87,6 @@ function UtilityBar() {
     <div className="hidden bg-navy-gradient text-navy-foreground lg:block">
       <div className="mx-auto flex h-9 max-w-6xl items-center justify-between px-5 text-xs font-medium">
         <div className="flex items-center gap-5">
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-navy-foreground/80 transition-colors hover:text-navy-foreground">
-            <MessageCircle className="h-3.5 w-3.5" />Chat on WhatsApp
-          </a>
           <a href={PHONE_HREF} className="inline-flex items-center gap-1.5 text-navy-foreground/80 transition-colors hover:text-navy-foreground">
             <Phone className="h-3.5 w-3.5" />{PHONE_DISPLAY}
           </a>
@@ -145,7 +139,6 @@ export function SiteHeader() {
               <div className="mt-6 border-t pt-6">
                 <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Support</p>
                 <nav aria-label="Support" className="space-y-2">
-                  <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><MessageCircle size={17} />Chat on WhatsApp</a>
                   <a href={PHONE_HREF} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><Phone size={17} />{PHONE_DISPLAY}</a>
                   <SupportDialog trigger={<button type="button" className="flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-sm hover:bg-secondary"><LifeBuoy size={17} />Need Help?</button>} />
                 </nav>
