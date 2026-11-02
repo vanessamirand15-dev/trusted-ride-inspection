@@ -137,7 +137,7 @@ function Index() {
 
       <section className="border-y bg-card">
         <div className="mx-auto max-w-6xl px-5 py-10">
-          <p className="text-center text-xs font-medium text-muted-foreground">Illustrative platform figures, not measured results</p>
+          <p className="text-center text-xs font-medium text-muted-foreground">Sample data for MVP demonstration · Illustrative platform figures, not measured results</p>
           <dl className="mt-6 grid gap-6 text-center sm:grid-cols-3">
             {metrics.map((m) => (
               <div key={m.label}>
@@ -213,7 +213,7 @@ function Index() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-20">
-        <p className="text-center text-xs font-medium text-muted-foreground">Illustrative buyer stories, not verified customer reviews</p>
+        <p className="text-center text-xs font-medium text-muted-foreground">Sample data for MVP demonstration · Illustrative buyer stories, not verified customer reviews</p>
         <h2 className="mt-3 text-center text-3xl font-semibold md:text-4xl">A clearer picture before you buy</h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {reviews.map((r) => (

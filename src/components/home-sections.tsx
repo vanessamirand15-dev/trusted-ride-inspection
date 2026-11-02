@@ -47,7 +47,7 @@ export function CostEstimator() {
             <div><dt className="text-sm text-muted-foreground">Potential savings on hidden repairs</dt><dd className="mt-1 text-3xl font-semibold text-accent">${savings}+</dd></div>
           </dl>
           <Button asChild variant="cta" size="lg" className="mt-7 w-full"><Link to="/book" search={{ plan: plan.id }}>Book the {plan.name}</Link></Button>
-          <p className="mt-4 text-xs text-muted-foreground">Illustrative estimate for demonstration. Actual findings and savings vary by vehicle.</p>
+          <p className="mt-4 text-xs text-muted-foreground">Sample data for MVP demonstration. Actual findings and savings vary by vehicle.</p>
         </div>
       </div>
     </section>

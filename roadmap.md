@@ -40,3 +40,11 @@
 - [x] Add "Estimate Your Inspection Value" calculator (vehicle age + class → recommended inspection, cost, potential savings).
 - [x] Add "Buying Blind" vs "Inspected by Trustferly" comparison section.
 - [x] Add 3-pillar trust section: background checks, same/next-day service, reschedule protection.
+
+## Master brief (all-in-one)
+- [x] Restore the mandatory "Academic MVP Prototype" disclaimer in the top bar and footer (user reversed the earlier removal); standardize captions to "Sample data for MVP demonstration".
+- [x] Extend the booking wizard: seller contact details in scheduling step, mock card inputs and a generated tracking ID at confirmation.
+- [x] Replace "Apply to inspect" with a dedicated inspector application form (certification #, experience, city/state, equipment checklist, 48-hour success state).
+- [x] Add footer legal modals: Terms of Service, Privacy Policy, Cancellation Policy with sample terms.
+- Already covered by prior work: sample report modal, dynamic savings calculator, FAQ accordion, ZIP availability search.
+- Note: booking stays an account-linked page wizard (login-first requirement) rather than a modal; all four steps match the brief's content.
