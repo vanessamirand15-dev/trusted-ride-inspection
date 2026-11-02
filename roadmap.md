@@ -57,5 +57,6 @@
 - [x] Header without "For inspectors"; footer "For Professionals" with Apply as inspector + Inspector Portal
 - [x] Specialties selection + payout tiers ($80–$100 standard, $150–$220+ luxury) on /apply and /inspector/profile
 - [x] Job cards show category badge and tier payout; inspection form sections + luxury diagnostic notes
-- [x] Real inspector sign up/login, saved profile + assigned jobs, private documents (inspector + reviewers)
+- [x] Real inspector sign up/login, saved profile + assigned jobs, private documents (inspector + reviewers)  (tested end to end)
 - [ ] Production refactor brief (3 tiers $149/$229/$349, multi-step /apply, maps link, extended report builder, chat/support) — uploaded file is cut off at item 5
+- [x] Header strictly Logo / How it works / Pricing / Book inspection; pro links only in footer For Professionals
