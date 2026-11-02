@@ -4,6 +4,7 @@ import { BadgeCheck, CalendarClock, Check, DollarSign, MapPin, X } from 'lucide-
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { pageHead } from '@/lib/page-head';
+import { MockWallet } from '@/components/mock-finance';
 import { acceptJob, availableJobs, jobsByStatus, type InspectorProfile, type Job, type JobStatus } from '@/lib/demo-inspector';
 
 export const Route = createFileRoute('/inspector/dashboard')({
@@ -37,7 +38,7 @@ function Page() {
         </div>
       </aside>
       <Tabs defaultValue="available">
-        <TabsList><TabsTrigger value="available">Available jobs ({feed.length})</TabsTrigger><TabsTrigger value="mine">My inspections</TabsTrigger></TabsList>
+        <TabsList className="h-auto flex flex-wrap justify-start gap-1"><TabsTrigger value="available">Available jobs ({feed.length})</TabsTrigger><TabsTrigger value="mine">My inspections</TabsTrigger><TabsTrigger value="wallet">Wallet & Payouts</TabsTrigger></TabsList>
         <TabsContent value="available" className="mt-6 space-y-4">
           {feed.length === 0 && <p className="rounded-2xl border bg-card p-8 text-center text-muted-foreground">No pending requests within {profile.radius} miles. Try widening your radius.</p>}
           {feed.map(j => <JobCard key={j.id} job={j}>
@@ -54,6 +55,7 @@ function Page() {
             </div>
           </div>)}
         </TabsContent>
+        <TabsContent value="wallet" className="mt-6"><MockWallet /></TabsContent>
       </Tabs>
     </div>
   </InspectorShell>;

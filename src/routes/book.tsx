@@ -6,6 +6,7 @@ import { PageIntro } from "@/components/site-chrome";
 import { AccountGate } from '@/components/account-ui';
 import { useDemoAccount } from '@/components/demo-account';
 import { inspectionPlans, packageLabel } from '@/lib/inspection-plans';
+import { FinancialDisclaimer, MockPaymentGateway } from '@/components/mock-finance';
 
 export const Route = createFileRoute("/book")({
   validateSearch: (search: Record<string, unknown>): { plan?: 'standard' | 'premium' } => {
@@ -33,7 +34,8 @@ const stepMeta = [
   { icon: Car, label: 'Vehicle' },
   { icon: ClipboardList, label: 'Service' },
   { icon: CalendarCheck, label: 'Schedule' },
-  { icon: CreditCard, label: 'Confirm' },
+  { icon: CreditCard, label: 'Payment' },
+  { icon: Check, label: 'Confirm' },
 ];
 
 function Page() {
@@ -56,9 +58,6 @@ function BookingWizard() {
   const [sellerName, setSellerName] = useState('');
   const [sellerContact, setSellerContact] = useState('');
   const [address, setAddress] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCvc, setCardCvc] = useState('');
   const [done, setDone] = useState(false);
   const [bookingId, setBookingId] = useState<string | null>(null);
   const [trackingId, setTrackingId] = useState('');
@@ -66,7 +65,6 @@ function BookingWizard() {
   const selectedPlan = inspectionPlans.find(p => p.id === planId) ?? inspectionPlans[0];
   const stepOneValid = vehicle.trim().length > 0 && location.trim().length > 0;
   const stepThreeValid = date.length > 0 && sellerName.trim().length > 0 && sellerContact.trim().length > 0 && address.trim().length > 0;
-  const cardValid = cardNumber.replace(/\D/g, '').length >= 12 && cardExpiry.trim().length >= 4 && cardCvc.trim().length >= 3;
 
   const confirm = () => {
     const booking = addBooking({
@@ -107,6 +105,7 @@ function BookingWizard() {
               <Button asChild variant="outline" size="lg"><Link to="/bookings">Your bookings</Link></Button>
             </div>
             <p className="mt-6 text-xs text-muted-foreground">Demonstration booking · No real inspection is arranged and no payment is taken.</p>
+            <div className="mt-4 text-left"><FinancialDisclaimer /></div>
           </div>
         </div>
       </>
@@ -193,14 +192,17 @@ function BookingWizard() {
             </div>
             <div className="mt-2 flex justify-between">
               <Button variant="ghost" onClick={() => setStep(1)}><ChevronLeft />Back</Button>
-              <Button variant="cta" size="lg" disabled={!stepThreeValid} onClick={() => setStep(3)}>Review & confirm</Button>
+              <Button variant="cta" size="lg" disabled={!stepThreeValid} onClick={() => setStep(3)}>Continue to payment</Button>
             </div>
           </section>
         )}
 
-        {step === 3 && (
+        {step === 3 && <MockPaymentGateway amount={selectedPlan.price} onBack={() => setStep(2)} onContinue={() => setStep(4)} />}
+
+        {step === 4 && (
           <section className="grid gap-5 border-y py-8" aria-label="Confirm booking">
             <h2 className="text-xl font-semibold">Review & confirm</h2>
+            <FinancialDisclaimer />
             <dl className="grid gap-3 rounded-2xl border bg-card p-5 text-sm">
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Name</dt><dd className="font-medium text-navy">{account?.name}</dd></div>
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Vehicle</dt><dd className="font-medium text-navy">{vehicle}</dd></div>
@@ -211,16 +213,10 @@ function BookingWizard() {
               <div className="flex justify-between gap-4 border-t pt-3"><dt className="text-muted-foreground">Package</dt><dd className="font-medium text-navy">{selectedPlan.name}</dd></div>
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Total due today</dt><dd className="text-lg font-semibold text-navy">${selectedPlan.price}</dd></div>
             </dl>
-            <fieldset className="grid gap-4 rounded-2xl border bg-card p-5 sm:grid-cols-2">
-              <legend className="px-1 text-sm font-semibold text-navy">Payment details</legend>
-              <label className="text-sm font-medium text-navy sm:col-span-2">Card number<input inputMode="numeric" value={cardNumber} onChange={e => setCardNumber(e.target.value)} placeholder="4242 4242 4242 4242" className={field} autoComplete="off" /></label>
-              <label className="text-sm font-medium text-navy">Expiry<input value={cardExpiry} onChange={e => setCardExpiry(e.target.value)} placeholder="MM/YY" className={field} autoComplete="off" /></label>
-              <label className="text-sm font-medium text-navy">CVC<input inputMode="numeric" value={cardCvc} onChange={e => setCardCvc(e.target.value)} placeholder="123" className={field} autoComplete="off" /></label>
-            </fieldset>
-            <p className="flex items-center gap-2 text-xs text-muted-foreground"><CreditCard className="h-4 w-4 shrink-0" />Simulated checkout · No payment is processed and card details are never stored.</p>
+            <p className="flex items-center gap-2 text-sm text-accent"><Check className="h-4 w-4 shrink-0" />Mock payment step complete. No charge made.</p>
             <div className="mt-2 flex justify-between">
-              <Button variant="ghost" onClick={() => setStep(2)}><ChevronLeft />Back</Button>
-              <Button variant="cta" size="lg" disabled={!cardValid} onClick={confirm}>Complete Booking</Button>
+              <Button variant="ghost" onClick={() => setStep(3)}><ChevronLeft />Back</Button>
+              <Button variant="cta" size="lg" onClick={confirm}>Complete Booking</Button>
             </div>
           </section>
         )}

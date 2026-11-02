@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { pageHead } from '@/lib/page-head';
 import { specialties } from '@/lib/demo-inspector';
+import { MockWallet } from '@/components/mock-finance';
 
 export const Route = createFileRoute('/_authenticated/inspector/portal')({
   head: () => pageHead('Inspector portal', 'Your Trustferly inspector profile, private verification documents and assigned inspection jobs.'),
@@ -65,7 +66,7 @@ function Page() {
       <Button variant="outline" onClick={signOut}><LogOut />Sign out</Button>
     </div>
     <Tabs defaultValue="jobs" className="mt-10">
-      <TabsList><TabsTrigger value="jobs">Assigned jobs ({data.jobs.length})</TabsTrigger><TabsTrigger value="profile">Profile</TabsTrigger><TabsTrigger value="docs">Documents</TabsTrigger>{data.isReviewer && <TabsTrigger value="review">Review</TabsTrigger>}</TabsList>
+      <TabsList className="h-auto flex flex-wrap justify-start gap-1"><TabsTrigger value="jobs">Assigned jobs ({data.jobs.length})</TabsTrigger><TabsTrigger value="profile">Profile</TabsTrigger><TabsTrigger value="docs">Documents</TabsTrigger><TabsTrigger value="wallet">Wallet & Payouts</TabsTrigger>{data.isReviewer && <TabsTrigger value="review">Review</TabsTrigger>}</TabsList>
       <TabsContent value="jobs" className="mt-6 space-y-8">
         {data.jobs.length === 0 && <p className="rounded-2xl border bg-card p-8 text-center text-muted-foreground">No jobs assigned yet. Once a reviewer verifies your profile and assigns an inspection, it will appear here.</p>}
         {data.jobs.length > 0 && statuses.map(s => <div key={s}>
@@ -89,6 +90,7 @@ function Page() {
       </TabsContent>
       <TabsContent value="profile" className="mt-6"><ProfileForm profile={profile} onSaved={refresh} /></TabsContent>
       <TabsContent value="docs" className="mt-6"><Documents uid={data.uid} docs={data.docs} onChange={refresh} /></TabsContent>
+      <TabsContent value="wallet" className="mt-6"><MockWallet /></TabsContent>
       {data.isReviewer && <TabsContent value="review" className="mt-6"><Review /></TabsContent>}
     </Tabs>
   </section>;

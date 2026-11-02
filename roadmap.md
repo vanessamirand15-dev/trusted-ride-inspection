@@ -1,4 +1,10 @@
 # Account and booking demonstration
+## Academic financial screens
+- [x] Add a dedicated dummy payment step before buyer confirmation, including billing address and disclaimer.
+- [x] Add Wallet & Payouts to real and sample inspector portals with mock setup and fictional ledger.
+- [x] Verify booking completion, sample wallet setup, financial input non-persistence and narrow-screen layout.
+- [ ] Verify wallet within a real signed-in inspector account: blocked because the existing QA login did not succeed and the requesting user has no account available for session minting.
+
 - [x] Add shared demonstration accounts and booking entities with tested lifecycle rules.
 - [x] Add login/signup, account, settings, booking list and booking detail pages.
 - [x] Tie the booking form to the signed-in demonstration account.
