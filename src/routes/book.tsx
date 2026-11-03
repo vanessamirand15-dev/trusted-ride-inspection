@@ -200,7 +200,7 @@ function BookingWizard() {
                 <p className="text-sm text-muted-foreground">Choose one of these options, or skip it and enter the details yourself.</p>
               </div>
               <div role="tablist" aria-label="Ways to add your listing" className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-4">
-                {([['link', 'Link', 'Paste the listing page address'], ['shot', 'Screenshot', 'Upload a photo of the ad'], ['text', 'Paste text', 'Copy the ad text in'], ['manual', 'Enter details manually', 'Type them in yourself']] as const).map(([id, label, hint]) => (
+                {([['manual', 'Enter details manually', 'Type them in yourself'], ['link', 'Link', 'Paste the listing page address'], ['shot', 'Screenshot', 'Upload a photo of the ad'], ['text', 'Paste text', 'Copy the ad text in']] as const).map(([id, label, hint]) => (
                   <button
                     key={id}
                     type="button"
