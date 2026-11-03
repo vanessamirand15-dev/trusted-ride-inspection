@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState, type ClipboardEvent as ReactClipboardEvent, type DragEvent as ReactDragEvent } from "react";
+import { useEffect, useState, type DragEvent as ReactDragEvent } from "react";
 import { BadgeCheck, CalendarCheck, Car, Check, ChevronLeft, ClipboardList, ClipboardPaste, CreditCard, ExternalLink, ScanSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageIntro } from "@/components/site-chrome";
@@ -110,7 +110,7 @@ function BookingWizard() {
   };
   useEffect(() => {
     if (intake !== 'shot') return;
-    const onPaste = (e: ReactClipboardEvent) => {
+    const onPaste = (e: ClipboardEvent) => {
       const file = Array.from(e.clipboardData?.files ?? []).find(f => f.type.startsWith('image/'));
       if (file) onShot(file);
     };
