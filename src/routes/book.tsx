@@ -196,8 +196,8 @@ function BookingWizard() {
             <h2 className="text-xl font-semibold md:col-span-2">Vehicle details</h2>
             <div className="grid gap-4 rounded-lg border bg-muted/40 p-5 md:col-span-2">
               <div>
-                <p className="font-semibold text-navy">Fill details automatically (optional)</p>
-                <p className="text-sm text-muted-foreground">Choose one of these options, or skip it and enter the details yourself.</p>
+                <p className="font-semibold text-navy">How would you like to add vehicle details?</p>
+                <p className="text-sm text-muted-foreground">Pick whichever works for you. You can always check and edit the details below.</p>
               </div>
               <div role="tablist" aria-label="Ways to add your listing" className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-4">
                 {([['manual', 'Enter details manually', 'Type them in yourself'], ['link', 'Link', 'Paste the listing page address'], ['shot', 'Screenshot', 'Upload a photo of the ad'], ['text', 'Paste text', 'Copy the ad text in']] as const).map(([id, label, hint]) => (
