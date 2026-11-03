@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type DragEvent as ReactDragEvent } from "react";
 import { BadgeCheck, CalendarCheck, Car, Check, ChevronLeft, ClipboardList, ClipboardPaste, CreditCard, ExternalLink, ScanSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { InfoTip } from "@/components/info-tip";
 import { PageIntro } from "@/components/site-chrome";
 import { AccountGate } from '@/components/account-ui';
 import { useDemoAccount } from '@/components/demo-account';
@@ -239,7 +240,7 @@ function BookingWizard() {
               {intake === 'manual' && <p className="text-sm text-muted-foreground">No problem. Type your vehicle details in the read-out fields below.</p>}
               {intake === 'link' && (<>
                 <label className="text-sm font-medium text-navy">Car listing URL<input type="url" value={listingUrl} onChange={e => setListingUrl(e.target.value)} placeholder="https://example.com/vehicle-listing" className={field} autoComplete="off" /></label>
-                <p className="text-sm text-muted-foreground">Some sites, like Facebook Marketplace, block automatic reading. If so, try a screenshot or paste the text.</p>
+                <p className="text-sm text-muted-foreground">Some sites, like Facebook Marketplace, block automatic reading. If so, try a screenshot or paste the text. <InfoTip text="We read the listing page for the year, make, model, VIN and location. When a site blocks us, use a screenshot or paste the ad text instead." className="ml-0.5" /></p>
                 <div className="flex flex-wrap items-center gap-3">
                   <Button type="button" variant="cta" disabled={!listingUrl.trim() || urlBusy} onClick={importFromUrl}><ExternalLink />{urlBusy ? 'Reading listing…' : 'Import from link'}</Button>
                   {urlStatus && <p role="status" className="text-sm text-muted-foreground">{urlStatus}</p>}
@@ -252,7 +253,7 @@ function BookingWizard() {
                   onDrop={onShotDrop}
                   className={`rounded-xl border-2 border-dashed px-5 py-6 text-center transition ${shotDrag ? 'border-primary bg-card ring-2 ring-ring' : 'border-input bg-background'}`}
                 >
-                  <p className="text-sm font-medium text-navy">Listing screenshot (PNG, JPG or WebP, up to 5 MB)</p>
+                  <p className="text-sm font-medium text-navy">Listing screenshot (PNG, JPG or WebP, up to 5 MB) <InfoTip text="Take a picture or screenshot of the ad. We look for the vehicle, VIN, mileage, price and location so you only have to confirm them." className="ml-0.5" /></p>
                   <p className="mt-1 text-sm text-muted-foreground">Drag and drop the image here, or paste it from your clipboard.</p>
                   <label className="mt-3 inline-flex cursor-pointer items-center gap-2 rounded-lg border bg-card px-4 py-2 text-sm font-medium text-navy shadow-sm hover:bg-secondary">
                     Choose a file instead
@@ -290,11 +291,11 @@ function BookingWizard() {
               <input id="vehicle-input" required value={vehicle} onChange={e => setVehicle(e.target.value)} placeholder="2021 Honda CR-V" className="w-full bg-transparent p-0 text-base font-semibold text-navy outline-none" />
             </label>
             <label className="block rounded-xl border bg-muted/40 px-3 py-2 transition focus-within:ring-2 focus-within:ring-ring">
-              <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">VIN (optional)</span>
+              <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">VIN (optional) <InfoTip text="A 17 character code on the car itself or in the ad. It helps the inspector verify the exact vehicle, but you can still book without it." /></span>
               <input value={vin} onChange={e => setVin(e.target.value)} placeholder="1HGCV1F34LA000000" className="w-full bg-transparent p-0 text-base font-semibold text-navy outline-none" />
             </label>
             <label className="block rounded-xl border bg-muted/40 px-3 py-2 transition focus-within:ring-2 focus-within:ring-ring">
-              <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Vehicle location ZIP or city</span>
+              <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Vehicle location ZIP or city <InfoTip text="Where the car is parked for the inspection. Our inspectors cover every ZIP code in the United States." /></span>
               <input required value={location} onChange={e => setLocation(e.target.value)} placeholder="90001 or Los Angeles" className="w-full bg-transparent p-0 text-base font-semibold text-navy outline-none" />
             </label>
             <div className="flex justify-end md:col-span-2">
