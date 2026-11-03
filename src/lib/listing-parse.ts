@@ -22,7 +22,7 @@ export function parseListingText(text: string): ParsedListing {
   if (vinMatch) result.vin = vinMatch[0];
 
   const mileageMatch = clean.match(MILEAGE_RE);
-  if (mileageMatch) {
+  if (mileageMatch?.[1]) {
     result.mileage = `${Number(mileageMatch[1].replace(/,/g, '')).toLocaleString('en-US')} miles`;
   }
 
