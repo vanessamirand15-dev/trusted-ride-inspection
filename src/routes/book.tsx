@@ -7,6 +7,7 @@ import { AccountGate } from '@/components/account-ui';
 import { useDemoAccount } from '@/components/demo-account';
 import { inspectionPlans, packageLabel } from '@/lib/inspection-plans';
 import { FinancialDisclaimer, MockPaymentGateway } from '@/components/mock-finance';
+import { parseListingText } from '@/lib/listing-parse';
 
 export const Route = createFileRoute("/book")({
   validateSearch: (search: Record<string, unknown>): { plan?: 'standard' | 'premium' } => {
@@ -50,6 +51,8 @@ function BookingWizard() {
 
   const [step, setStep] = useState(0);
   const [listingUrl, setListingUrl] = useState('');
+  const [listingText, setListingText] = useState('');
+  const [listingStatus, setListingStatus] = useState('');
   const [vehicle, setVehicle] = useState('');
   const [vin, setVin] = useState('');
   const [location, setLocation] = useState('');
@@ -66,6 +69,21 @@ function BookingWizard() {
   const selectedPlan = inspectionPlans.find(p => p.id === planId) ?? inspectionPlans[0];
   const stepOneValid = vehicle.trim().length > 0 && location.trim().length > 0;
   const stepThreeValid = date.length > 0 && sellerName.trim().length > 0 && sellerContact.trim().length > 0 && address.trim().length > 0;
+
+  const fillFromListing = () => {
+    const parsed = parseListingText(listingText);
+    const filled: string[] = [];
+    if (parsed.vehicle) { setVehicle(parsed.vehicle); filled.push('year, make & model'); }
+    if (parsed.vin) { setVin(parsed.vin); filled.push('VIN'); }
+    if (parsed.location) { setLocation(parsed.location); filled.push('location'); }
+    const extras = [
+      parsed.mileage ? `mileage (${parsed.mileage})` : '',
+      parsed.price ? `asking price (${parsed.price})` : '',
+    ].filter(Boolean).join(' and ');
+    setListingStatus(filled.length === 0
+      ? 'We could not read vehicle details from that text. Please enter them by hand below.'
+      : `Filled ${filled.join(', ')}${extras ? `, also found ${extras}` : ''}. Review and edit the details below.`);
+  };
 
   const confirm = () => {
     const booking = addBooking({
@@ -134,9 +152,19 @@ function BookingWizard() {
             <h2 className="text-xl font-semibold md:col-span-2">Vehicle details</h2>
             <div className="grid gap-3 border-b pb-5 md:col-span-2">
               <label className="text-sm font-medium text-navy">Car listing URL (optional)<input type="url" value={listingUrl} onChange={e => setListingUrl(e.target.value)} placeholder="https://example.com/vehicle-listing" className={field} autoComplete="off" /></label>
+              <p className="text-sm text-muted-foreground">Automatic import from a URL is not connected yet. Copy the ad text from any listing site and paste it below instead.</p>
+              <label htmlFor="listing-text" className="text-sm font-medium text-navy">Paste listing text (optional)</label>
+              <textarea
+                id="listing-text"
+                rows={5}
+                value={listingText}
+                onChange={e => setListingText(e.target.value)}
+                placeholder={"2021 Honda CR-V EX-L\nMileage: 45,000 miles\n$28,500\nLocated in Los Angeles, CA 90001"}
+                className={`${field} resize-y`}
+              />
               <div className="flex flex-wrap items-center gap-3">
-                <Button variant="outline" disabled>Read listing</Button>
-                <p role="status" className="text-sm text-muted-foreground">Listing import is not connected yet. Enter the vehicle details below to continue.</p>
+                <Button type="button" variant="outline" disabled={!listingText.trim()} onClick={fillFromListing}>Fill details from text</Button>
+                {listingStatus && <p role="status" className="text-sm text-muted-foreground">{listingStatus}</p>}
               </div>
             </div>
             <label className="text-sm font-medium text-navy md:col-span-2">Year, make & model<input required value={vehicle} onChange={e => setVehicle(e.target.value)} placeholder="2021 Honda CR-V" className={field} /></label>

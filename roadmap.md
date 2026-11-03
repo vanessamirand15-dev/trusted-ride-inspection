@@ -1,7 +1,8 @@
 # Account and booking demonstration
 ## Car listing intake
 - [x] Add an optional Car listing URL field without blocking manual booking entry.
-- [ ] Extract available vehicle details for review: blocked because Firecrawl connection creation was denied by workspace permissions and no accessible connection exists. A workspace member with connection permissions must connect Firecrawl before extraction can be implemented and tested.
+- [x] Add a pasted listing text option: buyers copy ad text, the browser fills vehicle details locally for review, manual entry stays available (parser tested).
+- [ ] Extract available vehicle details automatically from a URL: blocked because Firecrawl connection creation was denied by workspace permissions and no accessible connection exists. A workspace member with connection permissions must connect Firecrawl before extraction can be implemented and tested.
 - [ ] Verify successful and failed live extraction after Firecrawl is connected.
 
 ## Academic financial screens
