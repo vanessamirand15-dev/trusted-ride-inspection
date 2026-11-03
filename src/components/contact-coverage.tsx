@@ -129,19 +129,8 @@ export function CoverageSection() {
           <UsCoverageMap active={active} onSelect={setActive} />
           <p className="mt-2 text-center text-xs text-muted-foreground">All 50 states covered · Alaska and Hawaii included</p>
         </div>
-        <div>
-          <ul className="space-y-2">
-            {COVERAGE_REGIONS.map(h => (
-              <li key={h.name}>
-                <button type="button" onClick={() => setActive(h.name)} className={`flex w-full items-center justify-between rounded-lg border p-3 text-left text-sm transition-colors ${active === h.name ? "border-accent bg-teal-soft" : "bg-card hover:bg-secondary"}`}>
-                  <span className="flex items-center gap-2 font-medium"><MapPin className="h-4 w-4 text-accent" />{h.name}</span>
-                  <span className="text-xs text-muted-foreground">{h.zips}</span>
-                </button>
-              </li>
-            ))}
-            <li className="rounded-lg border border-dashed p-3 text-sm text-muted-foreground">Plus every other ZIP code across all 50 states</li>
-          </ul>
-          <div className="mt-6"><ZipChecker /></div>
+        <div className="self-start">
+          <ZipChecker />
           <p className="mt-4 text-xs text-muted-foreground">{FORM_NOTICE}</p>
         </div>
       </div>
