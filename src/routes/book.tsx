@@ -10,6 +10,7 @@ import { FinancialDisclaimer, MockPaymentGateway } from '@/components/mock-finan
 import { parseListingText, type ParsedListing } from '@/lib/listing-parse';
 import { useServerFn } from '@tanstack/react-start';
 import { importListingFromUrl } from '@/lib/listing-import.functions';
+import { readListingScreenshotFn } from '@/lib/ai/read-screenshot.functions';
 
 export const Route = createFileRoute("/book")({
   validateSearch: (search: Record<string, unknown>): { plan?: 'standard' | 'premium' } => {
@@ -84,6 +85,30 @@ function BookingWizard() {
     } catch {
       setUrlStatus('Something went wrong reading that link. Paste the ad text below or enter the details by hand.');
     } finally { setUrlBusy(false); }
+  };
+
+  const [intake, setIntake] = useState<'link' | 'shot'>('link');
+  const readShot = useServerFn(readListingScreenshotFn);
+  const [shotPreview, setShotPreview] = useState('');
+  const [shotBusy, setShotBusy] = useState(false);
+  const [shotStatus, setShotStatus] = useState('');
+  const onShot = (file?: File) => {
+    setShotStatus('');
+    if (!file) { setShotPreview(''); return; }
+    if (file.size > 5 * 1024 * 1024) { setShotPreview(''); setShotStatus('That image is too large. Please use one under 5 MB.'); return; }
+    const reader = new FileReader();
+    reader.onload = () => setShotPreview(String(reader.result));
+    reader.readAsDataURL(file);
+  };
+  const importFromShot = async () => {
+    setShotBusy(true); setShotStatus('Reading the screenshot…');
+    try {
+      const res = await readShot({ data: { image: shotPreview } });
+      if (!res.ok) setShotStatus(`${res.reason} Paste the ad text below or enter the details by hand.`);
+      else setShotStatus(applyListing(res.listing, 'We could not find vehicle details in that screenshot. Paste the ad text below or enter them by hand.'));
+    } catch {
+      setShotStatus('Something went wrong reading that screenshot. Paste the ad text below or enter the details by hand.');
+    } finally { setShotBusy(false); }
   };
 
   const fillFromListing = () => {
@@ -170,11 +195,25 @@ function BookingWizard() {
           <section className="grid gap-5 border-y py-8 md:grid-cols-2" aria-label="Vehicle details">
             <h2 className="text-xl font-semibold md:col-span-2">Vehicle details</h2>
             <div className="grid gap-3 border-b pb-5 md:col-span-2">
-              <label className="text-sm font-medium text-navy">Car listing URL (optional)<input type="url" value={listingUrl} onChange={e => setListingUrl(e.target.value)} placeholder="https://example.com/vehicle-listing" className={field} autoComplete="off" /></label>
-              <div className="flex flex-wrap items-center gap-3">
-                <Button type="button" variant="outline" disabled={!listingUrl.trim() || urlBusy} onClick={importFromUrl}>{urlBusy ? 'Reading listing…' : 'Import from link'}</Button>
-                {urlStatus && <p role="status" className="text-sm text-muted-foreground">{urlStatus}</p>}
+              <p className="text-sm font-medium text-navy">Car listing: link or screenshot (optional)</p>
+              <div role="tablist" className="flex gap-2">
+                <Button type="button" size="sm" role="tab" aria-selected={intake === 'link'} variant={intake === 'link' ? 'default' : 'outline'} onClick={() => setIntake('link')}>Link</Button>
+                <Button type="button" size="sm" role="tab" aria-selected={intake === 'shot'} variant={intake === 'shot' ? 'default' : 'outline'} onClick={() => setIntake('shot')}>Screenshot</Button>
               </div>
+              {intake === 'link' ? (<>
+                <label className="text-sm font-medium text-navy">Car listing URL<input type="url" value={listingUrl} onChange={e => setListingUrl(e.target.value)} placeholder="https://example.com/vehicle-listing" className={field} autoComplete="off" /></label>
+                <div className="flex flex-wrap items-center gap-3">
+                  <Button type="button" variant="outline" disabled={!listingUrl.trim() || urlBusy} onClick={importFromUrl}>{urlBusy ? 'Reading listing…' : 'Import from link'}</Button>
+                  {urlStatus && <p role="status" className="text-sm text-muted-foreground">{urlStatus}</p>}
+                </div>
+              </>) : (<>
+                <label className="text-sm font-medium text-navy">Listing screenshot (PNG, JPG or WebP, up to 5 MB)<input type="file" accept="image/png,image/jpeg,image/webp" onChange={e => onShot(e.target.files?.[0])} className={field} /></label>
+                {shotPreview && <img src={shotPreview} alt="Uploaded listing screenshot" className="max-h-56 w-auto rounded-md border object-contain" />}
+                <div className="flex flex-wrap items-center gap-3">
+                  <Button type="button" variant="outline" disabled={!shotPreview || shotBusy} onClick={importFromShot}>{shotBusy ? 'Reading screenshot…' : 'Read screenshot'}</Button>
+                  {shotStatus && <p role="status" className="text-sm text-muted-foreground">{shotStatus}</p>}
+                </div>
+              </>)}
               <p className="text-sm text-muted-foreground">Some sites, like Facebook Marketplace, block automatic reading. If the link doesn't work, copy the ad text and paste it below.</p>
               <label htmlFor="listing-text" className="text-sm font-medium text-navy">Paste listing text (optional)</label>
               <textarea
