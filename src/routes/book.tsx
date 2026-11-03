@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { BadgeCheck, CalendarCheck, Car, Check, ChevronLeft, ClipboardList, CreditCard } from "lucide-react";
+import { BadgeCheck, CalendarCheck, Car, Check, ChevronLeft, ClipboardList, ClipboardPaste, CreditCard, ExternalLink, ScanSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageIntro } from "@/components/site-chrome";
 import { AccountGate } from '@/components/account-ui';
