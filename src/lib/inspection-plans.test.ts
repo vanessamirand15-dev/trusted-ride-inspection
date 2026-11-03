@@ -14,4 +14,9 @@ describe('inspection packages', () => {
   it('adds the requested premium checks and matching', () => {
     expect(inspectionPlans[1].features).toEqual(['Everything in Standard', 'Engine compression test', 'Paint depth gauge inspection', 'Priority inspector matching']);
   });
+  it('provides hover detail text for every package', () => {
+    for (const plan of inspectionPlans) expect(plan.details.length).toBeGreaterThan(40);
+    expect(inspectionPlans[0].details).toMatch(/sedans, SUVs and trucks/);
+    expect(inspectionPlans[1].details).toMatch(/luxury diagnostics/);
+  });
 });
