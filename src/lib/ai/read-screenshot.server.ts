@@ -1,5 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { generateText } from "ai";
+import { streamText } from "ai";
 import { createLovableAiGatewayRunIdFetch, getLovableAiGatewayRunId } from "./run-id.ts";
 import type { ParsedListing } from "../listing-parse";
 
@@ -19,15 +19,16 @@ export async function readListingScreenshot(request: Request, dataUrl: string): 
     headers: { "Lovable-API-Key": apiKey, "X-Lovable-AIG-SDK": "vercel-ai-sdk" },
     fetch: runIdFetch.fetch,
   });
-  const result = await generateText({
+  const result = streamText({
     model: provider.responses("openai/gpt-6-astra"),
     instructions: INSTRUCTIONS,
-    messages: [{ role: "user", content: [{ type: "text", text: "Extract the vehicle details." }, { type: "image", image: dataUrl }] }],
+    messages: [{ role: "user", content: [{ type: "text", text: "Extract the vehicle details." }, { type: "image", image: new URL(dataUrl) }] }],
     abortSignal: request.signal,
     maxRetries: 0,
-    providerOptions: { openai: { store: false, reasoningEffort: "low" } },
+    providerOptions: { openai: { forceReasoning: true, reasoningEffort: "low", reasoningSummary: "auto", store: false, include: ["reasoning.encrypted_content"] } },
   });
-  const match = result.text.match(/\{[\s\S]*\}/);
+  const text = await result.text;
+  const match = text.match(/\{[\s\S]*\}/);
   if (!match) return {};
   const raw = JSON.parse(match[0]) as Record<string, unknown>;
   const out: ParsedListing = {};
