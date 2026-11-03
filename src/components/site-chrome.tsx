@@ -129,6 +129,7 @@ export function SiteHeader() {
               <nav aria-label="Main menu" className="mt-8 space-y-2">
                 <Button asChild variant="cta" className="mb-4 w-full justify-start"><Link to="/book" onClick={() => setOpen(false)}><Plus />Book now</Link></Button>
                 <Link to="/" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Home</Link>
+                <Link to="/sellers" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">For sellers</Link>
                 {nav.map(n => <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">{n.label}</Link>)}
                 <Link to="/" hash="coverage" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Coverage Area</Link>
                 <SampleReportDialog trigger={<button type="button" className="block w-full rounded-md px-3 py-3 text-left text-sm hover:bg-secondary">Sample Report</button>} />
@@ -206,6 +207,7 @@ export function SiteFooter() {
         <div className="space-y-2 text-sm">
           <p className="font-semibold">Get started</p>
           <Link to="/book" className="block text-navy-foreground/70 hover:text-navy-foreground">Book an inspection</Link>
+          <Link to="/sellers" className="block text-navy-foreground/70 hover:text-navy-foreground">For sellers: inspect your car</Link>
           <p className="pt-3 font-semibold">For Professionals</p>
           <Link to="/apply" className="block text-navy-foreground/70 hover:text-navy-foreground">Apply as inspector</Link>
           <Link to="/inspector/login" className="block text-navy-foreground/70 hover:text-navy-foreground">Inspector Portal / Login</Link>

@@ -1,4 +1,7 @@
 # Account and booking demonstration
+## Seller inspections
+- [x] Add a dedicated seller area with own-car booking, account access and saved seller requests.
+- [x] Verify seller signup, booking completion and buyer flow preservation.
 ## Car listing intake
 - [x] Add an optional Car listing URL field without blocking manual booking entry.
 - [x] Add a pasted listing text option: buyers copy ad text, the browser fills vehicle details locally for review, manual entry stays available (parser tested).

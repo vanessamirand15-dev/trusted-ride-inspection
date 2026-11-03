@@ -81,6 +81,7 @@ function Index() {
           </div>
           <div className="mt-8 max-w-lg"><p className="mb-2 text-sm font-medium text-navy">Check coverage for your ZIP code</p><ZipChecker /></div>
           <p className="mt-6 text-sm text-muted-foreground">We never sell cars, list vehicles or offer financing.</p>
+          <p className="mt-4 text-sm text-muted-foreground">Selling your car? <Link to="/sellers" className="font-medium text-primary underline underline-offset-4">Inspect your own vehicle</Link></p>
         </div>
         <div className="relative">
           <img src={hero} width={1408} height={1056} alt="Inspector reviewing a used sedan" className="rounded-3xl object-cover shadow-soft" />

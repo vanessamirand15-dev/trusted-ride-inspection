@@ -14,9 +14,9 @@ import { importListingFromUrl } from '@/lib/listing-import.functions';
 import { readListingScreenshotFn } from '@/lib/ai/read-screenshot.functions';
 
 export const Route = createFileRoute("/book")({
-  validateSearch: (search: Record<string, unknown>): { plan?: 'standard' | 'premium' } => {
+  validateSearch: (search: Record<string, unknown>): { plan?: 'standard' | 'premium'; purpose?: 'seller' } => {
     const plan = search['plan'];
-    return plan === 'standard' || plan === 'premium' ? { plan } : {};
+    return { ...(plan === 'standard' || plan === 'premium' ? { plan } : {}), ...(search['purpose'] === 'seller' ? { purpose: 'seller' as const } : {}) };
   },
   head: () => ({
     meta: [
@@ -44,12 +44,13 @@ const stepMeta = [
 ];
 
 function Page() {
-  const { plan } = Route.useSearch();
-  return <AccountGate next="/book" bookingPlan={plan}><BookingWizard /></AccountGate>;
+  const { plan, purpose } = Route.useSearch();
+  return <AccountGate next="/book" bookingPlan={plan} bookingPurpose={purpose}><BookingWizard /></AccountGate>;
 }
 
 function BookingWizard() {
-  const { plan } = Route.useSearch();
+  const { plan, purpose } = Route.useSearch();
+  const isSeller = purpose === 'seller';
   const { account, addBooking } = useDemoAccount();
   const navigate = useNavigate();
 
@@ -63,8 +64,8 @@ function BookingWizard() {
   const [planId, setPlanId] = useState<'standard' | 'premium'>(plan === 'premium' ? 'premium' : 'standard');
   const [date, setDate] = useState('');
   const [slot, setSlot] = useState(timeSlots[0]);
-  const [sellerName, setSellerName] = useState('');
-  const [sellerContact, setSellerContact] = useState('');
+  const [sellerName, setSellerName] = useState(isSeller ? account?.name ?? '' : '');
+  const [sellerContact, setSellerContact] = useState(isSeller ? account?.email ?? '' : '');
   const [address, setAddress] = useState('');
   const [done, setDone] = useState(false);
   const [bookingId, setBookingId] = useState<string | null>(null);
@@ -154,6 +155,7 @@ function BookingWizard() {
       location: `${address.trim()}, ${location.trim()}`,
       date: `${date} · ${slot}`,
       package: packageLabel(selectedPlan),
+      purpose: isSeller ? 'seller' : 'buyer',
     });
     if (booking) {
       setBookingId(booking.id);
@@ -171,7 +173,7 @@ function BookingWizard() {
             <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-accent text-accent-foreground">
               <Check className="h-8 w-8" />
             </span>
-            <h2 className="mt-6 text-3xl font-semibold">Inspection Scheduled!</h2>
+            <h2 className="mt-6 text-3xl font-semibold">Inspection requested</h2>
             <p className="mx-auto mt-3 max-w-md text-muted-foreground">An inspector will be assigned shortly. You can follow every step from your bookings page.</p>
             <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-teal-soft px-4 py-2 text-sm font-semibold text-accent">Tracking ID: {trackingId}</p>
             <dl className="mx-auto mt-8 grid max-w-md gap-3 rounded-2xl bg-background p-5 text-left text-sm">
@@ -184,6 +186,7 @@ function BookingWizard() {
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               {bookingId && <Button asChild variant="cta" size="lg"><Link to="/bookings/$bookingId" params={{ bookingId }}>View booking</Link></Button>}
               <Button asChild variant="outline" size="lg"><Link to="/bookings">Your bookings</Link></Button>
+              {isSeller && <Button asChild variant="outline" size="lg"><Link to="/sellers">Your seller area</Link></Button>}
             </div>
             <p className="mt-6 text-xs text-muted-foreground">Demonstration booking · No real inspection is arranged and no payment is taken.</p>
             <div className="mt-4 text-left"><FinancialDisclaimer /></div>
@@ -195,7 +198,7 @@ function BookingWizard() {
 
   return (
     <>
-      <PageIntro eyebrow="Book" title="Request an inspection" text="Tell us about the vehicle and we'll match you with a verified inspector." />
+      <PageIntro eyebrow={isSeller ? 'For sellers' : 'Book'} title={isSeller ? 'Request an inspection for your car' : 'Request an inspection'} text={isSeller ? 'Check your own car before selling. No listing or buyer is needed to make a request.' : "Tell us about the vehicle and we'll match you with a verified inspector."} />
       <div className="mx-auto max-w-2xl px-5 pb-24">
         <ol className="flex items-center gap-2 py-6" aria-label="Booking progress">
           {stepMeta.map((meta, i) => (
@@ -333,7 +336,7 @@ function BookingWizard() {
 
         {step === 2 && (
           <section className="grid gap-5 border-y py-8" aria-label="Scheduling and seller contact">
-            <h2 className="text-xl font-semibold">Scheduling & seller contact</h2>
+            <h2 className="text-xl font-semibold">{isSeller ? 'Scheduling & your contact details' : 'Scheduling & seller contact'}</h2>
             <label className="max-w-xs text-sm font-medium text-navy">Preferred date<input required type="date" value={date} onChange={e => setDate(e.target.value)} className={field} /></label>
             <div className="grid gap-3 sm:grid-cols-3" role="radiogroup" aria-label="Preferred time slot">
               {timeSlots.map(t => (
@@ -350,8 +353,8 @@ function BookingWizard() {
               ))}
             </div>
             <div className="grid gap-5 border-t pt-5 md:grid-cols-2">
-              <label className="text-sm font-medium text-navy">Seller name<input required value={sellerName} onChange={e => setSellerName(e.target.value)} placeholder="Jane Doe" className={field} autoComplete="off" /></label>
-              <label className="text-sm font-medium text-navy">Seller phone or email<input required value={sellerContact} onChange={e => setSellerContact(e.target.value)} placeholder="(555) 010-2030" className={field} autoComplete="off" /></label>
+              <label className="text-sm font-medium text-navy">{isSeller ? 'Your name' : 'Seller name'}<input required value={sellerName} onChange={e => setSellerName(e.target.value)} placeholder="Jane Doe" className={field} autoComplete="off" /></label>
+              <label className="text-sm font-medium text-navy">{isSeller ? 'Your phone or email' : 'Seller phone or email'}<input required value={sellerContact} onChange={e => setSellerContact(e.target.value)} placeholder="(555) 010-2030" className={field} autoComplete="off" /></label>
               <label className="text-sm font-medium text-navy md:col-span-2">Inspection address<input required value={address} onChange={e => setAddress(e.target.value)} placeholder="Street address where the car will be" className={field} autoComplete="off" /></label>
             </div>
             <div className="mt-2 flex justify-between">
