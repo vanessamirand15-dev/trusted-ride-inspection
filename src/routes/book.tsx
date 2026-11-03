@@ -194,19 +194,25 @@ function BookingWizard() {
         {step === 0 && (
           <section className="grid gap-5 border-y py-8 md:grid-cols-2" aria-label="Vehicle details">
             <h2 className="text-xl font-semibold md:col-span-2">Vehicle details</h2>
-            <div className="grid gap-3 border-b pb-5 md:col-span-2">
-              <p className="text-sm font-medium text-navy">Car listing: link or screenshot (optional)</p>
-              <div role="tablist" className="flex gap-2">
-                <Button type="button" size="sm" role="tab" aria-selected={intake === 'link'} variant={intake === 'link' ? 'default' : 'outline'} onClick={() => setIntake('link')}>Link</Button>
-                <Button type="button" size="sm" role="tab" aria-selected={intake === 'shot'} variant={intake === 'shot' ? 'default' : 'outline'} onClick={() => setIntake('shot')}>Screenshot</Button>
+            <div className="grid gap-4 rounded-lg border bg-muted/40 p-5 md:col-span-2">
+              <div>
+                <p className="font-semibold text-navy">Fill details automatically (optional)</p>
+                <p className="text-sm text-muted-foreground">Pick one of three ways. We fill in what we find, and you can edit it below.</p>
               </div>
-              {intake === 'link' ? (<>
+              <div role="tablist" aria-label="Ways to add your listing" className="grid grid-cols-3 gap-2">
+                {([['link', '1. Link'], ['shot', '2. Screenshot'], ['text', '3. Paste text']] as const).map(([id, label]) => (
+                  <Button key={id} type="button" size="sm" role="tab" aria-selected={intake === id} variant={intake === id ? 'default' : 'outline'} onClick={() => setIntake(id)}>{label}</Button>
+                ))}
+              </div>
+              {intake === 'link' && (<>
                 <label className="text-sm font-medium text-navy">Car listing URL<input type="url" value={listingUrl} onChange={e => setListingUrl(e.target.value)} placeholder="https://example.com/vehicle-listing" className={field} autoComplete="off" /></label>
+                <p className="text-sm text-muted-foreground">Some sites, like Facebook Marketplace, block automatic reading. If so, try a screenshot or paste the text.</p>
                 <div className="flex flex-wrap items-center gap-3">
                   <Button type="button" variant="outline" disabled={!listingUrl.trim() || urlBusy} onClick={importFromUrl}>{urlBusy ? 'Reading listing…' : 'Import from link'}</Button>
                   {urlStatus && <p role="status" className="text-sm text-muted-foreground">{urlStatus}</p>}
                 </div>
-              </>) : (<>
+              </>)}
+              {intake === 'shot' && (<>
                 <label className="text-sm font-medium text-navy">Listing screenshot (PNG, JPG or WebP, up to 5 MB)<input type="file" accept="image/png,image/jpeg,image/webp" onChange={e => onShot(e.target.files?.[0])} className={field} /></label>
                 {shotPreview && <img src={shotPreview} alt="Uploaded listing screenshot" className="max-h-56 w-auto rounded-md border object-contain" />}
                 <div className="flex flex-wrap items-center gap-3">
@@ -214,21 +220,23 @@ function BookingWizard() {
                   {shotStatus && <p role="status" className="text-sm text-muted-foreground">{shotStatus}</p>}
                 </div>
               </>)}
-              <p className="text-sm text-muted-foreground">Some sites, like Facebook Marketplace, block automatic reading. If the link doesn't work, copy the ad text and paste it below.</p>
-              <label htmlFor="listing-text" className="text-sm font-medium text-navy">Paste listing text (optional)</label>
-              <textarea
-                id="listing-text"
-                rows={5}
-                value={listingText}
-                onChange={e => setListingText(e.target.value)}
-                placeholder={"2021 Honda CR-V EX-L\nMileage: 45,000 miles\n$28,500\nLocated in Los Angeles, CA 90001"}
-                className={`${field} resize-y`}
-              />
-              <div className="flex flex-wrap items-center gap-3">
-                <Button type="button" variant="outline" disabled={!listingText.trim()} onClick={fillFromListing}>Fill details from text</Button>
-                {listingStatus && <p role="status" className="text-sm text-muted-foreground">{listingStatus}</p>}
-              </div>
+              {intake === 'text' && (<>
+                <label htmlFor="listing-text" className="text-sm font-medium text-navy">Paste the ad text</label>
+                <textarea
+                  id="listing-text"
+                  rows={4}
+                  value={listingText}
+                  onChange={e => setListingText(e.target.value)}
+                  placeholder={"2021 Honda CR-V EX-L\nMileage: 45,000 miles\n$28,500\nLocated in Los Angeles, CA 90001"}
+                  className={`${field} resize-y`}
+                />
+                <div className="flex flex-wrap items-center gap-3">
+                  <Button type="button" variant="outline" disabled={!listingText.trim()} onClick={fillFromListing}>Fill details from text</Button>
+                  {listingStatus && <p role="status" className="text-sm text-muted-foreground">{listingStatus}</p>}
+                </div>
+              </>)}
             </div>
+            <p className="text-sm font-semibold text-navy md:col-span-2">Your vehicle <span className="font-normal text-muted-foreground">· enter or review these</span></p>
             <label className="text-sm font-medium text-navy md:col-span-2">Year, make & model<input required value={vehicle} onChange={e => setVehicle(e.target.value)} placeholder="2021 Honda CR-V" className={field} /></label>
             <label className="text-sm font-medium text-navy">VIN (optional)<input value={vin} onChange={e => setVin(e.target.value)} placeholder="1HGCV1F34LA000000" className={field} /></label>
             <label className="text-sm font-medium text-navy">Vehicle location ZIP or city<input required value={location} onChange={e => setLocation(e.target.value)} placeholder="90001 or Los Angeles" className={field} /></label>
