@@ -83,3 +83,4 @@
 - [x] Contact Support footer column, Contact Us section + dialog with saved form
 
 - [x] Car listing URL: free direct page import (structured data + title), editable, with paste/manual fallback
+- [x] Declutter Request an inspection: three clear intake options (link, screenshot, paste text)
