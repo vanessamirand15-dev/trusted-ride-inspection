@@ -256,10 +256,13 @@ function BookingWizard() {
                   <p className="mt-1 text-sm text-muted-foreground">Drag and drop the image here, or paste it from your clipboard.</p>
                   <label className="mt-3 inline-flex cursor-pointer items-center gap-2 rounded-lg border bg-card px-4 py-2 text-sm font-medium text-navy shadow-sm hover:bg-secondary">
                     Choose a file instead
-                    <input type="file" accept="image/png,image/jpeg,image/webp" onChange={e => onShot(e.target.files?.[0])} className="sr-only" />
+                    <input id="shot-file-input" type="file" accept="image/png,image/jpeg,image/webp" onChange={e => onShot(e.target.files?.[0])} className="sr-only" />
                   </label>
                 </div>
-                {shotPreview && <img src={shotPreview} alt="Uploaded listing screenshot" className="max-h-56 w-auto rounded-md border object-contain" />}
+                <div className="flex flex-wrap items-start gap-4">
+                  {shotPreview && <img src={shotPreview} alt="Uploaded listing screenshot" className="max-h-56 w-auto rounded-md border object-contain" />}
+                  {shotPreview && <label htmlFor="shot-file-input" className="cursor-pointer rounded-lg border bg-card px-4 py-2 text-sm font-medium text-navy shadow-sm hover:bg-secondary">Replace image</label>}
+                </div>
                 <div className="flex flex-wrap items-center gap-3">
                   <Button type="button" variant="cta" disabled={!shotPreview || shotBusy} onClick={importFromShot}><ScanSearch />{shotBusy ? 'Reading screenshot…' : 'Read screenshot'}</Button>
                   {shotStatus && <p role="status" className="text-sm text-muted-foreground">{shotStatus}</p>}
