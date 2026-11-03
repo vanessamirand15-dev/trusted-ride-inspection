@@ -5,6 +5,7 @@ export interface Booking {
   id: string; accountId: string; vehicle: string; vin: string; location: string;
   date: string; package: string; timestamps: string[]; inspector?: string;
   cancelledAt?: string;
+  purpose?: 'buyer' | 'seller';
 }
 export interface DemoState { account: DemoAccount | null; bookings: Booking[] }
 export function statusOf(booking: Booking): Stage | 'Cancelled' {

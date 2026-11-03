@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { canCancel, createBooking, ownBookings, sampleState, stages, statusOf } from './demo-bookings';
 describe('demonstration booking rules', () => {
+  it('saves a seller own-car request under the requesting account', () => {
+    const booking = createBooking('seller-1', { vehicle: '2020 Toyota Camry', vin: '', location: 'Austin, TX', date: '2026-11-05', package: 'Standard', purpose: 'seller' });
+    expect(booking.purpose).toBe('seller');
+    expect(ownBookings({ account: { id: 'seller-1', name: 'Seller', email: '' }, bookings: [booking] })).toEqual([booking]);
+    expect(ownBookings({ account: { id: 'buyer-1', name: 'Buyer', email: '' }, bookings: [booking] })).toEqual([]);
+    expect(statusOf(booking)).toBe('Requested');
+  });
   it('uses the agreed five stages in order', () => {
     expect([...stages]).toEqual(['Requested', 'Scheduled', 'Inspection in progress', 'Report being prepared', 'Completed']);
   });

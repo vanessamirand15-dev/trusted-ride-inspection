@@ -7,7 +7,7 @@ import { statusOf, type Booking } from '@/lib/demo-bookings';
 import logoAsset from '@/assets/trustferly_logo.png.asset.json';
 
 export const inputClass = 'mt-2 w-full rounded-md border bg-card px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-ring';
-export function AuthScreen({ next = '/bookings', bookingPlan }: { next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined }) {
+export function AuthScreen({ next = '/bookings', bookingPlan, bookingPurpose }: { next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined; bookingPurpose?: 'seller' }) {
   const [signup, setSignup] = useState(false);
   const [error, setError] = useState('');
   const { login } = useDemoAccount();
@@ -22,12 +22,12 @@ export function AuthScreen({ next = '/bookings', bookingPlan }: { next?: '/book'
     const sample = !signup && identity.toLowerCase() === 'test user';
     if (sample && password !== 'password') { setError('The sample account password is password.'); return; }
     login(signup ? String(data.get('name') || identity).trim() : identity, signup ? identity : '', sample);
-    if (next === '/book') navigate({ to: '/book', search: bookingPlan ? { plan: bookingPlan } : {} });
+    if (next === '/book') navigate({ to: '/book', search: { ...(bookingPlan ? { plan: bookingPlan } : {}), ...(bookingPurpose ? { purpose: bookingPurpose } : {}) } });
     else navigate({ to: sample || signup ? '/bookings' : next });
   }
   return <section className="mx-auto max-w-md px-5 py-16 md:py-24">
-    <div className="mb-7 flex items-center gap-2 text-sm font-medium text-accent"><img src={logoAsset.url} alt="Trustferly logo" width={32} height={32} className="h-8 w-8" /> Buyer account <span className="ml-auto rounded-md bg-secondary px-2 py-1 text-xs text-muted-foreground">Demo</span></div>
-    <h1 className="text-4xl font-semibold">{bookingFlow ? 'Request your inspection' : signup ? 'Create your account' : 'Welcome back'}</h1>
+    <div className="mb-7 flex items-center gap-2 text-sm font-medium text-accent"><img src={logoAsset.url} alt="Trustferly logo" width={32} height={32} className="h-8 w-8" /> {bookingPurpose === 'seller' ? 'Seller account' : 'Inspection account'} <span className="ml-auto rounded-md bg-secondary px-2 py-1 text-xs text-muted-foreground">Demo</span></div>
+    <h1 className="text-4xl font-semibold">{bookingPurpose === 'seller' ? 'Inspect your own car' : bookingFlow ? 'Request your inspection' : signup ? 'Create your account' : 'Welcome back'}</h1>
     <p className="mt-3 text-muted-foreground">{bookingFlow ? 'First, create your free account. Your inspection requests are saved to it, so you can track every booking and its status.' : signup ? 'A fresh start for your next vehicle inspection.' : 'Your inspections, all in one place.'}</p>
     {bookingFlow && <ol className="mt-5 flex items-center gap-2 text-xs font-medium" aria-label="Booking steps">
       <li className="rounded-full bg-secondary px-3 py-1.5 text-accent" aria-current="step">1 · Your account</li>
@@ -49,17 +49,17 @@ export function AuthScreen({ next = '/bookings', bookingPlan }: { next?: '/book'
     {!signup && <div className="mt-6 border-t pt-5 text-sm"><p className="font-medium">Sample account</p><p className="mt-1 text-muted-foreground">Username: test user · Password: password</p></div>}
   </section>;
 }
-export function AccountGate({ children, next = '/bookings', bookingPlan }: { children: ReactNode; next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined }) {
+export function AccountGate({ children, next = '/bookings', bookingPlan, bookingPurpose }: { children: ReactNode; next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined; bookingPurpose?: 'seller' }) {
   const { ready, account } = useDemoAccount();
   if (!ready) return <div className="mx-auto max-w-5xl px-5 py-20 text-muted-foreground" role="status">Loading account…</div>;
-  return account ? children : <AuthScreen next={next} bookingPlan={bookingPlan} />;
+  return account ? children : <AuthScreen next={next} bookingPlan={bookingPlan} bookingPurpose={bookingPurpose} />;
 }
 export function AccountLayout({ title, subtitle, children, action }: { title: string; subtitle: string; children: ReactNode; action?: ReactNode }) {
   return <section className="mx-auto max-w-5xl px-5 py-10 md:py-16">
     <nav aria-label="Account" className="mb-10 flex flex-wrap gap-6 border-b pb-4 text-sm">
       {([{ to: '/bookings', label: 'Your Bookings' }, { to: '/account', label: 'Your account' }, { to: '/account/settings', label: 'Settings' }] as const).map(n => <Link key={n.to} to={n.to} activeOptions={{ exact: true }} activeProps={{ className: 'text-primary font-semibold' }} className="text-muted-foreground hover:text-primary">{n.label}</Link>)}
     </nav>
-    <div className="mb-9 flex flex-wrap items-start justify-between gap-5"><div><p className="mb-2 text-xs font-semibold uppercase text-accent">Buyer account</p><h1 className="text-3xl font-semibold md:text-4xl">{title}</h1><p className="mt-3 text-muted-foreground">{subtitle}</p></div>{action}</div>
+    <div className="mb-9 flex flex-wrap items-start justify-between gap-5"><div><p className="mb-2 text-xs font-semibold uppercase text-accent">Inspection account</p><h1 className="text-3xl font-semibold md:text-4xl">{title}</h1><p className="mt-3 text-muted-foreground">{subtitle}</p></div>{action}</div>
     {children}
   </section>;
 }
