@@ -26,7 +26,8 @@ function meta(html: string, key: string): string | undefined {
   return content ? decode(content) : undefined;
 }
 
-type Json = Record<string, unknown>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Json = any;
 function str(v: unknown): string | undefined {
   if (typeof v === "string" || typeof v === "number") return String(v).trim() || undefined;
   if (v && typeof v === "object" && "name" in v) return str((v as Json).name);
