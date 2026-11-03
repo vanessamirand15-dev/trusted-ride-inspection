@@ -19,7 +19,7 @@ export function parseListingText(text: string): ParsedListing {
   const result: ParsedListing = {};
 
   const vinMatch = clean.toUpperCase().match(VIN_RE);
-  if (vinMatch) result.vin = vinMatch[0];
+  if (vinMatch?.[0]) result.vin = vinMatch[0];
 
   const mileageMatch = clean.match(MILEAGE_RE);
   if (mileageMatch?.[1]) {
@@ -27,7 +27,7 @@ export function parseListingText(text: string): ParsedListing {
   }
 
   const priceMatch = clean.match(PRICE_RE);
-  if (priceMatch) result.price = `$${priceMatch[1]}`;
+  if (priceMatch?.[1]) result.price = `$${priceMatch[1]}`;
 
   for (const line of lines) {
     const m = line.match(/(?:located in|location:?)\s*(.+)$/i);
