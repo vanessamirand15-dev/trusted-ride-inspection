@@ -197,19 +197,34 @@ function BookingWizard() {
             <div className="grid gap-4 rounded-lg border bg-muted/40 p-5 md:col-span-2">
               <div>
                 <p className="font-semibold text-navy">Fill details automatically (optional)</p>
-                <p className="text-sm text-muted-foreground">Pick one of three ways and we fill in what we find, or skip this and enter the details yourself.</p>
+                <p className="text-sm text-muted-foreground">Choose one of these options, or skip it and enter the details yourself.</p>
               </div>
-              <div role="tablist" aria-label="Ways to add your listing" className="grid grid-cols-2 gap-2 md:grid-cols-4">
-                {([['link', '1. Link'], ['shot', '2. Screenshot'], ['text', '3. Paste text'], ['manual', 'Enter details manually']] as const).map(([id, label]) => (
-                  <Button key={id} type="button" size="sm" role="tab" aria-selected={intake === id} variant={intake === id ? 'default' : 'outline'} onClick={() => { setIntake(id); if (id === 'manual') setTimeout(() => document.getElementById('vehicle-input')?.focus(), 0); }}>{label}</Button>
+              <div role="tablist" aria-label="Ways to add your listing" className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-4">
+                {([['link', 'Link', 'Paste the listing page address'], ['shot', 'Screenshot', 'Upload a photo of the ad'], ['text', 'Paste text', 'Copy the ad text in'], ['manual', 'Enter details manually', 'Type them in yourself']] as const).map(([id, label, hint]) => (
+                  <button
+                    key={id}
+                    type="button"
+                    role="tab"
+                    aria-selected={intake === id}
+                    onClick={() => { setIntake(id); if (id === 'manual') setTimeout(() => document.getElementById('vehicle-input')?.focus(), 0); }}
+                    className={`flex items-start gap-2.5 rounded-xl border p-3 text-left transition ${intake === id ? 'border-primary bg-card shadow-soft ring-2 ring-ring' : 'bg-background hover:border-primary/40 hover:bg-card'}`}
+                  >
+                    <span aria-hidden className={`mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full border ${intake === id ? 'border-primary bg-primary' : 'border-input'}`}>
+                      {intake === id && <Check className="h-2.5 w-2.5 text-primary-foreground" />}
+                    </span>
+                    <span>
+                      <span className={`block text-sm font-medium ${intake === id ? 'text-navy' : 'text-foreground'}`}>{label}</span>
+                      <span className="mt-0.5 block text-xs text-muted-foreground">{hint}</span>
+                    </span>
+                  </button>
                 ))}
               </div>
-              {intake === 'manual' && <p className="text-sm text-muted-foreground">No problem. Type your vehicle details in the fields below.</p>}
+              {intake === 'manual' && <p className="text-sm text-muted-foreground">No problem. Type your vehicle details in the read-out fields below.</p>}
               {intake === 'link' && (<>
                 <label className="text-sm font-medium text-navy">Car listing URL<input type="url" value={listingUrl} onChange={e => setListingUrl(e.target.value)} placeholder="https://example.com/vehicle-listing" className={field} autoComplete="off" /></label>
                 <p className="text-sm text-muted-foreground">Some sites, like Facebook Marketplace, block automatic reading. If so, try a screenshot or paste the text.</p>
                 <div className="flex flex-wrap items-center gap-3">
-                  <Button type="button" variant="outline" disabled={!listingUrl.trim() || urlBusy} onClick={importFromUrl}>{urlBusy ? 'Reading listing…' : 'Import from link'}</Button>
+                  <Button type="button" variant="cta" disabled={!listingUrl.trim() || urlBusy} onClick={importFromUrl}><ExternalLink />{urlBusy ? 'Reading listing…' : 'Import from link'}</Button>
                   {urlStatus && <p role="status" className="text-sm text-muted-foreground">{urlStatus}</p>}
                 </div>
               </>)}
@@ -217,7 +232,7 @@ function BookingWizard() {
                 <label className="text-sm font-medium text-navy">Listing screenshot (PNG, JPG or WebP, up to 5 MB)<input type="file" accept="image/png,image/jpeg,image/webp" onChange={e => onShot(e.target.files?.[0])} className={field} /></label>
                 {shotPreview && <img src={shotPreview} alt="Uploaded listing screenshot" className="max-h-56 w-auto rounded-md border object-contain" />}
                 <div className="flex flex-wrap items-center gap-3">
-                  <Button type="button" variant="outline" disabled={!shotPreview || shotBusy} onClick={importFromShot}>{shotBusy ? 'Reading screenshot…' : 'Read screenshot'}</Button>
+                  <Button type="button" variant="cta" disabled={!shotPreview || shotBusy} onClick={importFromShot}><ScanSearch />{shotBusy ? 'Reading screenshot…' : 'Read screenshot'}</Button>
                   {shotStatus && <p role="status" className="text-sm text-muted-foreground">{shotStatus}</p>}
                 </div>
               </>)}
@@ -232,15 +247,24 @@ function BookingWizard() {
                   className={`${field} resize-y`}
                 />
                 <div className="flex flex-wrap items-center gap-3">
-                  <Button type="button" variant="outline" disabled={!listingText.trim()} onClick={fillFromListing}>Fill details from text</Button>
+                  <Button type="button" variant="cta" disabled={!listingText.trim()} onClick={fillFromListing}><ClipboardPaste />Fill details from text</Button>
                   {listingStatus && <p role="status" className="text-sm text-muted-foreground">{listingStatus}</p>}
                 </div>
               </>)}
             </div>
-            <p className="text-sm font-semibold text-navy md:col-span-2">Your vehicle <span className="font-normal text-muted-foreground">· enter or review these</span></p>
-            <label className="text-sm font-medium text-navy md:col-span-2">Year, make & model<input id="vehicle-input" required value={vehicle} onChange={e => setVehicle(e.target.value)} placeholder="2021 Honda CR-V" className={field} /></label>
-            <label className="text-sm font-medium text-navy">VIN (optional)<input value={vin} onChange={e => setVin(e.target.value)} placeholder="1HGCV1F34LA000000" className={field} /></label>
-            <label className="text-sm font-medium text-navy">Vehicle location ZIP or city<input required value={location} onChange={e => setLocation(e.target.value)} placeholder="90001 or Los Angeles" className={field} /></label>
+            <p className="text-sm font-semibold text-navy md:col-span-2">Your vehicle <span className="font-normal text-muted-foreground">· check and edit these read-outs</span></p>
+            <label className="block rounded-xl border bg-muted/40 px-3 py-2 transition focus-within:ring-2 focus-within:ring-ring md:col-span-2" htmlFor="vehicle-input">
+              <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Year, make &amp; model</span>
+              <input id="vehicle-input" required value={vehicle} onChange={e => setVehicle(e.target.value)} placeholder="2021 Honda CR-V" className="w-full bg-transparent p-0 text-base font-semibold text-navy outline-none" />
+            </label>
+            <label className="block rounded-xl border bg-muted/40 px-3 py-2 transition focus-within:ring-2 focus-within:ring-ring">
+              <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">VIN (optional)</span>
+              <input value={vin} onChange={e => setVin(e.target.value)} placeholder="1HGCV1F34LA000000" className="w-full bg-transparent p-0 text-base font-semibold text-navy outline-none" />
+            </label>
+            <label className="block rounded-xl border bg-muted/40 px-3 py-2 transition focus-within:ring-2 focus-within:ring-ring">
+              <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Vehicle location ZIP or city</span>
+              <input required value={location} onChange={e => setLocation(e.target.value)} placeholder="90001 or Los Angeles" className="w-full bg-transparent p-0 text-base font-semibold text-navy outline-none" />
+            </label>
             <div className="flex justify-end md:col-span-2">
               <Button variant="cta" size="lg" disabled={!stepOneValid} onClick={() => setStep(1)}>Continue</Button>
             </div>
