@@ -7,7 +7,7 @@ import { statusOf, type Booking } from '@/lib/demo-bookings';
 import logoAsset from '@/assets/trustferly_logo.png.asset.json';
 
 export const inputClass = 'mt-2 w-full rounded-md border bg-card px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-ring';
-export function AuthScreen({ next = '/bookings', bookingPlan, bookingPurpose }: { next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined; bookingPurpose?: 'seller' }) {
+export function AuthScreen({ next = '/bookings', bookingPlan, bookingPurpose }: { next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined; bookingPurpose?: 'seller' | undefined }) {
   const [signup, setSignup] = useState(false);
   const [error, setError] = useState('');
   const { login } = useDemoAccount();
@@ -49,7 +49,7 @@ export function AuthScreen({ next = '/bookings', bookingPlan, bookingPurpose }: 
     {!signup && <div className="mt-6 border-t pt-5 text-sm"><p className="font-medium">Sample account</p><p className="mt-1 text-muted-foreground">Username: test user · Password: password</p></div>}
   </section>;
 }
-export function AccountGate({ children, next = '/bookings', bookingPlan, bookingPurpose }: { children: ReactNode; next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined; bookingPurpose?: 'seller' }) {
+export function AccountGate({ children, next = '/bookings', bookingPlan, bookingPurpose }: { children: ReactNode; next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined; bookingPurpose?: 'seller' | undefined }) {
   const { ready, account } = useDemoAccount();
   if (!ready) return <div className="mx-auto max-w-5xl px-5 py-20 text-muted-foreground" role="status">Loading account…</div>;
   return account ? children : <AuthScreen next={next} bookingPlan={bookingPlan} bookingPurpose={bookingPurpose} />;
