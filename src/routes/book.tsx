@@ -316,7 +316,7 @@ function BookingWizard() {
                 className={`rounded-2xl border p-5 text-left transition ${planId === p.id ? 'border-primary bg-card shadow-soft ring-2 ring-ring' : 'bg-background hover:bg-card'}`}
               >
                 <div className="flex items-center justify-between gap-4">
-                  <p className="font-semibold text-navy">{p.name}</p>
+                  <p className="flex items-center gap-1.5 font-semibold text-navy">{p.name}<InfoTip text={p.details} /></p>
                   <p className="text-lg font-semibold text-navy">${p.price}</p>
                 </div>
                 <ul className="mt-3 grid gap-1.5 text-sm text-muted-foreground sm:grid-cols-2">
