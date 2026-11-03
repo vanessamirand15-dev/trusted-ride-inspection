@@ -252,7 +252,7 @@ function BookingWizard() {
                 </div>
               </>)}
             </div>
-            <p className="text-sm font-semibold text-navy md:col-span-2">Your vehicle <span className="font-normal text-muted-foreground">· check and edit these read-outs</span></p>
+            <p className="text-sm font-semibold text-navy md:col-span-2">Your vehicle <span className="font-normal text-muted-foreground">· check and edit these details</span></p>
             <label className="block rounded-xl border bg-muted/40 px-3 py-2 transition focus-within:ring-2 focus-within:ring-ring md:col-span-2" htmlFor="vehicle-input">
               <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Year, make &amp; model</span>
               <input id="vehicle-input" required value={vehicle} onChange={e => setVehicle(e.target.value)} placeholder="2021 Honda CR-V" className="w-full bg-transparent p-0 text-base font-semibold text-navy outline-none" />
