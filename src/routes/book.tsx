@@ -87,7 +87,7 @@ function BookingWizard() {
     } finally { setUrlBusy(false); }
   };
 
-  const [intake, setIntake] = useState<'link' | 'shot' | 'text' | 'manual'>('link');
+  const [intake, setIntake] = useState<'link' | 'shot' | 'text' | 'manual'>('manual');
   const readShot = useServerFn(readListingScreenshotFn);
   const [shotPreview, setShotPreview] = useState('');
   const [shotBusy, setShotBusy] = useState(false);
