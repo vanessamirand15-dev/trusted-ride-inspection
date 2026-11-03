@@ -7,7 +7,9 @@ import { AccountGate } from '@/components/account-ui';
 import { useDemoAccount } from '@/components/demo-account';
 import { inspectionPlans, packageLabel } from '@/lib/inspection-plans';
 import { FinancialDisclaimer, MockPaymentGateway } from '@/components/mock-finance';
-import { parseListingText } from '@/lib/listing-parse';
+import { parseListingText, type ParsedListing } from '@/lib/listing-parse';
+import { useServerFn } from '@tanstack/react-start';
+import { importListingFromUrl } from '@/lib/listing-import.functions';
 
 export const Route = createFileRoute("/book")({
   validateSearch: (search: Record<string, unknown>): { plan?: 'standard' | 'premium' } => {
@@ -70,8 +72,25 @@ function BookingWizard() {
   const stepOneValid = vehicle.trim().length > 0 && location.trim().length > 0;
   const stepThreeValid = date.length > 0 && sellerName.trim().length > 0 && sellerContact.trim().length > 0 && address.trim().length > 0;
 
+  const readListing = useServerFn(importListingFromUrl);
+  const [urlBusy, setUrlBusy] = useState(false);
+  const [urlStatus, setUrlStatus] = useState('');
+  const importFromUrl = async () => {
+    setUrlBusy(true); setUrlStatus('Reading the listing…');
+    try {
+      const res = await readListing({ data: { url: listingUrl } });
+      if (!res.ok) setUrlStatus(`${res.reason} Paste the ad text below or enter the details by hand.`);
+      else setUrlStatus(applyListing(res.listing, 'We could not find vehicle details on that page. Paste the ad text below or enter them by hand.'));
+    } catch {
+      setUrlStatus('Something went wrong reading that link. Paste the ad text below or enter the details by hand.');
+    } finally { setUrlBusy(false); }
+  };
+
   const fillFromListing = () => {
-    const parsed = parseListingText(listingText);
+    setListingStatus(applyListing(parseListingText(listingText), 'We could not read vehicle details from that text. Please enter them by hand below.'));
+  };
+
+  const applyListing = (parsed: ParsedListing, emptyMessage: string) => {
     const filled: string[] = [];
     if (parsed.vehicle) { setVehicle(parsed.vehicle); filled.push('year, make & model'); }
     if (parsed.vin) { setVin(parsed.vin); filled.push('VIN'); }
@@ -80,8 +99,8 @@ function BookingWizard() {
       parsed.mileage ? `mileage (${parsed.mileage})` : '',
       parsed.price ? `asking price (${parsed.price})` : '',
     ].filter(Boolean).join(' and ');
-    setListingStatus(filled.length === 0
-      ? 'We could not read vehicle details from that text. Please enter them by hand below.'
+    return (filled.length === 0
+      ? emptyMessage
       : `Filled ${filled.join(', ')}${extras ? `, also found ${extras}` : ''}. Review and edit the details below.`);
   };
 
@@ -152,7 +171,11 @@ function BookingWizard() {
             <h2 className="text-xl font-semibold md:col-span-2">Vehicle details</h2>
             <div className="grid gap-3 border-b pb-5 md:col-span-2">
               <label className="text-sm font-medium text-navy">Car listing URL (optional)<input type="url" value={listingUrl} onChange={e => setListingUrl(e.target.value)} placeholder="https://example.com/vehicle-listing" className={field} autoComplete="off" /></label>
-              <p className="text-sm text-muted-foreground">Automatic import from a URL is not connected yet. Copy the ad text from any listing site and paste it below instead.</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button type="button" variant="outline" disabled={!listingUrl.trim() || urlBusy} onClick={importFromUrl}>{urlBusy ? 'Reading listing…' : 'Import from link'}</Button>
+                {urlStatus && <p role="status" className="text-sm text-muted-foreground">{urlStatus}</p>}
+              </div>
+              <p className="text-sm text-muted-foreground">Some sites, like Facebook Marketplace, block automatic reading. If the link doesn't work, copy the ad text and paste it below.</p>
               <label htmlFor="listing-text" className="text-sm font-medium text-navy">Paste listing text (optional)</label>
               <textarea
                 id="listing-text"
