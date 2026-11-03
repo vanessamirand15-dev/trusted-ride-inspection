@@ -87,7 +87,7 @@ function BookingWizard() {
     } finally { setUrlBusy(false); }
   };
 
-  const [intake, setIntake] = useState<'link' | 'shot' | 'text'>('link');
+  const [intake, setIntake] = useState<'link' | 'shot' | 'text' | 'manual'>('link');
   const readShot = useServerFn(readListingScreenshotFn);
   const [shotPreview, setShotPreview] = useState('');
   const [shotBusy, setShotBusy] = useState(false);
@@ -197,13 +197,14 @@ function BookingWizard() {
             <div className="grid gap-4 rounded-lg border bg-muted/40 p-5 md:col-span-2">
               <div>
                 <p className="font-semibold text-navy">Fill details automatically (optional)</p>
-                <p className="text-sm text-muted-foreground">Pick one of three ways. We fill in what we find, and you can edit it below.</p>
+                <p className="text-sm text-muted-foreground">Pick one of three ways and we fill in what we find, or skip this and enter the details yourself.</p>
               </div>
-              <div role="tablist" aria-label="Ways to add your listing" className="grid grid-cols-3 gap-2">
-                {([['link', '1. Link'], ['shot', '2. Screenshot'], ['text', '3. Paste text']] as const).map(([id, label]) => (
-                  <Button key={id} type="button" size="sm" role="tab" aria-selected={intake === id} variant={intake === id ? 'default' : 'outline'} onClick={() => setIntake(id)}>{label}</Button>
+              <div role="tablist" aria-label="Ways to add your listing" className="grid grid-cols-2 gap-2 md:grid-cols-4">
+                {([['link', '1. Link'], ['shot', '2. Screenshot'], ['text', '3. Paste text'], ['manual', 'Enter details manually']] as const).map(([id, label]) => (
+                  <Button key={id} type="button" size="sm" role="tab" aria-selected={intake === id} variant={intake === id ? 'default' : 'outline'} onClick={() => { setIntake(id); if (id === 'manual') setTimeout(() => document.getElementById('vehicle-input')?.focus(), 0); }}>{label}</Button>
                 ))}
               </div>
+              {intake === 'manual' && <p className="text-sm text-muted-foreground">No problem. Type your vehicle details in the fields below.</p>}
               {intake === 'link' && (<>
                 <label className="text-sm font-medium text-navy">Car listing URL<input type="url" value={listingUrl} onChange={e => setListingUrl(e.target.value)} placeholder="https://example.com/vehicle-listing" className={field} autoComplete="off" /></label>
                 <p className="text-sm text-muted-foreground">Some sites, like Facebook Marketplace, block automatic reading. If so, try a screenshot or paste the text.</p>
@@ -237,7 +238,7 @@ function BookingWizard() {
               </>)}
             </div>
             <p className="text-sm font-semibold text-navy md:col-span-2">Your vehicle <span className="font-normal text-muted-foreground">· enter or review these</span></p>
-            <label className="text-sm font-medium text-navy md:col-span-2">Year, make & model<input required value={vehicle} onChange={e => setVehicle(e.target.value)} placeholder="2021 Honda CR-V" className={field} /></label>
+            <label className="text-sm font-medium text-navy md:col-span-2">Year, make & model<input id="vehicle-input" required value={vehicle} onChange={e => setVehicle(e.target.value)} placeholder="2021 Honda CR-V" className={field} /></label>
             <label className="text-sm font-medium text-navy">VIN (optional)<input value={vin} onChange={e => setVin(e.target.value)} placeholder="1HGCV1F34LA000000" className={field} /></label>
             <label className="text-sm font-medium text-navy">Vehicle location ZIP or city<input required value={location} onChange={e => setLocation(e.target.value)} placeholder="90001 or Los Angeles" className={field} /></label>
             <div className="flex justify-end md:col-span-2">
