@@ -31,7 +31,7 @@ export function parseListingText(text: string): ParsedListing {
 
   for (const line of lines) {
     const m = line.match(/(?:located in|location:?)\s*(.+)$/i);
-    if (m) {
+    if (m?.[1]) {
       result.location = m[1].trim();
       break;
     }
