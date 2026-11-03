@@ -246,7 +246,19 @@ function BookingWizard() {
                 </div>
               </>)}
               {intake === 'shot' && (<>
-                <label className="text-sm font-medium text-navy">Listing screenshot (PNG, JPG or WebP, up to 5 MB)<input type="file" accept="image/png,image/jpeg,image/webp" onChange={e => onShot(e.target.files?.[0])} className={field} /></label>
+                <div
+                  onDragOver={e => { e.preventDefault(); setShotDrag(true); }}
+                  onDragLeave={() => setShotDrag(false)}
+                  onDrop={onShotDrop}
+                  className={`rounded-xl border-2 border-dashed px-5 py-6 text-center transition ${shotDrag ? 'border-primary bg-card ring-2 ring-ring' : 'border-input bg-background'}`}
+                >
+                  <p className="text-sm font-medium text-navy">Listing screenshot (PNG, JPG or WebP, up to 5 MB)</p>
+                  <p className="mt-1 text-sm text-muted-foreground">Drag and drop the image here, or paste it from your clipboard.</p>
+                  <label className="mt-3 inline-flex cursor-pointer items-center gap-2 rounded-lg border bg-card px-4 py-2 text-sm font-medium text-navy shadow-sm hover:bg-secondary">
+                    Choose a file instead
+                    <input type="file" accept="image/png,image/jpeg,image/webp" onChange={e => onShot(e.target.files?.[0])} className="sr-only" />
+                  </label>
+                </div>
                 {shotPreview && <img src={shotPreview} alt="Uploaded listing screenshot" className="max-h-56 w-auto rounded-md border object-contain" />}
                 <div className="flex flex-wrap items-center gap-3">
                   <Button type="button" variant="cta" disabled={!shotPreview || shotBusy} onClick={importFromShot}><ScanSearch />{shotBusy ? 'Reading screenshot…' : 'Read screenshot'}</Button>
