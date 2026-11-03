@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState, type ClipboardEvent as ReactClipboardEvent, type DragEvent as ReactDragEvent } from "react";
 import { BadgeCheck, CalendarCheck, Car, Check, ChevronLeft, ClipboardList, ClipboardPaste, CreditCard, ExternalLink, ScanSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageIntro } from "@/components/site-chrome";
@@ -92,6 +92,7 @@ function BookingWizard() {
   const [shotPreview, setShotPreview] = useState('');
   const [shotBusy, setShotBusy] = useState(false);
   const [shotStatus, setShotStatus] = useState('');
+  const [shotDrag, setShotDrag] = useState(false);
   const onShot = (file?: File) => {
     setShotStatus('');
     if (!file) { setShotPreview(''); return; }
@@ -100,6 +101,22 @@ function BookingWizard() {
     reader.onload = () => setShotPreview(String(reader.result));
     reader.readAsDataURL(file);
   };
+  const onShotDrop = (e: ReactDragEvent) => {
+    e.preventDefault();
+    setShotDrag(false);
+    const file = Array.from(e.dataTransfer.files).find(f => f.type.startsWith('image/'));
+    if (file) onShot(file);
+    else setShotStatus('Drop an image file, like a PNG or JPG screenshot.');
+  };
+  useEffect(() => {
+    if (intake !== 'shot') return;
+    const onPaste = (e: ReactClipboardEvent) => {
+      const file = Array.from(e.clipboardData?.files ?? []).find(f => f.type.startsWith('image/'));
+      if (file) onShot(file);
+    };
+    window.addEventListener('paste', onPaste);
+    return () => window.removeEventListener('paste', onPaste);
+  }, [intake]);
   const importFromShot = async () => {
     setShotBusy(true); setShotStatus('Reading the screenshot…');
     try {
