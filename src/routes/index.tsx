@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BadgeCheck, ClipboardCheck, FileText, Lock, MapPin, Search, ShieldCheck, Star, UserCheck } from "lucide-react";
+import { BadgeCheck, Car, ClipboardCheck, FileText, Lock, MapPin, Search, ShieldCheck, Star, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -68,20 +68,19 @@ function Index() {
             Trustferly vehicle inspections
           </h1>
           <p className="mt-5 max-w-lg text-lg text-muted-foreground">
-            Trustferly connects used-car buyers with independent professional inspectors, so private
-            sales are safer and more transparent.
+            Independent vehicle inspections for buyers and sellers. Check a car before buying, or inspect your own car before selling.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild variant="cta" size="lg"><Link to="/book">Book an inspection</Link></Button>
-            <SampleReportDialog />
+          <div className="mt-6 grid gap-3 sm:grid-cols-2" aria-label="Buyer and seller inspection options">
+            <Button asChild variant="cta" size="lg" className="h-auto min-h-16 justify-start whitespace-normal px-4 py-3"><Link to="/book"><Search className="shrink-0" /><span className="text-left"><span className="block">Buying a car</span><span className="block text-xs font-normal">Inspect before you buy</span></span></Link></Button>
+            <Button asChild variant="outline" size="lg" className="h-auto min-h-16 justify-start whitespace-normal border-accent bg-teal-soft px-4 py-3 text-accent hover:bg-accent hover:text-accent-foreground"><Link to="/sellers"><Car className="shrink-0" /><span className="text-left"><span className="block">Selling my car</span><span className="block text-xs font-normal">Inspect my own vehicle</span></span></Link></Button>
           </div>
+          <div className="mt-4"><SampleReportDialog /></div>
           <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-muted-foreground">
             <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-accent" />Satisfaction Guarantee</span>
             <span className="inline-flex items-center gap-1.5"><Lock className="h-4 w-4 text-accent" />Secure SSL Checkout</span>
           </div>
           <div className="mt-8 max-w-lg"><p className="mb-2 text-sm font-medium text-navy">Check coverage for your ZIP code</p><ZipChecker /></div>
           <p className="mt-6 text-sm text-muted-foreground">We never sell cars, list vehicles or offer financing.</p>
-          <p className="mt-4 text-sm text-muted-foreground">Selling your car? <Link to="/sellers" className="font-medium text-primary underline underline-offset-4">Inspect your own vehicle</Link></p>
         </div>
         <div className="relative">
           <img src={hero} width={1408} height={1056} alt="Inspector reviewing a used sedan" className="rounded-3xl object-cover shadow-soft" />
