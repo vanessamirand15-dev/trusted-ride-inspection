@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { COVERAGE_REGIONS, checkCoverage, type CoverageStatus } from "@/lib/coverage";
+import { UsCoverageMap } from "@/components/us-coverage-map";
 
 export const SUPPORT_EMAIL = "support@trustferly.demo";
 export const PHONE_DISPLAY = "1-800-555-RIDE";
@@ -124,29 +125,9 @@ export function CoverageSection() {
       <h2 className="mt-2 text-3xl font-semibold md:text-4xl">Nationwide Coverage & Service Areas</h2>
       <p className="mt-3 max-w-2xl text-muted-foreground">Trustferly covers the entire United States: verified inspectors are available in every US ZIP code, so you can book an inspection wherever the vehicle is located.</p>
       <div className="mt-8 grid gap-8 md:grid-cols-2">
-        <div className="relative aspect-[5/3] overflow-hidden rounded-2xl border bg-teal-soft p-4 shadow-soft">
-          <svg viewBox="0 0 100 62" className="absolute inset-0 h-full w-full" aria-hidden>
-            <path
-              d="M6 10 L12 6 L20 6 L34 6 L42 8 L50 6 L58 5 L64 6 L74 5 L84 3 L90 2 L92 8 L90 14 L89 20 L86 28 L85 36 L82 44 L81 50 L78 56 L75 51 L70 50 L62 51 L54 56 L50 52 L46 44 L38 40 L28 38 L20 32 L12 30 L8 22 L6 14 Z"
-              className="fill-primary/15 stroke-primary/30"
-              strokeWidth="0.8"
-            />
-          </svg>
-          {COVERAGE_REGIONS.map(h => (
-            <button
-              key={h.name}
-              type="button"
-              onClick={() => setActive(h.name)}
-              aria-pressed={active === h.name}
-              className="group absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ left: `${h.x}%`, top: `${h.y}%` }}
-            >
-              <span className={`block rounded-full border-2 border-accent/40 bg-accent/15 transition-all ${active === h.name ? "h-24 w-24" : "h-14 w-14"}`} />
-              <span className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" />
-              <span className="absolute left-1/2 top-1/2 mt-3 -translate-x-1/2 whitespace-nowrap rounded bg-card px-2 py-0.5 text-xs font-medium shadow-soft">{h.name}</span>
-            </button>
-          ))}
-          <p className="absolute bottom-2 right-3 text-[10px] text-muted-foreground">Illustrative map · not to scale</p>
+        <div className="self-start rounded-2xl border bg-teal-soft p-4 shadow-soft">
+          <UsCoverageMap active={active} onSelect={setActive} />
+          <p className="mt-2 text-center text-xs text-muted-foreground">All 50 states covered · Alaska and Hawaii included</p>
         </div>
         <div>
           <ul className="space-y-2">
