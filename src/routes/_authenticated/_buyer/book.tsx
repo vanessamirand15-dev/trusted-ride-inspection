@@ -45,7 +45,7 @@ const stepMeta = [
 
 function Page() {
   const { plan, purpose } = Route.useSearch();
-  return <AccountGate next="/book" bookingPlan={plan} bookingPurpose={purpose}><BookingWizard /></AccountGate>;
+  return <AccountGate><BookingWizard /></AccountGate>;
 }
 
 function BookingWizard() {
