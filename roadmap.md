@@ -1,5 +1,7 @@
 # Account and booking demonstration
 ## Separate demo login
+- [x] Sign up creates a working account instantly (no email confirmation).
+- [ ] Log in accepts any name and password without a real account (opens the demo account).
 - [x] Add clearly labeled any-name/password demo access with sample and empty accounts, separate from real accounts; verify demo access and booking interaction.
 ## Restore account screen design
 - [x] Restore the original login/signup tabs, layout and signup name field while retaining real email accounts and social alternatives below; verify both screens.

@@ -17,6 +17,7 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
     e.preventDefault(); setBusy(true); setMessage('');
     const f = new FormData(e.currentTarget);
     const email = String(f.get('email')).trim(), password = String(f.get('password'));
+    if (!signup && !destination && !email.includes('@')) { setBusy(false); void navigate({ to: '/demo', search: { name: email } }); return; }
     try {
       const { data, error } = signup ? await supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin, data: { full_name: String(f.get('name') || '').trim() } } }) : await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
@@ -43,8 +44,8 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
     </div>
     <form onSubmit={submit} className="space-y-5">
       {signup && <label className="block text-sm font-medium">Your name<input name="name" required autoComplete="name" className="mt-2 w-full rounded-md border bg-card px-3 py-3 outline-none focus:ring-2 focus:ring-ring" /></label>}
-      <label className="block text-sm font-medium">Email<input required name="email" type="email" autoComplete="email" className="mt-2 w-full rounded-md border bg-card px-3 py-3 outline-none focus:ring-2 focus:ring-ring" /></label>
-      <label className="block text-sm font-medium">Password<input required name="password" type="password" minLength={6} autoComplete={signup ? 'new-password' : 'current-password'} className="mt-2 w-full rounded-md border bg-card px-3 py-3 outline-none focus:ring-2 focus:ring-ring" /></label>
+      <label className="block text-sm font-medium">{!signup && !destination ? 'Email or any username' : 'Email'}<input required name="email" type={!signup && !destination ? 'text' : 'email'} autoComplete={!signup && !destination ? 'username' : 'email'} className="mt-2 w-full rounded-md border bg-card px-3 py-3 outline-none focus:ring-2 focus:ring-ring" /></label>
+      <label className="block text-sm font-medium">Password<input required name="password" type="password" minLength={signup || destination ? 6 : 1} autoComplete={signup ? 'new-password' : 'current-password'} className="mt-2 w-full rounded-md border bg-card px-3 py-3 outline-none focus:ring-2 focus:ring-ring" /></label>
       {message && <p role="status" className="text-sm text-muted-foreground">{message}</p>}
       <Button type="submit" variant="cta" size="lg" disabled={busy} className="w-full">{busy ? 'Please wait…' : signup ? 'Create account' : 'Log in'}<ArrowRight /></Button>
     </form>
