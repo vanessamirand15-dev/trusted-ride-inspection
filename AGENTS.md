@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Application architecture
+- The public demo account route uses isolated transient state and browser-safe booking fixtures; it never creates auth sessions or accesses private booking data, so demo credentials cannot bypass real account guards.
 - Seller inspections reuse the shared real account and booking wizard with a saved booking purpose; the dedicated seller area filters owned seller requests without adding a separate transaction or identity-verification system.
 - Mock financial screens share a presentation-only component; financial inputs remain in transient forms and never enter browser storage, booking records or backend requests, keeping simulated banking separate from real inspector accounts.
 - Buyer and inspector accounts share Cloud Auth; buyer routes live under the authenticated buyer layout and require a validated contact profile. Buyer bookings persist in an owner-scoped RLS table; no financial inputs are saved. The legacy-named account provider exposes this shared session and query cache to preserve existing consumers.
