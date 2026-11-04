@@ -1,11 +1,16 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { useDemoAccount } from '@/components/demo-account';
 import { Apple, ArrowRight, Mail, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable';
 import logoAsset from '@/assets/trustferly_logo.png.asset.json';
 
-export function AuthForm() {
+export function AuthForm({ destination }: { destination?: '/inspector/portal' }) {
+  const { ready, account } = useDemoAccount();
+  const navigate = useNavigate();
+  useEffect(() => { if (destination && ready && account) void navigate({ to: destination, replace: true }); }, [destination, ready, account, navigate]);
   const [signup, setSignup] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
@@ -22,7 +27,7 @@ export function AuthForm() {
   }
   async function social(provider: 'google' | 'apple' | 'lovable') {
     setBusy(true); setMessage('');
-    try { const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: `${window.location.origin}/auth` }); if (result.error) throw result.error; }
+    try { const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: `${window.location.origin}${destination ? '/inspector/login' : '/auth'}` }); if (result.error) throw result.error; }
     catch (error) { setMessage(error instanceof Error ? error.message : 'Could not sign in. Please try again.'); }
     finally { setBusy(false); }
   }
