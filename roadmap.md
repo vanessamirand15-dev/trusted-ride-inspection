@@ -102,3 +102,5 @@
 - [x] Car listing URL: free direct page import (structured data + title), editable, with paste/manual fallback
 - [x] Declutter Request an inspection: three clear intake options (link, screenshot, paste text)
 - [x] Reorder intake options on /book: Enter details manually first, then Link, Screenshot, Paste text — done
+## Payment protection copy
+- [x] Replace payment protection card heading, body and FAQ answer with the user's provided wording.
