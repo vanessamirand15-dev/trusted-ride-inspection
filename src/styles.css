@@ -72,7 +72,7 @@
 
 :root {
   --radius: 0.875rem;
-  --background: oklch(0.984 0.003 247.858);
+  --background: oklch(0.967 0.003 264.542);
   --foreground: oklch(0.28 0.06 248);
   --navy: oklch(0.28 0.06 248);
   --navy-foreground: oklch(0.984 0.003 247.858);

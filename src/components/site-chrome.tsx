@@ -129,6 +129,7 @@ export function SiteHeader() {
               <nav aria-label="Main menu" className="mt-8 space-y-2">
                 <Button asChild variant="cta" className="mb-4 w-full justify-start"><Link to="/book" onClick={() => setOpen(false)}><Plus />Book now</Link></Button>
                 <Link to="/" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Home</Link>
+                <Link to="/bookings" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Your Bookings</Link>
                 <Link to="/sellers" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">For sellers</Link>
                 {nav.map(n => <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">{n.label}</Link>)}
                 <Link to="/" hash="coverage" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Coverage Area</Link>
@@ -152,7 +153,7 @@ export function SiteHeader() {
               <div className="mt-6 border-t pt-6">
                 {account ? <><p className="mb-4 break-words px-3 text-sm font-semibold">{account.name}</p><nav aria-label="Your account" className="space-y-2">
                   {([{ to: '/account', label: 'Your account', icon: UserRound }, { to: '/account/settings', label: 'Account settings', icon: Settings }, { to: '/bookings', label: 'Your Bookings', icon: CalendarDays }] as const).map(n => <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><n.icon size={17} />{n.label}</Link>)}
-                  <Button variant="ghost" className="w-full justify-start" onClick={() => { logout(); setOpen(false); navigate({ to: '/auth', replace: true }); }}><LogOut />Log out</Button>
+                  <Button variant="ghost" className="w-full justify-start" onClick={() => { void logout(); setOpen(false); }}><LogOut />Log out</Button>
                 </nav></> : <Button asChild variant="outline" className="w-full"><Link to="/auth" onClick={() => setOpen(false)}><UserRound />Log in / Sign up</Link></Button>}
               </div>
             </SheetContent>
@@ -175,7 +176,7 @@ export function SiteHeader() {
           <Link to="/" hash="faq" className={mainNavLinkClass}>FAQ</Link>
         </nav>
         <div className="flex items-center gap-3">
-        <Button asChild variant="outline" size="sm" className="hidden lg:inline-flex"><Link to={account ? '/bookings' : '/auth'}>{account ? 'Your Bookings' : 'Sign in'}</Link></Button>
+        <Button asChild variant="outline" size="sm" className="hidden md:inline-flex"><Link to="/bookings">Your Bookings</Link></Button>
         <Button asChild variant="cta" size="sm">
           <Link to="/book">Book inspection</Link>
         </Button>

@@ -1,58 +1,16 @@
-import { Link, useNavigate } from '@tanstack/react-router';
-import { useState, type FormEvent, type ReactNode } from 'react';
-import { ArrowRight, Check, ShieldCheck } from 'lucide-react';
+import { Link } from '@tanstack/react-router';
+import { type ReactNode } from 'react';
+import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useDemoAccount } from '@/components/demo-account';
 import { statusOf, type Booking } from '@/lib/demo-bookings';
-import logoAsset from '@/assets/trustferly_logo.png.asset.json';
 
 export const inputClass = 'mt-2 w-full rounded-md border bg-card px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-ring';
-export function AuthScreen({ next = '/bookings', bookingPlan, bookingPurpose }: { next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined; bookingPurpose?: 'seller' | undefined }) {
-  const [signup, setSignup] = useState(false);
-  const [error, setError] = useState('');
-  const { login } = useDemoAccount();
-  const navigate = useNavigate();
-  const bookingFlow = next === '/book';
-  function submit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const identity = String(data.get('identity') || '').trim();
-    const password = String(data.get('password') || '');
-    if (!identity || !password.trim()) { setError('Enter a name and password to continue.'); return; }
-    const sample = !signup && identity.toLowerCase() === 'test user';
-    if (sample && password !== 'password') { setError('The sample account password is password.'); return; }
-    login(signup ? String(data.get('name') || identity).trim() : identity, signup ? identity : '', sample);
-    if (next === '/book') navigate({ to: '/book', search: { ...(bookingPlan ? { plan: bookingPlan } : {}), ...(bookingPurpose ? { purpose: bookingPurpose } : {}) } });
-    else navigate({ to: sample || signup ? '/bookings' : next });
-  }
-  return <section className="mx-auto max-w-md px-5 py-16 md:py-24">
-    <div className="mb-7 flex items-center gap-2 text-sm font-medium text-accent"><img src={logoAsset.url} alt="Trustferly logo" width={32} height={32} className="h-8 w-8" /> {bookingPurpose === 'seller' ? 'Seller account' : 'Inspection account'} <span className="ml-auto rounded-md bg-secondary px-2 py-1 text-xs text-muted-foreground">Demo</span></div>
-    <h1 className="text-4xl font-semibold">{bookingPurpose === 'seller' ? 'Inspect your own car' : bookingFlow ? 'Request your inspection' : signup ? 'Create your account' : 'Welcome back'}</h1>
-    <p className="mt-3 text-muted-foreground">{bookingFlow ? 'First, create your free account. Your inspection requests are saved to it, so you can track every booking and its status.' : signup ? 'A fresh start for your next vehicle inspection.' : 'Your inspections, all in one place.'}</p>
-    {bookingFlow && <ol className="mt-5 flex items-center gap-2 text-xs font-medium" aria-label="Booking steps">
-      <li className="rounded-full bg-secondary px-3 py-1.5 text-accent" aria-current="step">1 · Your account</li>
-      <li aria-hidden className="text-muted-foreground">→</li>
-      <li className="rounded-full px-3 py-1.5 text-muted-foreground">2 · Inspection request</li>
-    </ol>}
-    <div className="my-7 grid grid-cols-2 border-b" role="tablist" aria-label="Account access">
-      <Button role="tab" aria-selected={!signup} variant="ghost" className={!signup ? 'rounded-none border-b-2 border-primary text-primary' : 'rounded-none'} onClick={() => { setSignup(false); setError(''); }}>Log in</Button>
-      <Button role="tab" aria-selected={signup} variant="ghost" className={signup ? 'rounded-none border-b-2 border-primary text-primary' : 'rounded-none'} onClick={() => { setSignup(true); setError(''); }}>Sign up</Button>
-    </div>
-    <form onSubmit={submit} className="space-y-5">
-      {signup && <label className="block text-sm font-medium">Your name<input name="name" required className={inputClass} autoComplete="off" /></label>}
-      <label className="block text-sm font-medium">{signup ? 'Email or username' : 'Username'}<input name="identity" required className={inputClass} autoComplete="off" /></label>
-      <label className="block text-sm font-medium">Password<input name="password" required type="password" className={inputClass} autoComplete="off" /></label>
-      {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
-      <Button className="w-full" size="lg" type="submit" variant="cta">{signup ? 'Create account' : 'Log in'}<ArrowRight /></Button>
-    </form>
-    <p className="mt-6 text-xs text-muted-foreground">Demonstration only · No real account is created.</p>
-    {!signup && <div className="mt-6 border-t pt-5 text-sm"><p className="font-medium">Sample account</p><p className="mt-1 text-muted-foreground">Username: test user · Password: password</p></div>}
-  </section>;
-}
-export function AccountGate({ children, next = '/bookings', bookingPlan, bookingPurpose }: { children: ReactNode; next?: '/book' | '/bookings' | '/account' | '/account/settings'; bookingPlan?: 'standard' | 'premium' | undefined; bookingPurpose?: 'seller' | undefined }) {
-  const { ready, account } = useDemoAccount();
-  if (!ready) return <div className="mx-auto max-w-5xl px-5 py-20 text-muted-foreground" role="status">Loading account…</div>;
-  return account ? children : <AuthScreen next={next} bookingPlan={bookingPlan} bookingPurpose={bookingPurpose} />;
+export function AccountGate({ children }: { children: ReactNode; next?: string; bookingPlan?: string; bookingPurpose?: string }) {
+  const { ready, error } = useDemoAccount();
+  if (error) return <p role="alert" className="mx-auto max-w-5xl px-5 py-20 text-destructive">{error}</p>;
+  if (!ready) return <p role="status" className="mx-auto max-w-5xl px-5 py-20 text-muted-foreground">Loading your account…</p>;
+  return children;
 }
 export function AccountLayout({ title, subtitle, children, action }: { title: string; subtitle: string; children: ReactNode; action?: ReactNode }) {
   return <section className="mx-auto max-w-5xl px-5 py-10 md:py-16">

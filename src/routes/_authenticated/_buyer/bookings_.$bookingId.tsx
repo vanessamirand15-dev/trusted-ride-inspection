@@ -9,7 +9,7 @@ import { stages, canCancel, statusOf } from '@/lib/demo-bookings';
 import { pageHead } from '@/lib/page-head';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-export const Route = createFileRoute('/bookings_/$bookingId')({ head: () => pageHead('Inspection booking', 'View your inspection timeline, inspector, and booking details.'), component: Page });
+export const Route = createFileRoute('/_authenticated/_buyer/bookings_/$bookingId')({ head: () => pageHead('Inspection booking', 'View your inspection timeline, inspector, and booking details.'), component: Page });
 function Page() { return <AccountGate><Detail /></AccountGate>; }
 function Detail() {
   const { bookingId } = Route.useParams();
@@ -17,6 +17,8 @@ function Detail() {
   const { cancelBooking } = useDemoAccount();
   const [dialog, setDialog] = useState<'contact' | 'cancel' | 'report' | null>(null);
   const [sent, setSent] = useState(false);
+  const [cancelError, setCancelError] = useState('');
+  const [cancelling, setCancelling] = useState(false);
   if (!booking) return <section className="mx-auto max-w-4xl px-5 py-20"><h1 className="text-3xl">Booking not found</h1><Button asChild className="mt-6"><Link to="/bookings">Your Bookings</Link></Button></section>;
   return <section className="mx-auto max-w-4xl px-5 py-10 md:py-16">
     <Link to="/bookings" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground"><ArrowLeft size={16} />Your Bookings</Link>
@@ -42,7 +44,7 @@ function Detail() {
     <Dialog open={dialog !== null} onOpenChange={open => { if (!open) setDialog(null); }}><DialogContent className="max-h-[85vh] w-[calc(100%-2rem)] overflow-y-auto rounded-lg">
       <DialogTitle>{dialog === 'cancel' ? 'Cancel this inspection?' : dialog === 'report' ? 'Sample inspection report' : `Contact ${booking.inspector}`}</DialogTitle>
       <DialogDescription>{dialog === 'cancel' ? 'The booking will remain in Your Bookings marked as cancelled.' : dialog === 'report' ? `${booking.vehicle} · Demonstration report` : 'Demonstration message only; no message will be sent to a real inspector.'}</DialogDescription>
-      {dialog === 'cancel' && <div className="flex flex-wrap gap-3"><Button variant="outline" onClick={() => setDialog(null)}>Keep booking</Button><Button variant="destructive" onClick={() => { cancelBooking(booking.id); setDialog(null); }}>Confirm cancellation</Button></div>}
+      {dialog === 'cancel' && <><div className="flex flex-wrap gap-3"><Button variant="outline" onClick={() => setDialog(null)}>Keep booking</Button><Button variant="destructive" disabled={cancelling} onClick={async () => { setCancelling(true); setCancelError(''); try { await cancelBooking(booking.id); setDialog(null); } catch (error) { setCancelError(error instanceof Error ? error.message : 'Could not cancel the booking.'); } finally { setCancelling(false); } }}>{cancelling ? 'Cancelling…' : 'Confirm cancellation'}</Button></div>{cancelError && <p role="alert" className="text-sm text-destructive">{cancelError}</p>}</>}
       {dialog === 'contact' && (sent ? <p role="status" className="text-accent">Sample message saved for this demonstration.</p> : <form onSubmit={e => { e.preventDefault(); setSent(true); }}><label className="text-sm">Message<textarea required className="mt-2 min-h-32 w-full rounded-md border bg-card p-3 focus:ring-2 focus:ring-ring" /></label><Button type="submit" className="mt-4"><MessageSquare />Send sample message</Button></form>)}
       {dialog === 'report' && <div className="space-y-4 text-sm"><p>Completed {displayTime(booking.timestamps[4] ?? '')}</p><p>Inspector: {booking.inspector}</p><dl className="space-y-3">{[['Exterior & body', 'Minor cosmetic wear'], ['Engine & transmission', 'No major issues observed'], ['Brakes & tires', 'Front tires showing wear'], ['Road test', 'Completed']].map(([k, v]) => <div key={k} className="border-t pt-3"><dt className="font-medium">{k}</dt><dd className="mt-1 text-muted-foreground">{v}</dd></div>)}</dl><p className="text-xs text-muted-foreground">Illustrative findings, not an actual vehicle assessment.</p></div>}
     </DialogContent></Dialog>
