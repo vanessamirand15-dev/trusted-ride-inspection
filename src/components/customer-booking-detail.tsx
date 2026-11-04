@@ -4,7 +4,9 @@ import { InspectionReport } from '@/components/inspection-report';
 import { useState } from 'react';
 import { ArrowLeft, Check, MessageSquare, X, FileText } from 'lucide-react';
 import { AccountGate, StatusBadge, displayTime, displayDate } from '@/components/account-ui';
-import { useCustomerAccount } from '@/components/quick-customer';
+import { useCustomerAccount, useQuickCustomer } from '@/components/quick-customer';
+import { useLocation } from '@tanstack/react-router';
+import { cancellationPolicy, cancellationFeeApplies } from '@/lib/cancellation';
 import { stages, canCancel, statusOf } from '@/lib/demo-bookings';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
@@ -12,6 +14,10 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/compone
 export function Detail({ bookingId }: { bookingId: string }) {
   const booking = useCustomerAccount().bookings.find(b => b.id === bookingId);
   const { cancelBooking } = useCustomerAccount();
+  const quick = useQuickCustomer();
+  const isQuick = useLocation({ select: location => location.pathname === '/demo' });
+  const [rescheduling, setRescheduling] = useState(false);
+  const [changed, setChanged] = useState('');
   const [dialog, setDialog] = useState<'contact' | 'cancel' | 'report' | null>(null);
   const [sent, setSent] = useState(false);
   const [cancelError, setCancelError] = useState('');
@@ -34,6 +40,9 @@ export function Detail({ bookingId }: { bookingId: string }) {
           {booking.inspector && <Button variant="outline" onClick={() => { setSent(false); setDialog('contact'); }}><MessageSquare />Contact your inspector</Button>}
           {statusOf(booking) === 'Completed' && <Button asChild><a href="#inspection-report"><FileText />View inspection report</a></Button>}
           {canCancel(booking) && <Button variant="ghost" className="text-destructive" onClick={() => setDialog('cancel')}><X />Cancel inspection</Button>}
+          {isQuick && canCancel(booking) && <><Button variant="outline" onClick={() => setRescheduling(!rescheduling)}>Reschedule inspection</Button><Button variant="outline" onClick={() => { quick.advance(booking.id); setChanged('Example inspection status updated.'); }}>Preview next status</Button></>}
+          {rescheduling && <form className="w-full space-y-3" onSubmit={event => { event.preventDefault(); const date = String(new FormData(event.currentTarget).get('date')); quick.reschedule(booking.id, date); setRescheduling(false); setChanged('Inspection rescheduled.'); }}><label className="block text-sm">New inspection date<input required name="date" type="date" defaultValue={booking.date.split(' · ')[0]} className="mt-2 w-full rounded-md border bg-card p-3" /></label><Button type="submit">Save new date</Button></form>}
+          {changed && <p role="status" className="text-sm text-accent">{changed}</p>}
         </div>
       </div>
     </div>
@@ -41,7 +50,7 @@ export function Detail({ bookingId }: { bookingId: string }) {
     <Dialog open={dialog !== null} onOpenChange={open => { if (!open) setDialog(null); }}><DialogContent className="max-h-[85vh] w-[calc(100%-2rem)] overflow-y-auto rounded-lg">
       <DialogTitle>{dialog === 'cancel' ? 'Cancel this inspection?' : dialog === 'report' ? 'Sample inspection report' : `Contact ${booking.inspector}`}</DialogTitle>
       <DialogDescription>{dialog === 'cancel' ? 'The booking will remain in Your Bookings marked as cancelled.' : dialog === 'report' ? `${booking.vehicle} · Demonstration report` : 'Demonstration message only; no message will be sent to a real inspector.'}</DialogDescription>
-      {dialog === 'cancel' && <><div className="flex flex-wrap gap-3"><Button variant="outline" onClick={() => setDialog(null)}>Keep booking</Button><Button variant="destructive" disabled={cancelling} onClick={async () => { setCancelling(true); setCancelError(''); try { await cancelBooking(booking.id); setDialog(null); } catch (error) { setCancelError(error instanceof Error ? error.message : 'Could not cancel the booking.'); } finally { setCancelling(false); } }}>{cancelling ? 'Cancelling…' : 'Confirm cancellation'}</Button></div>{cancelError && <p role="alert" className="text-sm text-destructive">{cancelError}</p>}</>}
+      {dialog === 'cancel' && <><p className="text-sm text-muted-foreground">{cancellationPolicy}</p><p className="text-sm font-medium">{cancellationFeeApplies(booking.timestamps[0] ?? '', new Date().toISOString()) ? 'This request is outside the 12-hour fee-free window. No actual fee is charged here.' : 'This request is within the 12-hour fee-free window.'}</p><div className="flex flex-wrap gap-3"><Button variant="outline" onClick={() => setDialog(null)}>Keep booking</Button><Button variant="destructive" disabled={cancelling} onClick={async () => { setCancelling(true); setCancelError(''); try { await cancelBooking(booking.id); setDialog(null); } catch (error) { setCancelError(error instanceof Error ? error.message : 'Could not cancel the booking.'); } finally { setCancelling(false); } }}>{cancelling ? 'Cancelling…' : 'Confirm cancellation'}</Button></div>{cancelError && <p role="alert" className="text-sm text-destructive">{cancelError}</p>}</>}
       {dialog === 'contact' && (sent ? <p role="status" className="text-accent">Sample message saved for this demonstration.</p> : <form onSubmit={e => { e.preventDefault(); setSent(true); }}><label className="text-sm">Message<textarea required className="mt-2 min-h-32 w-full rounded-md border bg-card p-3 focus:ring-2 focus:ring-ring" /></label><Button type="submit" className="mt-4"><MessageSquare />Send sample message</Button></form>)}
       {dialog === 'report' && <div className="space-y-4 text-sm"><p>Completed {displayTime(booking.timestamps[4] ?? '')}</p><p>Inspector: {booking.inspector}</p><dl className="space-y-3">{[['Exterior & body', 'Minor cosmetic wear'], ['Engine & transmission', 'No major issues observed'], ['Brakes & tires', 'Front tires showing wear'], ['Road test', 'Completed']].map(([k, v]) => <div key={k} className="border-t pt-3"><dt className="font-medium">{k}</dt><dd className="mt-1 text-muted-foreground">{v}</dd></div>)}</dl><p className="text-xs text-muted-foreground">Illustrative findings, not an actual vehicle assessment.</p></div>}
     </DialogContent></Dialog>
