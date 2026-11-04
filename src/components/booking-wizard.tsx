@@ -27,7 +27,7 @@ const stepMeta = [
   { icon: Check, label: 'Confirm' },
 ];
 
-export function BookingWizard({ plan, purpose }: { plan?: 'standard' | 'premium'; purpose?: 'seller' }) {
+export function BookingWizard({ plan, purpose }: { plan?: 'standard' | 'premium' | undefined; purpose?: 'seller' | undefined }) {
   const isSeller = purpose === 'seller';
   const { account, addBooking } = useCustomerAccount();
   const navigate = useNavigate();
