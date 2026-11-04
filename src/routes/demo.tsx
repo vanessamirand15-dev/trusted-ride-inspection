@@ -9,7 +9,7 @@ import { inspectionPlans, packageLabel } from '@/lib/inspection-plans';
 import { pageHead } from '@/lib/page-head';
 import { InspectionReport } from '@/components/inspection-report';
 
-export const Route = createFileRoute('/demo')({ validateSearch: (search: Record<string, unknown>): { name?: string } => (typeof search.name === 'string' && search.name.trim() ? { name: search.name.trim().slice(0, 60) } : {}), head: () => pageHead('Demo account', 'Explore fictional Trustferly inspection bookings without creating a real account.'), component: DemoPage });
+export const Route = createFileRoute('/demo')({ validateSearch: (search: Record<string, unknown>): { name?: string } => { const value = search['name']; return typeof value === 'string' && value.trim() ? { name: value.trim().slice(0, 60) } : {}; }, head: () => pageHead('Demo account', 'Explore fictional Trustferly inspection bookings without creating a real account.'), component: DemoPage });
 
 function DemoPage() {
   const { name } = Route.useSearch();
