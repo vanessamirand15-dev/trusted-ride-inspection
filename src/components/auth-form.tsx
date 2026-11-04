@@ -21,7 +21,10 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
       const { data, error } = signup ? await supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin, data: { full_name: String(f.get('name') || '').trim() } } }) : await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       if (signup && !data.session) setMessage('Check your email to confirm your account. Then return here to sign in and complete your profile.');
-    } catch (error) { setMessage(error instanceof Error ? error.message : 'Could not sign in. Please try again.'); }
+    } catch (error) {
+      const text = error instanceof Error ? error.message : '';
+      setMessage(/already registered/i.test(text) ? 'An account with this email already exists. Choose Log in instead.' : /invalid login/i.test(text) ? 'Email or password is incorrect.' : /password/i.test(text) ? 'Please use a password with at least 6 characters.' : text || 'Could not sign in. Please try again.');
+    }
     finally { setBusy(false); }
   }
   async function social(provider: 'google' | 'apple' | 'lovable') {
@@ -41,7 +44,7 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
     <form onSubmit={submit} className="space-y-5">
       {signup && <label className="block text-sm font-medium">Your name<input name="name" required autoComplete="name" className="mt-2 w-full rounded-md border bg-card px-3 py-3 outline-none focus:ring-2 focus:ring-ring" /></label>}
       <label className="block text-sm font-medium">Email<input required name="email" type="email" autoComplete="email" className="mt-2 w-full rounded-md border bg-card px-3 py-3 outline-none focus:ring-2 focus:ring-ring" /></label>
-      <label className="block text-sm font-medium">Password<input required name="password" type="password" minLength={8} autoComplete={signup ? 'new-password' : 'current-password'} className="mt-2 w-full rounded-md border bg-card px-3 py-3 outline-none focus:ring-2 focus:ring-ring" /></label>
+      <label className="block text-sm font-medium">Password<input required name="password" type="password" minLength={6} autoComplete={signup ? 'new-password' : 'current-password'} className="mt-2 w-full rounded-md border bg-card px-3 py-3 outline-none focus:ring-2 focus:ring-ring" /></label>
       {message && <p role="status" className="text-sm text-muted-foreground">{message}</p>}
       <Button type="submit" variant="cta" size="lg" disabled={busy} className="w-full">{busy ? 'Please wait…' : signup ? 'Create account' : 'Log in'}<ArrowRight /></Button>
     </form>
