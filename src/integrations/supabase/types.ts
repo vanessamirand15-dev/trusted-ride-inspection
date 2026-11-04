@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      buyer_bookings: {
+        Row: {
+          cancelled_at: string | null
+          created_at: string
+          id: string
+          inspector: string | null
+          location: string
+          package: string
+          preferred_date: string
+          purpose: string
+          timestamps: string[]
+          user_id: string
+          vehicle: string
+          vin: string
+        }
+        Insert: {
+          cancelled_at?: string | null
+          created_at?: string
+          id?: string
+          inspector?: string | null
+          location: string
+          package: string
+          preferred_date: string
+          purpose?: string
+          timestamps?: string[]
+          user_id: string
+          vehicle: string
+          vin?: string
+        }
+        Update: {
+          cancelled_at?: string | null
+          created_at?: string
+          id?: string
+          inspector?: string | null
+          location?: string
+          package?: string
+          preferred_date?: string
+          purpose?: string
+          timestamps?: string[]
+          user_id?: string
+          vehicle?: string
+          vin?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -137,7 +182,9 @@ export type Database = {
       profiles: {
         Row: {
           base_zip: string
+          buyer_profile_completed: boolean
           certification: string
+          contact_preference: string
           created_at: string
           email: string
           full_name: string
@@ -151,7 +198,9 @@ export type Database = {
         }
         Insert: {
           base_zip?: string
+          buyer_profile_completed?: boolean
           certification?: string
+          contact_preference?: string
           created_at?: string
           email?: string
           full_name?: string
@@ -165,7 +214,9 @@ export type Database = {
         }
         Update: {
           base_zip?: string
+          buyer_profile_completed?: boolean
           certification?: string
+          contact_preference?: string
           created_at?: string
           email?: string
           full_name?: string

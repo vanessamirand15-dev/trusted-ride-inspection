@@ -1,4 +1,9 @@
 # Account and booking demonstration
+## Unified real accounts
+- [ ] Replace buyer demo login with shared real email, Google, Apple and Lovable accounts (Facebook unsupported).
+- [ ] Require saved name, phone and preferences before buyer bookings; persist owner-only requests with RLS.
+- [ ] Add Your Bookings navigation and softer global background, preserve seller and mock payment flows.
+- [ ] Test profile onboarding, saved requests, signed-out redirects and account isolation.
 ## Seller inspections
 - [x] Add a dedicated seller area with own-car booking, account access and saved seller requests.
 - [x] Verify seller signup, booking completion and buyer flow preservation.
