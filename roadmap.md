@@ -1,5 +1,7 @@
 # Account and booking demonstration
 ## Separate demo login
+- [x] Sign up creates a working account instantly (no email confirmation).
+- [x] Log in accepts any name and password without a real account (opens the demo account).
 - [x] Add clearly labeled any-name/password demo access with sample and empty accounts, separate from real accounts; verify demo access and booking interaction.
 ## Restore account screen design
 - [x] Restore the original login/signup tabs, layout and signup name field while retaining real email accounts and social alternatives below; verify both screens.
@@ -100,3 +102,5 @@
 - [x] Car listing URL: free direct page import (structured data + title), editable, with paste/manual fallback
 - [x] Declutter Request an inspection: three clear intake options (link, screenshot, paste text)
 - [x] Reorder intake options on /book: Enter details manually first, then Link, Screenshot, Paste text — done
+## Payment protection copy
+- [x] Replace payment protection card heading, body and FAQ answer with the user's provided wording.

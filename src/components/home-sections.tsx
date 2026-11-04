@@ -85,7 +85,7 @@ const pillars = [
   { icon: ShieldCheck, title: 'Rigorous Background Checks', text: '100% verified, certified mechanics. Every inspector passes identity, certification and quality screening.' },
   { icon: Zap, title: 'Same-Day / Next-Day Service', text: 'Quick turnaround so you never lose a deal to another buyer while waiting.' },
   { icon: CalendarClock, title: 'Reschedule Protection', text: 'Free rescheduling if the seller postpones or cancels. Your booking stays safe.' },
-  { icon: ShieldCheck, title: 'Secure Payment Protection (Demo)', text: 'Payment protection is demonstrated only. No real funds are collected, held, or transferred.' },
+  { icon: ShieldCheck, title: 'Secure Payment Protection', text: 'Your funds are securely held and only released upon successful completion of the inspection. We guarantee a risk-free transaction for both buyers and sellers.' },
 ];
 
 export function TrustPillars() {
@@ -99,7 +99,7 @@ export function TrustPillars() {
               <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-teal-soft text-accent"><p.icon className="h-6 w-6" /></span>
               <h3 className="mt-5 text-lg font-semibold">{p.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{p.text}</p>
-              {p.title === 'Secure Payment Protection (Demo)' && <Button asChild variant="link" className="mt-3 h-auto whitespace-normal p-0"><Link to="/" hash="payment-protection">Payment protection details</Link></Button>}
+              {p.title === 'Secure Payment Protection' && <Button asChild variant="link" className="mt-3 h-auto whitespace-normal p-0"><Link to="/" hash="payment-protection">Payment protection details</Link></Button>}
             </div>
           ))}
         </div>
