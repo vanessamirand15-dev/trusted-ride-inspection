@@ -22,7 +22,7 @@ export function AuthForm() {
   }
   async function social(provider: 'google' | 'apple' | 'lovable') {
     setBusy(true); setMessage('');
-    try { const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: window.location.origin }); if (result.error) throw result.error; }
+    try { const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: `${window.location.origin}/auth` }); if (result.error) throw result.error; }
     catch (error) { setMessage(error instanceof Error ? error.message : 'Could not sign in. Please try again.'); }
     finally { setBusy(false); }
   }

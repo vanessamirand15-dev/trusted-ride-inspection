@@ -13,21 +13,23 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as BookRouteImport } from './routes/book'
-import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as ForInspectorsRouteImport } from './routes/for-inspectors'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as SellersRouteImport } from './routes/sellers'
-import { Route as AccountIndexRouteImport } from './routes/account.index'
-import { Route as AccountSettingsRouteImport } from './routes/account.settings'
-import { Route as BookingsBookingIdRouteImport } from './routes/bookings_.$bookingId'
+import { Route as AuthenticatedBuyerRouteRouteImport } from './routes/_authenticated/_buyer/route'
+import { Route as AuthenticatedCompleteProfileRouteImport } from './routes/_authenticated/complete-profile'
 import { Route as InspectorDashboardRouteImport } from './routes/inspector.dashboard'
 import { Route as InspectorFinancesRouteImport } from './routes/inspector.finances'
 import { Route as InspectorLoginRouteImport } from './routes/inspector.login'
 import { Route as InspectorProfileRouteImport } from './routes/inspector.profile'
+import { Route as AuthenticatedBuyerBookRouteImport } from './routes/_authenticated/_buyer/book'
+import { Route as AuthenticatedBuyerBookingsRouteImport } from './routes/_authenticated/_buyer/bookings'
 import { Route as AuthenticatedInspectorPortalRouteImport } from './routes/_authenticated/inspector.portal'
 import { Route as InspectorInspectionIdRouteImport } from './routes/inspector.inspection.$id'
+import { Route as AuthenticatedBuyerAccountIndexRouteImport } from './routes/_authenticated/_buyer/account.index'
+import { Route as AuthenticatedBuyerAccountSettingsRouteImport } from './routes/_authenticated/_buyer/account.settings'
+import { Route as AuthenticatedBuyerBookingsBookingIdRouteImport } from './routes/_authenticated/_buyer/bookings_.$bookingId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,16 +48,6 @@ const ApplyRoute = ApplyRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BookRoute = BookRouteImport.update({
-  id: '/book',
-  path: '/book',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BookingsRoute = BookingsRouteImport.update({
-  id: '/bookings',
-  path: '/bookings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForInspectorsRoute = ForInspectorsRouteImport.update({
@@ -78,21 +70,16 @@ const SellersRoute = SellersRouteImport.update({
   path: '/sellers',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AccountIndexRoute = AccountIndexRouteImport.update({
-  id: '/account/',
-  path: '/account/',
-  getParentRoute: () => rootRouteImport,
+const AuthenticatedBuyerRouteRoute = AuthenticatedBuyerRouteRouteImport.update({
+  id: '/_buyer',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AccountSettingsRoute = AccountSettingsRouteImport.update({
-  id: '/account/settings',
-  path: '/account/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BookingsBookingIdRoute = BookingsBookingIdRouteImport.update({
-  id: '/bookings_/$bookingId',
-  path: '/bookings/$bookingId',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AuthenticatedCompleteProfileRoute =
+  AuthenticatedCompleteProfileRouteImport.update({
+    id: '/complete-profile',
+    path: '/complete-profile',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const InspectorDashboardRoute = InspectorDashboardRouteImport.update({
   id: '/inspector/dashboard',
   path: '/inspector/dashboard',
@@ -113,6 +100,17 @@ const InspectorProfileRoute = InspectorProfileRouteImport.update({
   path: '/inspector/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedBuyerBookRoute = AuthenticatedBuyerBookRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => AuthenticatedBuyerRouteRoute,
+} as any)
+const AuthenticatedBuyerBookingsRoute =
+  AuthenticatedBuyerBookingsRouteImport.update({
+    id: '/bookings',
+    path: '/bookings',
+    getParentRoute: () => AuthenticatedBuyerRouteRoute,
+  } as any)
 const AuthenticatedInspectorPortalRoute =
   AuthenticatedInspectorPortalRouteImport.update({
     id: '/inspector/portal',
@@ -124,46 +122,66 @@ const InspectorInspectionIdRoute = InspectorInspectionIdRouteImport.update({
   path: '/inspector/inspection/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedBuyerAccountIndexRoute =
+  AuthenticatedBuyerAccountIndexRouteImport.update({
+    id: '/account/',
+    path: '/account/',
+    getParentRoute: () => AuthenticatedBuyerRouteRoute,
+  } as any)
+const AuthenticatedBuyerAccountSettingsRoute =
+  AuthenticatedBuyerAccountSettingsRouteImport.update({
+    id: '/account/settings',
+    path: '/account/settings',
+    getParentRoute: () => AuthenticatedBuyerRouteRoute,
+  } as any)
+const AuthenticatedBuyerBookingsBookingIdRoute =
+  AuthenticatedBuyerBookingsBookingIdRouteImport.update({
+    id: '/bookings_/$bookingId',
+    path: '/bookings/$bookingId',
+    getParentRoute: () => AuthenticatedBuyerRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
-  '/book': typeof BookRoute
-  '/bookings': typeof BookingsRoute
   '/for-inspectors': typeof ForInspectorsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
   '/sellers': typeof SellersRoute
-  '/account/settings': typeof AccountSettingsRoute
-  '/bookings/$bookingId': typeof BookingsBookingIdRoute
+  '/complete-profile': typeof AuthenticatedCompleteProfileRoute
   '/inspector/dashboard': typeof InspectorDashboardRoute
   '/inspector/finances': typeof InspectorFinancesRoute
   '/inspector/login': typeof InspectorLoginRoute
   '/inspector/profile': typeof InspectorProfileRoute
-  '/account/': typeof AccountIndexRoute
+  '/book': typeof AuthenticatedBuyerBookRoute
+  '/bookings': typeof AuthenticatedBuyerBookingsRoute
   '/inspector/portal': typeof AuthenticatedInspectorPortalRoute
   '/inspector/inspection/$id': typeof InspectorInspectionIdRoute
+  '/account/settings': typeof AuthenticatedBuyerAccountSettingsRoute
+  '/bookings/$bookingId': typeof AuthenticatedBuyerBookingsBookingIdRoute
+  '/account/': typeof AuthenticatedBuyerAccountIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
-  '/book': typeof BookRoute
-  '/bookings': typeof BookingsRoute
   '/for-inspectors': typeof ForInspectorsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
   '/sellers': typeof SellersRoute
-  '/account/settings': typeof AccountSettingsRoute
-  '/bookings/$bookingId': typeof BookingsBookingIdRoute
+  '/complete-profile': typeof AuthenticatedCompleteProfileRoute
   '/inspector/dashboard': typeof InspectorDashboardRoute
   '/inspector/finances': typeof InspectorFinancesRoute
   '/inspector/login': typeof InspectorLoginRoute
   '/inspector/profile': typeof InspectorProfileRoute
-  '/account': typeof AccountIndexRoute
+  '/book': typeof AuthenticatedBuyerBookRoute
+  '/bookings': typeof AuthenticatedBuyerBookingsRoute
   '/inspector/portal': typeof AuthenticatedInspectorPortalRoute
   '/inspector/inspection/$id': typeof InspectorInspectionIdRoute
+  '/account/settings': typeof AuthenticatedBuyerAccountSettingsRoute
+  '/bookings/$bookingId': typeof AuthenticatedBuyerBookingsBookingIdRoute
+  '/account': typeof AuthenticatedBuyerAccountIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -171,21 +189,23 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
-  '/book': typeof BookRoute
-  '/bookings': typeof BookingsRoute
   '/for-inspectors': typeof ForInspectorsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
   '/sellers': typeof SellersRoute
-  '/account/settings': typeof AccountSettingsRoute
-  '/bookings_/$bookingId': typeof BookingsBookingIdRoute
+  '/_authenticated/_buyer': typeof AuthenticatedBuyerRouteRouteWithChildren
+  '/_authenticated/complete-profile': typeof AuthenticatedCompleteProfileRoute
   '/inspector/dashboard': typeof InspectorDashboardRoute
   '/inspector/finances': typeof InspectorFinancesRoute
   '/inspector/login': typeof InspectorLoginRoute
   '/inspector/profile': typeof InspectorProfileRoute
-  '/account/': typeof AccountIndexRoute
+  '/_authenticated/_buyer/book': typeof AuthenticatedBuyerBookRoute
+  '/_authenticated/_buyer/bookings': typeof AuthenticatedBuyerBookingsRoute
   '/_authenticated/inspector/portal': typeof AuthenticatedInspectorPortalRoute
   '/inspector/inspection/$id': typeof InspectorInspectionIdRoute
+  '/_authenticated/_buyer/account/settings': typeof AuthenticatedBuyerAccountSettingsRoute
+  '/_authenticated/_buyer/bookings_/$bookingId': typeof AuthenticatedBuyerBookingsBookingIdRoute
+  '/_authenticated/_buyer/account/': typeof AuthenticatedBuyerAccountIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -193,62 +213,66 @@ export interface FileRouteTypes {
     | '/'
     | '/apply'
     | '/auth'
-    | '/book'
-    | '/bookings'
     | '/for-inspectors'
     | '/how-it-works'
     | '/pricing'
     | '/sellers'
-    | '/account/settings'
-    | '/bookings/$bookingId'
+    | '/complete-profile'
     | '/inspector/dashboard'
     | '/inspector/finances'
     | '/inspector/login'
     | '/inspector/profile'
-    | '/account/'
+    | '/book'
+    | '/bookings'
     | '/inspector/portal'
     | '/inspector/inspection/$id'
+    | '/account/settings'
+    | '/bookings/$bookingId'
+    | '/account/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/apply'
     | '/auth'
-    | '/book'
-    | '/bookings'
     | '/for-inspectors'
     | '/how-it-works'
     | '/pricing'
     | '/sellers'
-    | '/account/settings'
-    | '/bookings/$bookingId'
+    | '/complete-profile'
     | '/inspector/dashboard'
     | '/inspector/finances'
     | '/inspector/login'
     | '/inspector/profile'
-    | '/account'
+    | '/book'
+    | '/bookings'
     | '/inspector/portal'
     | '/inspector/inspection/$id'
+    | '/account/settings'
+    | '/bookings/$bookingId'
+    | '/account'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/apply'
     | '/auth'
-    | '/book'
-    | '/bookings'
     | '/for-inspectors'
     | '/how-it-works'
     | '/pricing'
     | '/sellers'
-    | '/account/settings'
-    | '/bookings_/$bookingId'
+    | '/_authenticated/_buyer'
+    | '/_authenticated/complete-profile'
     | '/inspector/dashboard'
     | '/inspector/finances'
     | '/inspector/login'
     | '/inspector/profile'
-    | '/account/'
+    | '/_authenticated/_buyer/book'
+    | '/_authenticated/_buyer/bookings'
     | '/_authenticated/inspector/portal'
     | '/inspector/inspection/$id'
+    | '/_authenticated/_buyer/account/settings'
+    | '/_authenticated/_buyer/bookings_/$bookingId'
+    | '/_authenticated/_buyer/account/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -256,19 +280,14 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ApplyRoute: typeof ApplyRoute
   AuthRoute: typeof AuthRoute
-  BookRoute: typeof BookRoute
-  BookingsRoute: typeof BookingsRoute
   ForInspectorsRoute: typeof ForInspectorsRoute
   HowItWorksRoute: typeof HowItWorksRoute
   PricingRoute: typeof PricingRoute
   SellersRoute: typeof SellersRoute
-  AccountSettingsRoute: typeof AccountSettingsRoute
-  BookingsBookingIdRoute: typeof BookingsBookingIdRoute
   InspectorDashboardRoute: typeof InspectorDashboardRoute
   InspectorFinancesRoute: typeof InspectorFinancesRoute
   InspectorLoginRoute: typeof InspectorLoginRoute
   InspectorProfileRoute: typeof InspectorProfileRoute
-  AccountIndexRoute: typeof AccountIndexRoute
   InspectorInspectionIdRoute: typeof InspectorInspectionIdRoute
 }
 
@@ -302,20 +321,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/book': {
-      id: '/book'
-      path: '/book'
-      fullPath: '/book'
-      preLoaderRoute: typeof BookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bookings': {
-      id: '/bookings'
-      path: '/bookings'
-      fullPath: '/bookings'
-      preLoaderRoute: typeof BookingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/for-inspectors': {
       id: '/for-inspectors'
       path: '/for-inspectors'
@@ -344,26 +349,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SellersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/account/': {
-      id: '/account/'
-      path: '/account'
-      fullPath: '/account/'
-      preLoaderRoute: typeof AccountIndexRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_authenticated/_buyer': {
+      id: '/_authenticated/_buyer'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedBuyerRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/account/settings': {
-      id: '/account/settings'
-      path: '/account/settings'
-      fullPath: '/account/settings'
-      preLoaderRoute: typeof AccountSettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bookings_/$bookingId': {
-      id: '/bookings_/$bookingId'
-      path: '/bookings/$bookingId'
-      fullPath: '/bookings/$bookingId'
-      preLoaderRoute: typeof BookingsBookingIdRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_authenticated/complete-profile': {
+      id: '/_authenticated/complete-profile'
+      path: '/complete-profile'
+      fullPath: '/complete-profile'
+      preLoaderRoute: typeof AuthenticatedCompleteProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/inspector/dashboard': {
       id: '/inspector/dashboard'
@@ -393,6 +391,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InspectorProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/_buyer/book': {
+      id: '/_authenticated/_buyer/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof AuthenticatedBuyerBookRouteImport
+      parentRoute: typeof AuthenticatedBuyerRouteRoute
+    }
+    '/_authenticated/_buyer/bookings': {
+      id: '/_authenticated/_buyer/bookings'
+      path: '/bookings'
+      fullPath: '/bookings'
+      preLoaderRoute: typeof AuthenticatedBuyerBookingsRouteImport
+      parentRoute: typeof AuthenticatedBuyerRouteRoute
+    }
     '/_authenticated/inspector/portal': {
       id: '/_authenticated/inspector/portal'
       path: '/inspector/portal'
@@ -407,14 +419,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InspectorInspectionIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/_buyer/account/': {
+      id: '/_authenticated/_buyer/account/'
+      path: '/account'
+      fullPath: '/account/'
+      preLoaderRoute: typeof AuthenticatedBuyerAccountIndexRouteImport
+      parentRoute: typeof AuthenticatedBuyerRouteRoute
+    }
+    '/_authenticated/_buyer/account/settings': {
+      id: '/_authenticated/_buyer/account/settings'
+      path: '/account/settings'
+      fullPath: '/account/settings'
+      preLoaderRoute: typeof AuthenticatedBuyerAccountSettingsRouteImport
+      parentRoute: typeof AuthenticatedBuyerRouteRoute
+    }
+    '/_authenticated/_buyer/bookings_/$bookingId': {
+      id: '/_authenticated/_buyer/bookings_/$bookingId'
+      path: '/bookings/$bookingId'
+      fullPath: '/bookings/$bookingId'
+      preLoaderRoute: typeof AuthenticatedBuyerBookingsBookingIdRouteImport
+      parentRoute: typeof AuthenticatedBuyerRouteRoute
+    }
   }
 }
 
+interface AuthenticatedBuyerRouteRouteChildren {
+  AuthenticatedBuyerBookRoute: typeof AuthenticatedBuyerBookRoute
+  AuthenticatedBuyerBookingsRoute: typeof AuthenticatedBuyerBookingsRoute
+  AuthenticatedBuyerAccountSettingsRoute: typeof AuthenticatedBuyerAccountSettingsRoute
+  AuthenticatedBuyerBookingsBookingIdRoute: typeof AuthenticatedBuyerBookingsBookingIdRoute
+  AuthenticatedBuyerAccountIndexRoute: typeof AuthenticatedBuyerAccountIndexRoute
+}
+
+const AuthenticatedBuyerRouteRouteChildren: AuthenticatedBuyerRouteRouteChildren =
+  {
+    AuthenticatedBuyerBookRoute: AuthenticatedBuyerBookRoute,
+    AuthenticatedBuyerBookingsRoute: AuthenticatedBuyerBookingsRoute,
+    AuthenticatedBuyerAccountSettingsRoute:
+      AuthenticatedBuyerAccountSettingsRoute,
+    AuthenticatedBuyerBookingsBookingIdRoute:
+      AuthenticatedBuyerBookingsBookingIdRoute,
+    AuthenticatedBuyerAccountIndexRoute: AuthenticatedBuyerAccountIndexRoute,
+  }
+
+const AuthenticatedBuyerRouteRouteWithChildren =
+  AuthenticatedBuyerRouteRoute._addFileChildren(
+    AuthenticatedBuyerRouteRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBuyerRouteRoute: typeof AuthenticatedBuyerRouteRouteWithChildren
+  AuthenticatedCompleteProfileRoute: typeof AuthenticatedCompleteProfileRoute
   AuthenticatedInspectorPortalRoute: typeof AuthenticatedInspectorPortalRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBuyerRouteRoute: AuthenticatedBuyerRouteRouteWithChildren,
+  AuthenticatedCompleteProfileRoute: AuthenticatedCompleteProfileRoute,
   AuthenticatedInspectorPortalRoute: AuthenticatedInspectorPortalRoute,
 }
 
@@ -426,19 +487,14 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ApplyRoute: ApplyRoute,
   AuthRoute: AuthRoute,
-  BookRoute: BookRoute,
-  BookingsRoute: BookingsRoute,
   ForInspectorsRoute: ForInspectorsRoute,
   HowItWorksRoute: HowItWorksRoute,
   PricingRoute: PricingRoute,
   SellersRoute: SellersRoute,
-  AccountSettingsRoute: AccountSettingsRoute,
-  BookingsBookingIdRoute: BookingsBookingIdRoute,
   InspectorDashboardRoute: InspectorDashboardRoute,
   InspectorFinancesRoute: InspectorFinancesRoute,
   InspectorLoginRoute: InspectorLoginRoute,
   InspectorProfileRoute: InspectorProfileRoute,
-  AccountIndexRoute: AccountIndexRoute,
   InspectorInspectionIdRoute: InspectorInspectionIdRoute,
 }
 export const routeTree = rootRouteImport
