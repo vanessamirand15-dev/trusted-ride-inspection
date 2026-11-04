@@ -31,6 +31,7 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
   const [signup, setSignup] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
+  const [socialMessage, setSocialMessage] = useState('');
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault(); setBusy(true); setMessage('');
     const f = new FormData(e.currentTarget);
