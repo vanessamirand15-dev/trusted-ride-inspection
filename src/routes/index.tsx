@@ -45,7 +45,7 @@ const metrics = [
 
 const faqs = [
   { q: "How does Secure Payment Protection work?", a: "We use a secure payment hold system to protect both parties. Your funds are safely held in our system and are only released once the inspection is successfully completed and verified, ensuring zero financial risk and no wasted time." },
-  { q: "What happens if the seller refuses to allow the inspection?", a: "You can cancel your inspection request. In this academic MVP, checkout is simulated and no real funds are collected, so there is no actual payment to refund." },
+  { q: "What happens if the seller refuses to allow the inspection?", a: "You can cancel your inspection request at any time before the inspector is dispatched. Upon cancellation, your securely held funds will be immediately released and a full refund will be issued to your original payment method." },
   { q: "Do I need to be present during the inspection?", a: "No. The inspector goes to the vehicle's location, completes the entire procedure, and sends the full digital report to your phone or email." },
   { q: "How long does it take to receive the report?", a: "Usually the same day, within a few hours after the on-site inspection is finished." },
   { q: "How are inspectors vetted?", a: "Every inspector passes a background check, automotive certification validation, and quality standard training before joining the platform." },
