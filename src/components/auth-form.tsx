@@ -62,6 +62,17 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
       {message && <p role="status" className="text-sm text-muted-foreground">{message}</p>}
       <Button type="submit" variant="cta" size="lg" disabled={busy} className="w-full">{busy ? 'Please wait…' : signup ? 'Create account' : 'Log in'}<ArrowRight /></Button>
     </form>
+    <div className="my-6 flex items-center gap-3" aria-hidden="true">
+      <span className="h-px flex-1 bg-border" />
+      <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Or continue with</span>
+      <span className="h-px flex-1 bg-border" />
+    </div>
+    <div className="space-y-3">
+      <Button type="button" variant="outline" size="lg" className="w-full" onClick={() => setSocialMessage('Social login will be available in a future update.')}><GoogleIcon />Continue with Google</Button>
+      <Button type="button" variant="outline" size="lg" className="w-full" onClick={() => setSocialMessage('Social login will be available in a future update.')}><Apple />Continue with Apple</Button>
+      <Button type="button" variant="outline" size="lg" className="w-full" onClick={() => setSocialMessage('Social login will be available in a future update.')}><FacebookIcon />Continue with Facebook</Button>
+      {socialMessage && <p role="status" className="text-center text-sm text-muted-foreground">{socialMessage}</p>}
+    </div>
     {!signup && !destination && <div className="mt-6 border-t pt-5 text-sm"><p className="font-medium">Sample account</p><p className="mt-1 text-muted-foreground">Username: test user · Password: password</p></div>}
   </section>;
 }
