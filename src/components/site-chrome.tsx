@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { useState, type ReactNode } from 'react';
 import { Menu, LogOut, UserRound, CalendarDays, Settings, Plus, ShieldCheck, Lock, CreditCard, Phone, Mail, LifeBuoy } from "lucide-react";
 import logoAsset from '@/assets/trustferly_logo.png.asset.json';
@@ -7,6 +7,7 @@ import { CustomerLink, useQuickCustomer } from '@/components/quick-customer';
 import { useDemoAccount } from '@/components/demo-account';
 import { cancellationPolicy } from '@/lib/cancellation';
 import { SampleReportDialog } from '@/components/sample-report-dialog';
+import { inspectorAccountPath } from '@/lib/account-navigation';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 
@@ -117,7 +118,8 @@ export function SiteHeader() {
   const real = useDemoAccount();
   const quick = useQuickCustomer();
   const { account, logout } = quick.account ? quick : real;
-  const navigate = useNavigate();
+  const path = useLocation({ select: location => location.pathname });
+  const inspectorAccount = !quick.account && Boolean(real.account) && inspectorAccountPath(path);
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
       <p className="bg-secondary px-5 py-1.5 text-center text-[11px] font-medium text-muted-foreground">{prototypeNotice}</p>
@@ -156,7 +158,7 @@ export function SiteHeader() {
               )}
               <div className="mt-6 border-t pt-6">
                 {account ? <><p className="mb-4 break-words px-3 text-sm font-semibold">{account.name}</p><nav aria-label="Your account" className="space-y-2">
-                  {([{ to: '/account', label: 'Your account', icon: UserRound }, { to: '/account/settings', label: 'Account settings', icon: Settings }, { to: '/bookings', label: 'Your Bookings', icon: CalendarDays }] as const).map(n => <CustomerLink key={n.to} to={n.to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><n.icon size={17} />{n.label}</CustomerLink>)}
+                  {inspectorAccount ? <Link to="/inspector/portal" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><UserRound size={17} />Inspector Portal</Link> : ([{ to: '/account', label: 'Your account', icon: UserRound }, { to: '/account/settings', label: 'Account settings', icon: Settings }, { to: '/bookings', label: 'Your Bookings', icon: CalendarDays }] as const).map(n => <CustomerLink key={n.to} to={n.to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><n.icon size={17} />{n.label}</CustomerLink>)}
                   <Button variant="ghost" className="w-full justify-start" onClick={() => { void logout(); setOpen(false); }}><LogOut />Log out</Button>
                 </nav></> : <Button asChild variant="outline" className="w-full"><Link to="/auth" onClick={() => setOpen(false)}><UserRound />Log in / Sign up</Link></Button>}
               </div>
