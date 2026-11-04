@@ -44,7 +44,8 @@ const metrics = [
 ];
 
 const faqs = [
-  { q: "What happens if the seller refuses to allow the inspection?", a: "If the seller refuses or the vehicle is not available, we refund the full amount you paid." },
+  { q: "How does Secure Payment Protection (Demo) work?", a: "Payment protection is demonstrated only in this academic MVP. No real funds are collected, held, or transferred for buyers or sellers. Checkout is simulated, not a live payment or escrow service." },
+  { q: "What happens if the seller refuses to allow the inspection?", a: "You can cancel your inspection request. In this academic MVP, checkout is simulated and no real funds are collected, so there is no actual payment to refund." },
   { q: "Do I need to be present during the inspection?", a: "No. The inspector goes to the vehicle's location, completes the entire procedure, and sends the full digital report to your phone or email." },
   { q: "How long does it take to receive the report?", a: "Usually the same day, within a few hours after the on-site inspection is finished." },
   { q: "How are inspectors vetted?", a: "Every inspector passes a background check, automotive certification validation, and quality standard training before joining the platform." },
