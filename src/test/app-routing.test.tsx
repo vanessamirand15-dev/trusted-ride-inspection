@@ -14,4 +14,16 @@ describe("App routing", () => {
 
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
+  it('places bookings behind both authentication and profile completion', () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+    const ids = router.matchRoutes('/bookings').map(match => match.routeId);
+    expect(ids).toContain('/_authenticated');
+    expect(ids).toContain('/_authenticated/_buyer');
+  });
+  it('requires authentication and profile completion before new inspections', () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+    const ids = router.matchRoutes('/book').map(match => match.routeId);
+    expect(ids).toContain('/_authenticated');
+    expect(ids).toContain('/_authenticated/_buyer');
+  });
 });
