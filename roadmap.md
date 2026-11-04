@@ -1,5 +1,6 @@
 # Account and booking demonstration
 ## Complete Quick Login experience
+- [ ] Update cancellation copy: no cancellation fee within 12 hours of requesting a booking; a fee applies after 12 hours. Amount not supplied; no real charges.
 - [ ] Preserve Quick Login and connect shared profile, settings, saved vehicles, booking list, details, reports and booking wizard without registration.
 - [ ] Add isolated fictional upcoming, completed and cancelled bookings, rescheduling, cancellation and status updates.
 - [ ] Verify navigation, profile edits, new bookings, reports and private-account separation on desktop and mobile.
