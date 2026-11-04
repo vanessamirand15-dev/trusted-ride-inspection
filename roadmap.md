@@ -1,4 +1,8 @@
 # Account and booking demonstration
+## Restore previous account and inspector access
+- [x] Compare prior working versions without reversing deliberate changes; existing inspector jobs, report builder, schedule and account fields remain present.
+- [x] Restore intended login destinations and inspector account navigation while retaining existing design and account protection.
+- [x] Verify customer quick access, real inspector profile/wallet, sample jobs/report/schedule, and login destinations.
 ## Complete Quick Login experience
 - [x] Remove Lovable sign-in from the account form.
 - [x] Omit Facebook sign-in as accepted by the user; retain Google and Apple without Lovable.
@@ -33,7 +37,7 @@
 - [x] Add a dedicated dummy payment step before buyer confirmation, including billing address and disclaimer.
 - [x] Add Wallet & Payouts to real and sample inspector portals with mock setup and fictional ledger.
 - [x] Verify booking completion, sample wallet setup, financial input non-persistence and narrow-screen layout.
-- [ ] Verify wallet within a real signed-in inspector account: blocked because the existing QA login did not succeed and the requesting user has no account available for session minting.
+- [x] Verify wallet within the requesting user's real signed-in inspector account, including mock setup confirmation and cleared inputs.
 
 - [x] Add shared demonstration accounts and booking entities with tested lifecycle rules.
 - [x] Add login/signup, account, settings, booking list and booking detail pages.

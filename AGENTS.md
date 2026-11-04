@@ -21,3 +21,4 @@
 - The public Honda sample report is independent of account booking reports so fictional preview findings never change booking lifecycle records.
 
 - The root owns the sole auth-state subscriber; account consumers refresh verified identity via its browser event, and sign-out cancels and clears queries before clearing the session.
+- Account navigation preserves an allowlisted customer destination through login and profile completion; inspector account pages use inspector login and portal links without adding professional options to customer menus.
