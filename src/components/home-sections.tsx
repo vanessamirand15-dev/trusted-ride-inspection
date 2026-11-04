@@ -99,6 +99,7 @@ export function TrustPillars() {
               <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-teal-soft text-accent"><p.icon className="h-6 w-6" /></span>
               <h3 className="mt-5 text-lg font-semibold">{p.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{p.text}</p>
+              {p.title === 'Secure Payment Protection (Demo)' && <Button asChild variant="link" className="mt-3 h-auto whitespace-normal p-0"><Link to="/" hash="payment-protection">Payment protection details</Link></Button>}
             </div>
           ))}
         </div>
