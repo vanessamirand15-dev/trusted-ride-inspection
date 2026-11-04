@@ -1,4 +1,8 @@
 # Account and booking demonstration
+## Restore previous account and inspector access
+- [ ] Compare prior working versions without reversing deliberate changes.
+- [ ] Restore intended login destinations and inspector account navigation while retaining existing design and account protection.
+- [ ] Verify customer quick access, real inspector profile/wallet, sample jobs/report/schedule, and login destinations.
 ## Complete Quick Login experience
 - [x] Remove Lovable sign-in from the account form.
 - [x] Omit Facebook sign-in as accepted by the user; retain Google and Apple without Lovable.
