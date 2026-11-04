@@ -1,10 +1,9 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
 import { useDemoAccount } from '@/components/demo-account';
-import { Apple, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { lovable } from '@/integrations/lovable';
 
 export function AuthForm({ destination }: { destination?: '/inspector/portal' }) {
   const { ready, account } = useDemoAccount();
@@ -28,12 +27,6 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
     }
     finally { setBusy(false); }
   }
-  async function social(provider: 'google' | 'apple') {
-    setBusy(true); setMessage('');
-    try { const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: `${window.location.origin}${destination ? '/inspector/login' : '/auth'}` }); if (result.error) throw result.error; }
-    catch (error) { setMessage(error instanceof Error ? error.message : 'Could not sign in. Please try again.'); }
-    finally { setBusy(false); }
-  }
   return <section className="mx-auto max-w-md px-5 py-16 md:py-24">
     <div className="mb-7 flex items-center gap-2 text-sm font-medium text-accent"><ShieldCheck size={20} />{destination ? 'Inspector account' : 'Buyer account'}</div>
     <h1 className="text-4xl font-semibold">{signup ? 'Create your account' : 'Welcome back'}</h1>
@@ -49,11 +42,6 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
       {message && <p role="status" className="text-sm text-muted-foreground">{message}</p>}
       <Button type="submit" variant="cta" size="lg" disabled={busy} className="w-full">{busy ? 'Please wait…' : signup ? 'Create account' : 'Log in'}<ArrowRight /></Button>
     </form>
-    <div className="my-6 flex items-center gap-4 text-xs text-muted-foreground"><span className="h-px flex-1 bg-border" />Or continue with<span className="h-px flex-1 bg-border" /></div>
-    <div className="grid gap-3">
-      <Button variant="outline" size="lg" disabled={busy} onClick={() => social('google')}><span className="font-semibold" aria-hidden>G</span>Continue with Google</Button>
-      <Button variant="outline" size="lg" disabled={busy} onClick={() => social('apple')}><Apple />Continue with Apple</Button>
-    </div>
-    {!destination && <div className="mt-7 border-t pt-5"><Button asChild variant="outline" size="lg" className="w-full"><Link to="/demo">Quick account access<ArrowRight /></Link></Button><p className="mt-3 text-xs text-muted-foreground">Example bookings only. No email confirmation required.</p></div>}
+    {!signup && !destination && <div className="mt-6 border-t pt-5 text-sm"><p className="font-medium">Sample account</p><p className="mt-1 text-muted-foreground">Username: test user · Password: password</p></div>}
   </section>;
 }
