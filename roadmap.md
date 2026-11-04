@@ -1,4 +1,6 @@
 # Account and booking demonstration
+## Restore account screen design
+- [ ] Restore the original login/signup tabs, layout and signup name field while retaining real email accounts and social alternatives below; verify both screens.
 ## Demo payment protection disclosure
 - [x] Add the homepage payment protection demo card and update payment-related FAQs; verify both visibly.
 ## Unified real accounts
