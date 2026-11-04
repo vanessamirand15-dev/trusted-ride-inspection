@@ -85,6 +85,7 @@ const pillars = [
   { icon: ShieldCheck, title: 'Rigorous Background Checks', text: '100% verified, certified mechanics. Every inspector passes identity, certification and quality screening.' },
   { icon: Zap, title: 'Same-Day / Next-Day Service', text: 'Quick turnaround so you never lose a deal to another buyer while waiting.' },
   { icon: CalendarClock, title: 'Reschedule Protection', text: 'Free rescheduling if the seller postpones or cancels. Your booking stays safe.' },
+  { icon: ShieldCheck, title: 'Secure Payment Protection (Demo)', text: 'Payment protection is demonstrated only. No real funds are collected, held, or transferred.' },
 ];
 
 export function TrustPillars() {
@@ -92,7 +93,7 @@ export function TrustPillars() {
     <section aria-labelledby="trust-heading" className="border-t bg-card">
       <div className="mx-auto max-w-6xl px-5 py-20">
         <h2 id="trust-heading" className="text-center text-3xl font-semibold md:text-4xl">Why buyers trust Trustferly</h2>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {pillars.map(p => (
             <div key={p.title} className="rounded-2xl border bg-background p-7 text-center">
               <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-teal-soft text-accent"><p.icon className="h-6 w-6" /></span>
