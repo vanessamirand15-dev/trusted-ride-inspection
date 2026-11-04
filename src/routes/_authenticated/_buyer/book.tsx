@@ -13,7 +13,7 @@ import { useServerFn } from '@tanstack/react-start';
 import { importListingFromUrl } from '@/lib/listing-import.functions';
 import { readListingScreenshotFn } from '@/lib/ai/read-screenshot.functions';
 
-export const Route = createFileRoute("/book")({
+export const Route = createFileRoute("/_authenticated/_buyer/book")({
   validateSearch: (search: Record<string, unknown>): { plan?: 'standard' | 'premium'; purpose?: 'seller' } => {
     const plan = search['plan'];
     return { ...(plan === 'standard' || plan === 'premium' ? { plan } : {}), ...(search['purpose'] === 'seller' ? { purpose: 'seller' as const } : {}) };
@@ -148,8 +148,12 @@ function BookingWizard() {
       : `Filled ${filled.join(', ')}${extras ? `, also found ${extras}` : ''}. Review and edit the details below.`);
   };
 
-  const confirm = () => {
-    const booking = addBooking({
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
+  const confirm = async () => {
+    setSaving(true); setSaveError('');
+    try {
+    const booking = await addBooking({
       vehicle: vehicle.trim(),
       vin: vin.trim(),
       location: `${address.trim()}, ${location.trim()}`,
@@ -159,9 +163,10 @@ function BookingWizard() {
     });
     if (booking) {
       setBookingId(booking.id);
-      setTrackingId(`TF-${Math.random().toString(36).slice(2, 8).toUpperCase()}`);
+      setTrackingId(`TF-${booking.id.slice(0, 8).toUpperCase()}`);
       setDone(true);
     }
+    } catch (error) { setSaveError(error instanceof Error ? error.message : 'Could not save your booking. Please try again.'); } finally { setSaving(false); }
   };
 
   if (done) {
@@ -381,9 +386,10 @@ function BookingWizard() {
               <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Total due today</dt><dd className="text-lg font-semibold text-navy">${selectedPlan.price}</dd></div>
             </dl>
             <p className="flex items-center gap-2 text-sm text-accent"><Check className="h-4 w-4 shrink-0" />Mock payment step complete. No charge made.</p>
+            {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
             <div className="mt-2 flex justify-between">
               <Button variant="ghost" onClick={() => setStep(3)}><ChevronLeft />Back</Button>
-              <Button variant="cta" size="lg" onClick={confirm}>Complete Booking</Button>
+              <Button variant="cta" size="lg" disabled={saving} onClick={confirm}>{saving ? 'Saving…' : 'Complete Booking'}</Button>
             </div>
           </section>
         )}
