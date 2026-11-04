@@ -3,7 +3,7 @@
 - [x] Restore the original login/signup tabs, layout and signup name field while retaining real email accounts and social alternatives below; verify both screens.
 ## Demo payment protection disclosure
 - [x] Add the homepage payment protection demo card and update payment-related FAQs; verify both visibly.
-- [ ] Link the card to its expanded FAQ explanation and shorten the disclosure professionally without implying real money handling.
+- [x] Link the card to its expanded FAQ explanation and shorten the disclosure professionally without implying real money handling.
 ## Unified real accounts
 - [x] Replace buyer demo login with shared real email, Google, Apple and Lovable accounts (Facebook unsupported). Social providers enabled; external provider sign-in not exercised.
 - [x] Require saved name, phone and contact preferences before buyer bookings; persist owner-only requests with RLS.
