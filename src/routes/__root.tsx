@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader, SiteFooter } from "../components/site-chrome";
 import { Toaster } from '@/components/ui/sonner';
+import { QuickCustomerProvider } from '@/components/quick-customer';
 import { DemoAccountProvider } from '@/components/demo-account';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -134,12 +135,12 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <DemoAccountProvider>
+      <DemoAccountProvider><QuickCustomerProvider>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <SiteHeader />
       <main className="min-h-[70vh]"><Outlet /></main>
       <SiteFooter />
-      </DemoAccountProvider>
+      </QuickCustomerProvider></DemoAccountProvider>
     </QueryClientProvider>
   );
 }

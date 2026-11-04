@@ -1,44 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { ArrowLeft, ArrowRight, Plus, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { inputClass, displayTime, StatusBadge } from '@/components/account-ui';
-import { openDemoAccount } from '@/lib/demo-access';
-import { canCancel, createBooking, stages, statusOf, type DemoState } from '@/lib/demo-bookings';
-import { inspectionPlans, packageLabel } from '@/lib/inspection-plans';
+import { inputClass } from '@/components/account-ui';
+import { useQuickCustomer } from '@/components/quick-customer';
+import { Overview } from '@/components/customer-overview';
+import { Settings } from '@/components/customer-settings';
+import { Bookings } from '@/components/customer-bookings';
+import { Detail } from '@/components/customer-booking-detail';
+import { BookingWizard } from '@/components/booking-wizard';
+import type { CustomerView } from '@/lib/quick-customer';
 import { pageHead } from '@/lib/page-head';
-import { InspectionReport } from '@/components/inspection-report';
-
-export const Route = createFileRoute('/demo')({ validateSearch: (search: Record<string, unknown>): { name?: string } => { const value = search['name']; return typeof value === 'string' && value.trim() ? { name: value.trim().slice(0, 60) } : {}; }, head: () => pageHead('Quick access account', 'View example Trustferly inspection bookings with quick account access.'), component: DemoPage });
-
+export const Route = createFileRoute('/demo')({
+  validateSearch: (search: Record<string, unknown>): { name?: string; view?: CustomerView; bookingId?: string } => {
+    const name = search['name']; const view = search['view']; const bookingId = search['bookingId'];
+    return { ...(typeof name === 'string' && name.trim() ? { name: name.trim().slice(0, 60) } : {}), ...(view === 'account' || view === 'settings' || view === 'book' || view === 'detail' || view === 'bookings' ? { view } : {}), ...(typeof bookingId === 'string' ? { bookingId } : {}) };
+  },
+  head: ({ match }) => pageHead(match.search.view === 'settings' ? 'Quick access account settings' : match.search.view === 'account' ? 'Quick access customer profile' : match.search.view === 'detail' ? 'Quick access inspection details' : match.search.view === 'book' ? 'Quick access inspection request' : 'Quick access account', 'Manage fictional Trustferly customer details, inspection requests and example reports with quick account access.'),
+  component: DemoPage,
+});
 function DemoPage() {
-  const { name } = Route.useSearch();
-  const [state, setState] = useState<DemoState>(() => name ? openDemoAccount(name, 'demo') : { account: null, bookings: [] });
-  const [selected, setSelected] = useState('');
-  const [adding, setAdding] = useState(false);
+  const { name, view, bookingId } = Route.useSearch();
+  const quick = useQuickCustomer();
   const [error, setError] = useState('');
-  const booking = state.bookings.find(item => item.id === selected);
-  if (!state.account) return <section className="mx-auto max-w-md px-5 py-16 md:py-24">
+  useEffect(() => { if (name && !quick.account) quick.login(name, 'quick'); }, [name]);
+  if (!quick.account) return <section className="mx-auto max-w-md px-5 py-16 md:py-24">
     <p className="mb-7 flex items-center gap-2 text-sm font-medium text-accent"><ShieldCheck size={20} />Quick access</p>
     <h1 className="text-4xl font-semibold">Welcome back</h1>
     <p className="mt-3 text-muted-foreground">Example bookings only. No live inspection requests are submitted.</p>
-    <form className="mt-7 space-y-5" onSubmit={event => { event.preventDefault(); const data = new FormData(event.currentTarget); try { setState(openDemoAccount(String(data.get('name') || ''), String(data.get('password') || ''))); } catch (error) { setError(error instanceof Error ? error.message : 'Please try again.'); } }}>
+    <form className="mt-7 space-y-5" onSubmit={event => { event.preventDefault(); const data = new FormData(event.currentTarget); try { quick.login(String(data.get('name') || ''), String(data.get('password') || '')); } catch (error) { setError(error instanceof Error ? error.message : 'Please try again.'); } }}>
       <label className="block text-sm font-medium">Name or username<input name="name" required autoComplete="off" className={inputClass} /></label>
       <label className="block text-sm font-medium">Password<input name="password" required type="password" autoComplete="off" className={inputClass} /></label>
       {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
       <Button type="submit" variant="cta" size="lg" className="w-full">Log in<ArrowRight /></Button>
     </form>
-    <Button variant="outline" className="mt-4 w-full" onClick={() => setState(openDemoAccount('test user', 'demo', true))}>Open sample account</Button>
+    <Button variant="outline" className="mt-4 w-full" onClick={() => quick.login('test user', 'demo', true)}>Open sample account</Button>
     <Button asChild variant="link" className="mt-4"><Link to="/auth"><ArrowLeft />Email account login</Link></Button>
   </section>;
-  return <section className="mx-auto max-w-5xl px-5 py-12">
-    <p className="mb-6 border-b pb-4 text-sm text-muted-foreground">Example bookings · Changes last only while this page is open</p>
-    <div className="flex flex-wrap items-center justify-between gap-4"><div><h1 className="text-3xl font-semibold">Your Bookings</h1><p className="mt-2 text-muted-foreground">{state.account.name}</p></div><div className="flex gap-3"><Button variant="outline" onClick={() => { setState({ account: null, bookings: [] }); setSelected(''); setAdding(false); }}>Log out</Button><Button variant="cta" onClick={() => { setAdding(true); setSelected(''); }}><Plus />New inspection</Button></div></div>
-    {adding && <form className="mt-8 space-y-5 border-y py-6" onSubmit={event => { event.preventDefault(); if (!state.account) return; const data = new FormData(event.currentTarget); const plan = inspectionPlans.find(plan => plan.id === data.get('plan')) ?? inspectionPlans[0]; if (!plan) return; const item = createBooking(state.account.id, { vehicle: String(data.get('vehicle')), vin: '', location: String(data.get('location')), date: String(data.get('date')), package: packageLabel(plan), purpose: 'buyer' }); setState({ ...state, bookings: [...state.bookings, item] }); setAdding(false); setSelected(item.id); }}>
-      <h2 className="text-xl font-semibold">New inspection</h2>
-      <div className="grid gap-5 sm:grid-cols-2"><label className="text-sm font-medium">Vehicle<input required name="vehicle" className={inputClass} /></label><label className="text-sm font-medium">Location<input required name="location" className={inputClass} /></label><label className="text-sm font-medium">Inspection date<input required name="date" type="date" className={inputClass} /></label><label className="text-sm font-medium">Inspection package<select name="plan" className={inputClass}>{inspectionPlans.map(plan => <option key={plan.id} value={plan.id}>{packageLabel(plan)}</option>)}</select></label></div>
-      <Button type="submit" variant="cta">Save request</Button>
-    </form>}
-    {booking ? <div className="mt-8"><Button variant="ghost" onClick={() => setSelected('')}><ArrowLeft />All bookings</Button><h2 className="mt-5 text-2xl font-semibold">{booking.vehicle}</h2><p className="mt-2 text-muted-foreground">{booking.location} · {booking.package}</p><div className="mt-4"><StatusBadge booking={booking} /></div><ol className="my-8 space-y-4">{stages.map((stage, index) => <li key={stage} className="flex items-center gap-3"><span className={`h-3 w-3 shrink-0 rounded-full ${booking.timestamps[index] ? 'bg-accent' : 'bg-border'}`} /><span>{stage}{booking.timestamps[index] && <span className="block text-sm text-muted-foreground">{displayTime(booking.timestamps[index])}</span>}</span></li>)}</ol>{canCancel(booking) && <Button variant="outline" onClick={() => setState({ ...state, bookings: state.bookings.map(item => item.id === booking.id ? { ...item, cancelledAt: new Date().toISOString() } : item) })}>Cancel inspection</Button>}{statusOf(booking) === 'Completed' && <InspectionReport booking={booking} />}</div> : !adding && <div className="mt-8 grid gap-4 sm:grid-cols-2">{state.bookings.length === 0 && <p className="text-muted-foreground">No inspections yet.</p>}{state.bookings.map(item => <Button key={item.id} variant="outline" className="h-auto justify-between whitespace-normal p-5 text-left" onClick={() => setSelected(item.id)}><span><span className="block font-semibold">{item.vehicle}</span><span className="mt-2 block text-sm text-muted-foreground">{statusOf(item)}</span></span><ArrowRight className="shrink-0" /></Button>)}</div>}
-  </section>;
+  return <>
+    <p className="mx-auto max-w-5xl border-b px-5 py-4 text-sm text-muted-foreground">Example customer information and bookings. No live inspection or payment is submitted. Changes last until you leave or refresh.</p>
+    {view === 'account' ? <Overview /> : view === 'settings' ? <Settings /> : view === 'book' ? <BookingWizard /> : view === 'detail' && bookingId ? <Detail key={bookingId} bookingId={bookingId} /> : <Bookings />}
+  </>;
 }

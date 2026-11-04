@@ -3,7 +3,9 @@ import { useState, type ReactNode } from 'react';
 import { Menu, LogOut, UserRound, CalendarDays, Settings, Plus, ShieldCheck, Lock, CreditCard, Phone, Mail, LifeBuoy } from "lucide-react";
 import logoAsset from '@/assets/trustferly_logo.png.asset.json';
 import { Button } from "@/components/ui/button";
+import { CustomerLink, useQuickCustomer } from '@/components/quick-customer';
 import { useDemoAccount } from '@/components/demo-account';
+import { cancellationPolicy } from '@/lib/cancellation';
 import { SampleReportDialog } from '@/components/sample-report-dialog';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
@@ -32,9 +34,7 @@ const legalDocs = [
   {
     label: 'Cancellation Policy',
     paragraphs: [
-      'Cancel free of charge before an inspector is assigned. After assignment, cancellations are refundable up to 12 hours before the scheduled slot.',
-      'If the seller refuses the inspection or the vehicle is unavailable, you receive a full refund.',
-      'Rescheduling is always free when the seller postpones or cancels. Sample policy for MVP demonstration.',
+      cancellationPolicy,
     ],
   },
 ];
@@ -114,7 +114,9 @@ const mainNavLinkClass = "text-sm font-medium text-navy/70 transition-colors hov
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const { account, logout } = useDemoAccount();
+  const real = useDemoAccount();
+  const quick = useQuickCustomer();
+  const { account, logout } = quick.account ? quick : real;
   const navigate = useNavigate();
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
@@ -127,9 +129,9 @@ export function SiteHeader() {
             <SheetContent side="left" className="flex w-[min(90vw,360px)] flex-col overflow-y-auto motion-reduce:animate-none">
               <SheetTitle><Logo /></SheetTitle><SheetDescription className="sr-only">Trustferly navigation</SheetDescription>
               <nav aria-label="Main menu" className="mt-8 space-y-2">
-                <Button asChild variant="cta" className="mb-4 w-full justify-start"><Link to="/book" onClick={() => setOpen(false)}><Plus />Book now</Link></Button>
+                <Button asChild variant="cta" className="mb-4 w-full justify-start"><CustomerLink to="/book" onClick={() => setOpen(false)}><Plus />Book now</CustomerLink></Button>
                 <Link to="/" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Home</Link>
-                <Link to="/bookings" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Your Bookings</Link>
+                <CustomerLink to="/bookings" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Your Bookings</CustomerLink>
                 <Link to="/sellers" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">For sellers</Link>
                 {nav.map(n => <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">{n.label}</Link>)}
                 <Link to="/" hash="coverage" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Coverage Area</Link>
@@ -152,7 +154,7 @@ export function SiteHeader() {
               </div>
               <div className="mt-6 border-t pt-6">
                 {account ? <><p className="mb-4 break-words px-3 text-sm font-semibold">{account.name}</p><nav aria-label="Your account" className="space-y-2">
-                  {([{ to: '/account', label: 'Your account', icon: UserRound }, { to: '/account/settings', label: 'Account settings', icon: Settings }, { to: '/bookings', label: 'Your Bookings', icon: CalendarDays }] as const).map(n => <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><n.icon size={17} />{n.label}</Link>)}
+                  {([{ to: '/account', label: 'Your account', icon: UserRound }, { to: '/account/settings', label: 'Account settings', icon: Settings }, { to: '/bookings', label: 'Your Bookings', icon: CalendarDays }] as const).map(n => <CustomerLink key={n.to} to={n.to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><n.icon size={17} />{n.label}</CustomerLink>)}
                   <Button variant="ghost" className="w-full justify-start" onClick={() => { void logout(); setOpen(false); }}><LogOut />Log out</Button>
                 </nav></> : <Button asChild variant="outline" className="w-full"><Link to="/auth" onClick={() => setOpen(false)}><UserRound />Log in / Sign up</Link></Button>}
               </div>
@@ -176,9 +178,9 @@ export function SiteHeader() {
           <Link to="/" hash="faq" className={mainNavLinkClass}>FAQ</Link>
         </nav>
         <div className="flex items-center gap-3">
-        <Button asChild variant="outline" size="sm" className="hidden md:inline-flex"><Link to="/bookings">Your Bookings</Link></Button>
+        <Button asChild variant="outline" size="sm" className="hidden md:inline-flex"><CustomerLink to="/bookings">Your Bookings</CustomerLink></Button>
         <Button asChild variant="cta" size="sm">
-          <Link to="/book">Book inspection</Link>
+          <CustomerLink to="/book">Book inspection</CustomerLink>
         </Button>
         </div>
       </div>
@@ -208,7 +210,7 @@ export function SiteFooter() {
         </div>
         <div className="space-y-2 text-sm">
           <p className="font-semibold">Get started</p>
-          <Link to="/book" className="block text-navy-foreground/70 hover:text-navy-foreground">Book an inspection</Link>
+          <CustomerLink to="/book" className="block text-navy-foreground/70 hover:text-navy-foreground">Book an inspection</CustomerLink>
           <Link to="/sellers" className="block text-navy-foreground/70 hover:text-navy-foreground">For sellers: inspect your car</Link>
           <p className="pt-3 font-semibold">For Professionals</p>
           <Link to="/apply" className="block text-navy-foreground/70 hover:text-navy-foreground">Apply as inspector</Link>

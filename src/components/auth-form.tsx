@@ -28,7 +28,7 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
     }
     finally { setBusy(false); }
   }
-  async function social(provider: 'google' | 'apple' | 'lovable') {
+  async function social(provider: 'google' | 'apple') {
     setBusy(true); setMessage('');
     try { const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: `${window.location.origin}${destination ? '/inspector/login' : '/auth'}` }); if (result.error) throw result.error; }
     catch (error) { setMessage(error instanceof Error ? error.message : 'Could not sign in. Please try again.'); }
@@ -53,7 +53,6 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
     <div className="grid gap-3">
       <Button variant="outline" size="lg" disabled={busy} onClick={() => social('google')}><span className="font-semibold" aria-hidden>G</span>Continue with Google</Button>
       <Button variant="outline" size="lg" disabled={busy} onClick={() => social('apple')}><Apple />Continue with Apple</Button>
-      <Button variant="outline" size="lg" disabled={busy} onClick={() => social('lovable')}><ShieldCheck />Continue with Lovable</Button>
     </div>
     {!destination && <div className="mt-7 border-t pt-5"><Button asChild variant="outline" size="lg" className="w-full"><Link to="/demo">Quick account access<ArrowRight /></Link></Button><p className="mt-3 text-xs text-muted-foreground">Example bookings only. No email confirmation required.</p></div>}
   </section>;
