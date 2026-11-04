@@ -55,6 +55,6 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
       <Button variant="outline" size="lg" disabled={busy} onClick={() => social('apple')}><Apple />Continue with Apple</Button>
       <Button variant="outline" size="lg" disabled={busy} onClick={() => social('lovable')}><ShieldCheck />Continue with Lovable</Button>
     </div>
-    {!destination && <div className="mt-7 border-t pt-5"><Button asChild variant="outline" size="lg" className="w-full"><Link to="/demo">Try the demo account<ArrowRight /></Link></Button><p className="mt-3 text-xs text-muted-foreground">Demonstration only. No real account or email confirmation required.</p></div>}
+    {!destination && <div className="mt-7 border-t pt-5"><Button asChild variant="outline" size="lg" className="w-full"><Link to="/demo">Quick account access<ArrowRight /></Link></Button><p className="mt-3 text-xs text-muted-foreground">Example bookings only. No email confirmation required.</p></div>}
   </section>;
 }
