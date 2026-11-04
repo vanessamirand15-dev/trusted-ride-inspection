@@ -145,13 +145,15 @@ export function SiteHeader() {
                   <SupportDialog trigger={<button type="button" className="flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-sm hover:bg-secondary"><LifeBuoy size={17} />Need Help?</button>} />
                 </nav>
               </div>
-              <div className="mt-6 border-t pt-6">
-                <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">For professionals</p>
-                <nav aria-label="For professionals" className="space-y-2">
-                  <Link to="/apply" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Become an Inspector</Link>
-                  <Link to="/inspector/login" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Inspector Login</Link>
-                </nav>
-              </div>
+              {!account && (
+                <div className="mt-6 border-t pt-6">
+                  <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">For professionals</p>
+                  <nav aria-label="For professionals" className="space-y-2">
+                    <Link to="/apply" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Become an Inspector</Link>
+                    <Link to="/inspector/login" onClick={() => setOpen(false)} className="block rounded-md px-3 py-3 text-sm hover:bg-secondary">Inspector Login</Link>
+                  </nav>
+                </div>
+              )}
               <div className="mt-6 border-t pt-6">
                 {account ? <><p className="mb-4 break-words px-3 text-sm font-semibold">{account.name}</p><nav aria-label="Your account" className="space-y-2">
                   {([{ to: '/account', label: 'Your account', icon: UserRound }, { to: '/account/settings', label: 'Account settings', icon: Settings }, { to: '/bookings', label: 'Your Bookings', icon: CalendarDays }] as const).map(n => <CustomerLink key={n.to} to={n.to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm hover:bg-secondary"><n.icon size={17} />{n.label}</CustomerLink>)}
