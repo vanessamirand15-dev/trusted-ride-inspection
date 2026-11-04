@@ -35,18 +35,18 @@ export function AuthForm({ destination }: { destination?: '/inspector/portal' })
     <img src={logoAsset.url} alt="Trustferly" width={48} height={48} className="mb-6 h-12 w-12" />
     <h1 className="text-3xl font-semibold">{signup ? 'Create your account' : 'Welcome to Trustferly'}</h1>
     <p className="mt-4 rounded-md border bg-teal-soft p-4 text-sm text-foreground">Please log in or create a profile to view and manage your bookings.</p>
-    <div className="mt-7 grid gap-3">
-      <Button variant="outline" size="lg" disabled={busy} onClick={() => social('google')}><span className="font-semibold" aria-hidden>G</span>Continue with Google</Button>
-      <Button variant="outline" size="lg" disabled={busy} onClick={() => social('apple')}><Apple />Continue with Apple</Button>
-      <Button variant="outline" size="lg" disabled={busy} onClick={() => social('lovable')}><ShieldCheck />Continue with Lovable</Button>
-    </div>
-    <div className="my-6 flex items-center gap-4 text-xs text-muted-foreground"><span className="h-px flex-1 bg-border" />Or use your email<span className="h-px flex-1 bg-border" /></div>
-    <form onSubmit={submit} className="space-y-5 rounded-lg border bg-card p-6 shadow-soft">
+    <form onSubmit={submit} className="mt-7 space-y-5 rounded-lg border bg-card p-6 shadow-soft">
       <label className="block text-sm font-medium">Email<input required name="email" type="email" autoComplete="email" className="mt-2 w-full rounded-md border bg-card px-3 py-3 outline-none focus:ring-2 focus:ring-ring" /></label>
       <label className="block text-sm font-medium">Password<input required name="password" type="password" minLength={8} autoComplete={signup ? 'new-password' : 'current-password'} className="mt-2 w-full rounded-md border bg-card px-3 py-3 outline-none focus:ring-2 focus:ring-ring" /></label>
       {message && <p role="status" className="text-sm text-muted-foreground">{message}</p>}
       <Button type="submit" variant="cta" size="lg" disabled={busy} className="w-full"><Mail />{busy ? 'Please wait…' : signup ? 'Create account' : 'Log in'}<ArrowRight /></Button>
       <Button type="button" variant="link" className="h-auto w-full whitespace-normal" onClick={() => { setSignup(!signup); setMessage(''); }}>{signup ? 'Already have an account? Log in' : 'New here? Create an account'}</Button>
     </form>
+    <div className="my-6 flex items-center gap-4 text-xs text-muted-foreground"><span className="h-px flex-1 bg-border" />Or continue with<span className="h-px flex-1 bg-border" /></div>
+    <div className="grid gap-3">
+      <Button variant="outline" size="lg" disabled={busy} onClick={() => social('google')}><span className="font-semibold" aria-hidden>G</span>Continue with Google</Button>
+      <Button variant="outline" size="lg" disabled={busy} onClick={() => social('apple')}><Apple />Continue with Apple</Button>
+      <Button variant="outline" size="lg" disabled={busy} onClick={() => social('lovable')}><ShieldCheck />Continue with Lovable</Button>
+    </div>
   </section>;
 }
