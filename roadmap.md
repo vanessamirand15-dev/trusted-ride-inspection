@@ -1,4 +1,8 @@
 # Account and booking demonstration
+## Complete Quick Login experience
+- [ ] Preserve Quick Login and connect shared profile, settings, saved vehicles, booking list, details, reports and booking wizard without registration.
+- [ ] Add isolated fictional upcoming, completed and cancelled bookings, rescheduling, cancellation and status updates.
+- [ ] Verify navigation, profile edits, new bookings, reports and private-account separation on desktop and mobile.
 ## Separate demo login
 - [x] Sign up creates a working account instantly (no email confirmation).
 - [x] Log in accepts any name and password without a real account (opens the demo account).
