@@ -204,6 +204,7 @@ export function SiteFooter() {
               {n.label}
             </Link>
           ))}
+          <Link to="/" hash="faq" className="block text-navy-foreground/70 hover:text-navy-foreground">FAQ</Link>
         </div>
         <div className="space-y-2 text-sm">
           <p className="font-semibold">Get started</p>
