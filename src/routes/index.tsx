@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { createFileRoute, Link, useLocation } from "@tanstack/react-router";
 import { BadgeCheck, Car, ClipboardCheck, FileText, Lock, MapPin, Search, ShieldCheck, Star, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -44,7 +44,7 @@ const metrics = [
 ];
 
 const faqs = [
-  { q: "How does Secure Payment Protection (Demo) work?", a: "Payment protection is demonstrated only in this academic MVP. No real funds are collected, held, or transferred for buyers or sellers. Checkout is simulated, not a live payment or escrow service." },
+  { q: "How does Secure Payment Protection (Demo) work?", a: "Our demo previews payment protection for buyers and sellers. Payments are simulated: no real funds are collected, held, or transferred." },
   { q: "What happens if the seller refuses to allow the inspection?", a: "You can cancel your inspection request. In this academic MVP, checkout is simulated and no real funds are collected, so there is no actual payment to refund." },
   { q: "Do I need to be present during the inspection?", a: "No. The inspector goes to the vehicle's location, completes the entire procedure, and sends the full digital report to your phone or email." },
   { q: "How long does it take to receive the report?", a: "Usually the same day, within a few hours after the on-site inspection is finished." },
@@ -58,6 +58,9 @@ const reviews = [
 ];
 
 function Index() {
+  const hash = useLocation({ select: location => location.hash });
+  const [openFaq, setOpenFaq] = useState('');
+  useEffect(() => { if (hash === 'payment-protection') setOpenFaq('faq-0'); }, [hash]);
   return (
     <>
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 md:grid-cols-2 md:py-24">
@@ -153,9 +156,9 @@ function Index() {
       <section id="faq" className="scroll-mt-24 border-t bg-card">
         <div className="mx-auto max-w-3xl px-5 py-20">
           <h2 className="text-center text-3xl font-semibold md:text-4xl">Frequently asked questions</h2>
-          <Accordion type="single" collapsible className="mt-10">
+          <Accordion type="single" collapsible value={openFaq} onValueChange={setOpenFaq} className="mt-10">
             {faqs.map((f, i) => (
-              <AccordionItem key={f.q} value={`faq-${i}`}>
+              <AccordionItem key={f.q} value={`faq-${i}`} id={i === 0 ? 'payment-protection' : undefined} className="scroll-mt-32">
                 <AccordionTrigger className="text-left text-base font-semibold">{f.q}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
               </AccordionItem>
