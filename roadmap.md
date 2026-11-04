@@ -1,10 +1,11 @@
 # Account and booking demonstration
 ## Complete Quick Login experience
-- [ ] Remove Lovable sign-in from the account form. Facebook sign-in is blocked by the account service's unsupported provider.
-- [ ] Update cancellation copy: no cancellation fee within 12 hours of requesting a booking; a fee applies after 12 hours. Amount not supplied; no real charges.
-- [ ] Preserve Quick Login and connect shared profile, settings, saved vehicles, booking list, details, reports and booking wizard without registration.
-- [ ] Add isolated fictional upcoming, completed and cancelled bookings, rescheduling, cancellation and status updates.
-- [ ] Verify navigation, profile edits, new bookings, reports and private-account separation on desktop and mobile.
+- [x] Remove Lovable sign-in from the account form.
+- [ ] Add Facebook sign-in: blocked because the account service does not support Facebook.
+- [x] Update cancellation copy: no cancellation fee within 12 hours of requesting a booking; a fee applies after 12 hours. Amount not supplied; no real charges.
+- [x] Preserve Quick Login and connect shared profile, settings, saved vehicles, booking list, details, reports and booking wizard without registration.
+- [x] Add isolated fictional upcoming, completed and cancelled bookings, rescheduling, cancellation and status updates.
+- [x] Verify navigation, profile edits, new bookings, reports and private-account separation on desktop and mobile.
 ## Separate demo login
 - [x] Sign up creates a working account instantly (no email confirmation).
 - [x] Log in accepts any name and password without a real account (opens the demo account).
