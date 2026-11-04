@@ -26,7 +26,7 @@ const legalDocs = [
     paragraphs: [
       'Account details, booking information and vehicle data are used only to arrange and deliver your inspection and report.',
       'We never sell your personal information. Seller contact details are shared only with the assigned inspector.',
-      'Sample policy for MVP demonstration. No real data is collected or stored on a server in this prototype.',
+      'Sample policy for MVP demonstration. Account contact profiles and inspection requests are saved privately; payment and banking fields remain simulated and are not stored.',
     ],
   },
   {
