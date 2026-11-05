@@ -33,6 +33,7 @@ export function BookingWizard({ plan, purpose }: { plan?: 'standard' | 'premium'
   const navigate = useNavigate();
 
   const [step, setStep] = useState(0);
+  useEffect(() => { window.scrollTo({ top: 0 }); }, [step]);
   const [listingUrl, setListingUrl] = useState('');
   const [listingText, setListingText] = useState('');
   const [listingStatus, setListingStatus] = useState('');
